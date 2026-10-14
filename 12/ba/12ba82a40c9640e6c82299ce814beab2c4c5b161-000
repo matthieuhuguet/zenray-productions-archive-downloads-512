@@ -1,0 +1,2370 @@
+# ZenRayShards, base de contexte (fichier 1)
+
+Ouvert le 2026-08-21. Source de vérité unique du projet de jeu **ZenRayShards**, studio **ZenRay**,
+auteur **Matthieu Huguet**, seul aux commandes.
+
+Ce fichier est écrit à ma voix, à la première personne. Claude corrige la grammaire et resserre les
+répétitions, il ne change ni mon style ni mon sens. Tout ce que je dis sur le jeu atterrit ici, et
+nulle part ailleurs.
+
+---
+
+## 0. Mode d'emploi de ce fichier
+
+**Ce que c'est.** Une base de données en un seul fichier, comme `Identity/Matthieu1.md` pour moi et
+`Japanese/Japanese1.md` pour le japonais. Le principe est vérifié : un skill routeur lit l'index des
+titres, va chercher la seule section utile, et ne charge jamais les milliers de lignes. Le fichier
+grossit sans jamais coûter au démarrage d'une session.
+
+**Le skill routeur qui ouvre cette porte :** `zenrayshards-context`. Il ne recopie rien d'ici, il
+sait seulement où chercher. Si un jour ce fichier et le skill divergent, **ce fichier fait foi**.
+
+**Comment on écrit dedans.** En append, section par section. Une information corrigée s'écrit dans
+la section concernée avec sa date ; une décision qui en annule une autre le dit explicitement, sans
+effacer l'ancienne. Le `PROGRESS.md` du dépôt Memory garde la chronologie, ce fichier garde le
+contenu. Une information, un seul endroit.
+
+**Ce qui ne va PAS ici.** Les secrets, qui vivent dans `Identity/Matthieu1.md` et nulle part
+ailleurs. Les lois transversales de travail, qui vivent dans `~/.claude/CLAUDE.md`. Le journal
+chronologique, qui vit dans `PROGRESS.md`. Le contexte personnel non lié au jeu, qui vit dans
+`Identity/Matthieu1.md`.
+
+**Ce qui est mesuré et ce qui ne l'est pas.** Les sections marquées « mesuré » portent une date et un
+chiffre relevé sur la machine. Tout le reste est de la pensée, de l'intention ou une piste. Ne jamais
+confondre les deux, ni traiter une piste comme un acquis.
+
+**Les quatre tableaux, et ce qui va dans chacun.** C'est la question qui se pose à chaque écriture,
+donc elle se tranche ici une fois pour toutes. §0.5 `GameDesignBoard` porte ce que le jeu pourrait
+ÊTRE, en `GD-xx`. §0.8 `ProjectBoard` porte ce qu'on FAIT sur le projet, en `PB-xx`. §0.6
+`SolvedBugs` porte les bugs résolus, en `BUG-xx`, et reste séparé parce que sa valeur n'est pas
+d'être une chose finie mais un calcul qu'on ne repaiera plus. §0.7 `WorkflowsAndPipelines` porte les
+chaînes de production rejouables, en `WF-xx`. Une ligne appartient à un seul de ces quatre tableaux,
+et les autres s'y réfèrent par son identifiant plutôt que d'en recopier le contenu.
+
+**Index des titres, à générer plutôt qu'à recopier :**
+
+```zsh
+rg -n '^## ' /Users/zenray/Create/Build/Memory/ZenRayShards/ZenRayShards1.md
+```
+
+---
+
+## 0.2 Instructions, les règles de ce projet, toutes au même endroit
+
+Ce que Claude doit appliquer sans qu'on le lui redemande. C'est le CLAUDE.md du jeu, écrit ici plutôt
+que dans un fichier séparé : une information, un seul endroit. Toute instruction nouvelle vient
+s'ajouter dans cette section, jamais ailleurs dans le fichier.
+
+### I-01 · Convention de nommage
+
+**Jamais de capitales hurlantes. Toujours du PascalCase, sans espace,** pour tout ce qui est un NOM
+TECHNIQUE : fonctions, variables, assets, Blueprints, dossiers, statuts, tags, entrées de données.
+`ToSort`, jamais `TO_SORT` ni `to sort`. Un souligné n'est admis que pour séparer deux idées qui ne
+se fondent pas, comme `Deprecated_Cut`.
+
+**Ce que l'utilisateur VOIT s'écrit en Pascal Case Avec Espaces.** L'interface, les libellés, les
+titres montrés à l'écran. `Deprecated Cut` à l'écran, `Deprecated_Cut` dans les données. Les deux ne
+se confondent jamais, et c'est la seule raison pour laquelle il y a deux formes.
+
+Cette convention vaut quasiment partout dans le projet : Unreal, le code, les fichiers, ce document.
+
+### I-02 · Tous les assets du jeu vivent dans `/Game/ZenRayShards`
+
+**Règle posée par Matthieu le 2026-08-22, dans ses mots :**
+
+> Tous les assets nécessaires au lancement du jeu, sans exception, doivent être présents (donc
+> déplacés) dans le dossier `/Game/ZenRayShards`, sans exceptions : personnages / models / textures /
+> environnements / blueprint / code C++ (enfin les acteurs), bref tout.
+
+**L'écart, mesuré le 2026-08-22 et non estimé.** Sur **3 370 assets**, **2** étaient dans
+`/Game/ZenRayShards`, le niveau `L_Level1` et son HLOD. Migration en cours, avancement en §7.6.
+
+**Comment on déplace, et pourquoi jamais autrement.** Un déplacement passe par `AssetTools.move`,
+éditeur OUVERT, jamais par le Finder : le moteur doit poser un redirecteur à l'ancien chemin, sinon
+toutes les références se cassent en silence. Deux dossiers ne bougent JAMAIS, `__ExternalActors__` et
+`__ExternalObjects__` : ce sont les acteurs externalisés du World Partition, dont le chemin est
+calculé par le moteur à partir de celui du niveau.
+
+**Et le neuf naît déjà là.** Tout asset créé à partir d'aujourd'hui apparaît directement dans
+`/Game/ZenRayShards/<Catégorie>`. La dette ne sert jamais d'excuse pour en fabriquer.
+
+### I-03 · Chercher un bug avant de le diagnostiquer
+
+Avant tout diagnostic, greper le SYMPTÔME dans la section `0.6 SolvedBugs` de ce fichier. Un bug
+résolu deux fois coûte le compute deux fois. Après résolution, y ajouter le bug dans la foulée, sous
+la forme symptôme, cause, correctif, contrôle. Protocole complet en §0.6.
+
+### I-04 · Mesurer, jamais estimer
+
+Un chiffre qui entre dans ce fichier a été relevé sur la machine, et il porte sa date. Ce qui est
+supposé s'écrit comme supposé. Une piste n'est jamais traitée comme un acquis.
+
+### I-05 · Ne jamais dire que la technique ne permet pas
+
+On cherche le chemin, on mesure, on dit franchement ce qui reste manuel aujourd'hui, et on le
+supprime boucle après boucle. La liste complète des interdits du projet vit en §17.
+
+### I-06 · L'instruction est minimale, la boucle est finie
+
+Une réponse se consomme en quinze minutes et se termine sur un statut fini, jamais sur « à suivre ».
+Détail en §5.
+
+### I-09 · Toujours autonome, ne jamais lui demander un clic
+
+**Règle posée par Matthieu le 2026-08-22, dans ses mots :**
+
+> Sois toujours autonome : ne me demande jamais de faire de clic si tu as potentiellement une
+> solution, agis. Seulement en dernier recours.
+
+Et sa formule de fond, déjà écrite dans le `~/.claude/CLAUDE.md` global :
+
+> I'm the most lazy guy in the world, never ask something you could do by yourself.
+
+**Ce que cela m'interdit.** Rendre un diagnostic assorti d'une marche à suivre en trois clics quand
+un chemin programmatique existe. Le 22 août, j'ai proposé « ouvre l'AnimBlueprint et supprime le
+graphe en double » : c'était un aveu d'abandon déguisé en conseil. La bonne réponse était de chercher
+l'autre voie, et il y en avait une.
+
+**Ce que « dernier recours » veut dire, concrètement.** J'ai le droit de lui rendre la main quand
+j'ai VRAIMENT épuisé les voies : l'API ne l'expose pas, le script échoue, le fichier est verrouillé.
+Et dans ce cas je dis ce que j'ai essayé et pourquoi ça a échoué, jamais seulement ce qu'il lui reste
+à faire.
+
+**Le corollaire sur les plantages.** Si l'éditeur tombe, je le relance moi-même 
+`Scripts/unreal_guard.py ensure`, et je reprends la tâche là où elle s'était arrêtée. Il ne
+relance rien à ma place.
+
+### I-07 · Ne jamais changer son style
+
+**Règle posée par Matthieu le 2026-08-22, dans ses mots :**
+
+> Quand je te demande d'écrire quelque chose, ne change jamais mon style, corrige uniquement la
+> grammaire, et sois proactif.
+
+Ce qu'on corrige : l'accord, la conjugaison, la ponctuation, les scories de dictée. Ce qu'on ne
+touche pas : le vocabulaire, l'ordre des idées, le rythme, les tournures, les répétitions qui sont
+les siennes. **Reformuler « plus proprement » est une faute**, pas une amélioration : le texte cesse
+alors d'être le sien, et c'est précisément ce qu'on voulait garder.
+
+Quand une règle vient de lui, elle s'écrit en CITATION, à ses mots, et le commentaire vient
+seulement après, jamais à la place.
+
+**Et « sois proactif » fait partie de la règle.** Une instruction qui dit « donc déplacer » demande
+un déplacement, pas une note expliquant qu'un déplacement serait risqué. On note ET on fait.
+### I-08 · Tout code du jeu est un HDA, et tout réglage visuel sort en curseur
+
+**La loi générale vit dans `~/.claude/CLAUDE.md` et fait foi.** Elle est reprise ici parce qu'un jeu
+la viole plus vite que n'importe quoi d'autre : une valeur de vitesse écrite en dur dans un Blueprint
+se retrouve copiée dans quinze autres avant la fin de la semaine, et il n'y a plus d'endroit où la
+changer.
+
+**Ce qu'est un HDA, en une phrase.** Une définition unique, sans aucune valeur littérale dedans, dont
+tous les paramètres sont exposés sur un panneau, et qu'on POSE autant de fois qu'on veut. Corriger la
+définition met à jour toutes les instances du même coup.
+
+**La transposition dans Unreal, terme pour terme :**
+
+| Houdini | Ici, dans ZenRayShards |
+|---|---|
+| La définition du HDA | Une classe `UObject`, un Blueprint parent, un `AnimBlueprint` |
+| L'interface de paramètres | `UPROPERTY(EditAnywhere)`, un `UDataAsset`, une `UDataTable`, une `UCurveTable` |
+| L'instance posée | Un acteur placé dans le niveau, un Blueprint enfant |
+| Le cook | Le moment où le Blueprint s'instancie au jeu |
+
+**Les trois étages, jamais mélangés.** Les jetons globaux (gravité, palette, seuils) valent pour tout
+le jeu. Les paramètres de famille valent pour toutes les instances d'un type, la vitesse par défaut
+d'un ennemi. Les surcharges d'instance ne valent que pour un cas précis, et l'emportent sans jamais
+modifier leur famille. La cascade va de l'instance vers la famille vers les jetons, comme en CSS.
+
+**Le seuil, qui évite de sur-construire.** On paramètre ce qui varie DÉJÀ, jamais ce qui pourrait
+varier un jour. À la première occurrence, on écrit la valeur en clair. **Dès la deuxième**, elle
+devient un gabarit et deux jeux de paramètres. Une interface de paramètres bâtie pour un besoin
+imaginaire est un défaut de production au même titre qu'une valeur en dur.
+
+**Le test qui valide, à passer avant de considérer une chose finie.** Changer un comportement doit se
+faire à UN seul endroit, se propager partout où cette valeur a du sens, et nulle part ailleurs. Il
+échoue de deux façons symétriques : si teindre vingt ennemis demande vingt modifications, la
+décomposition est ratée ; si changer la couleur d'un seul force à toucher les dix-neuf autres, le
+paramètre est rangé au mauvais étage.
+
+**Et le corollaire de design : tout ce qui se juge à l'œil sort en CURSEUR.** Vitesse de déplacement,
+distance de caméra, durée d'un fondu, intensité d'un écran-secoué, portée d'une attaque, courbe
+d'accélération. Deviner un nombre coûte trois à cinq allers-retours ; un curseur coûte dix secondes
+et rend SA valeur, pas mon approximation. Dans Unreal, le curseur existe déjà : c'est une
+`UPROPERTY(EditAnywhere, meta=(ClampMin, ClampMax, UIMin, UIMax))`, réglable en jeu. Le skill
+`design-sliders` porte la version web du même principe et reste la bonne porte pour une page HTML.
+
+**LE CURSEUR N'EST PAS QU'UN `UPROPERTY`, c'est parfois une VRAIE UI, et c'est la précision que
+Matthieu ajoute le 22 août.** Trois formes, de la moins chère à la plus chère, et on prend toujours
+la moins chère qui suffit :
+
+| Forme | Quand | Ce que ça coûte |
+|---|---|---|
+| `UPROPERTY(EditAnywhere, meta=(ClampMin, UIMin, UIMax))` | Le réglage se juge à l'arrêt, dans le Details panel | Une ligne |
+| Un **panneau d'éditeur Unreal** (Editor Utility Widget) | Plusieurs réglages liés, qu'on veut voir ensemble et rejouer | Un widget, pas de C++ |
+| Une **petite UI EN JEU** | Le réglage ne se juge QU'EN MOUVEMENT : vitesse, caméra, poids d'une frappe, écran-secoué | Un UMG de debug |
+
+**La troisième est celle qu'on oublie, et c'est la plus rentable ici.** Une distance de caméra ou une
+courbe d'accélération ne se jugent pas dans un panneau à l'arrêt : il faut jouer pendant qu'on tourne
+le bouton. Un petit UMG de debug, affiché par une touche et jamais empaqueté dans la version finale,
+rend la valeur JUSTE en dix secondes là où deviner coûte cinq allers-retours. C'est exactement la loi
+des curseurs du CLAUDE.md global, transposée au jeu : le panneau est un outil d'atelier, il ne part
+pas en production, et les valeurs trouvées migrent ensuite dans le `UDataAsset` qui les attend.
+
+**Ce que cela m'interdit, concrètement.** Écrire une valeur en dur dans un Blueprint qui en a déjà
+une ailleurs. Dupliquer un Blueprint pour en changer un nombre. Livrer un réglage sans son curseur
+quand Matthieu devra le juger à l'œil. Et laisser un paramètre non résolu passer en silence : il doit
+lever une erreur qui le NOMME, jamais produire un résultat partiel.
+---
+
+## 0.5 GameDesignBoard, le tableau des idées
+
+**C'est un Trello qui ne dit pas son nom, écrit dans le fichier plutôt que dans une app.** Toute
+idée de jeu entre ici, porte un identifiant stable, et se déplace d'une colonne à l'autre au fil du
+développement. Matthieu dit « GD-04 en Prototype » ou « GD-07 en Discarded », et la ligne bouge.
+
+**`Discarded` ne veut jamais dire supprimé.** Une idée écartée y descend et y reste lisible : elle a
+été vraie un jour, et le jeu de dans six mois pourrait la vouloir. Seul `Deprecated_Cut` signale une
+idée qu'une décision postérieure a coupée pour de bon, et même là on garde la ligne avec sa raison.
+Rien ne disparaît de ce fichier, jamais.
+
+### Statuts
+
+| Statut | Ce que ça veut dire |
+|---|---|
+| `ToSort` | Déposée, pas encore arbitrée. Tout arrive ici. |
+| `Prototype` | Validée pour être prototypée dans Unreal, ET destinée à finir dans le jeu. |
+| `Exercise` | On la construit pour APPRENDRE le moteur. Elle n'ira pas dans le jeu, et c'est voulu. |
+| `Discarded` | Écartée pour l'instant, gardée INTACTE. Peut remonter à tout moment. |
+| `Deprecated_Cut` | Coupée pour de bon par une décision postérieure, avec sa raison écrite. |
+
+### Board
+
+| ID | L'idée, en une ligne | Statut | D'où elle vient |
+|---|---|---|---|
+| GD-01 | **La double boucle**, faire grandir un village par deux boucles de gameplay qui s'alimentent | `ToSort` | 3 août, repris le 17 |
+| GD-02 | **Zelda open world**, la structure de monde ouvert comme squelette | `ToSort` | 22 août |
+| GD-03 | **Construction de maisons**, bâtir, avec loot et recettes de cuisine | `ToSort` | 17 août |
+| GD-04 | **Le squelette FFVII Remake**, reprendre son UX, son interface et sa caméra, pas son combat | `ToSort` | 16 août |
+| GD-05 | **Un gars qui vise une tourelle et qui tire**, la plus petite tranche jouable qui existe | `Exercise` | 17 août |
+| GD-06 | **Le combat comme socle**, tous les jeux PlayStation y passent | `ToSort` | 17 août |
+| GD-07 | **Ne pas tuer tout le monde**, l'espace que Sony laisse vide | `ToSort` | 17 août |
+| GD-08 | **Rester simple, presque littéraire**, ne jamais laisser l'objet devenir trop complexe | `ToSort` | 16 août |
+| GD-09 | **Les thèmes viennent de ma vie**, qu'est-ce que je veux raconter, et pourquoi | `ToSort` | 16 août |
+| GD-10 | **Amael**, nom du personnage, blond, dans la veine de Daemon Targaryen | `ToSort` | 3 août, réf. ajoutée le 21 |
+| GD-11 | **ZenRayKingdom** et le document **Key Of Time**, matière à intégrer | `ToSort` | 17 août |
+| GD-12 | **Bretagne + Chine + Japon**, mélange culturel, pas sûr que tout fusionner soit bon | `ToSort` | 17 août |
+| GD-13 | **Le level design Ghost of Tsushima** repris de mes concept arts, dont je me souviens entièrement | `ToSort` | 17 août |
+| GD-14 | **Positionnement AAA Sony-like**, le créneau où il n'y a pas de concurrence | `ToSort` | 17 août |
+| GD-15 | **Vendable à des Japonais**, un produit fini et itérable qu'on voudrait acheter tout de suite | `ToSort` | 17 août |
+| GD-16 | **Les transitions caméra-animation en plein combat**, la signature Square Enix, à intégrer absolument | `ToSort` | 22 août |
+
+---
+
+### ToSort
+
+Tout ce qui n'a pas encore été arbitré. Le détail complet de chaque piste vit en §10, ce tableau ne
+fait que la nommer et la situer.
+
+**GD-01 · La double boucle.** Un jeu où l'on fait grandir un village par deux boucles de gameplay
+qui s'alimentent l'une l'autre. C'est la plus ancienne idée du carnet et la seule qui décrive un
+SYSTÈME plutôt qu'une ambiance.
+
+**GD-02 · Zelda open world.** La structure de monde ouvert comme squelette. Se combine naturellement
+avec GD-01 et GD-03 : c'est le trio « double boucle Zelda et construire des maisons » du 17 août.
+
+**GD-03 · Construction de maisons, loot, recettes.** Le versant construction de la double boucle.
+
+**GD-04 · Le squelette FFVII Remake.** Ce qui rend ce jeu extrêmement fluide n'est pas son système de
+combat, c'est son UX, son interface et sa caméra. Reprendre ce squelette plutôt qu'inventer une
+architecture.
+
+**GD-05 · Un gars qui vise une tourelle et qui tire.** Ce n'est pas un pitch, c'est une UNITÉ DE
+TRAVAIL, la plus petite chose jouable qui traverse entrée, animation, caméra et retour. Elle est de
+loin la moins chère à prototyper, et la seule qui puisse être finie dans la journée.
+
+**GD-06 · Le combat comme socle assumé.** Tous les jeux PlayStation passent par du combat.
+
+**GD-07 · Ne pas tuer tout le monde.** L'espace de game design que Sony laisse libre. Se lit avec
+GD-06 : le combat comme socle, mais pas comme finalité.
+
+**GD-08 · Rester simple, presque littéraire.** Un système complexe qui marche descend toujours d'un
+système simple qui marchait.
+
+**GD-09 · Les thèmes viennent de ma vie.**
+
+**GD-10 · Amael.** Nom du personnage, apparu le 3 août. Référence visuelle du 21 août : blond, dans
+la veine de Daemon Targaryen. Matthieu a explicitement dit de ne rien acter, la ligne est une trace,
+pas une décision.
+
+**GD-11 · ZenRayKingdom et Key Of Time.** Matière déjà écrite, à relire avant d'arbitrer.
+
+**GD-12 · Bretagne + Chine + Japon.** Ses mots : « je ne suis pas sûr que tout merge soit la
+meilleure idée, mais je pense qu'il y a de bonnes idées dans ça ».
+
+**GD-13 · Le level design Ghost of Tsushima.** Séquencer et rendre cohérent sans que ce soit bancal,
+quitte à ne garder que la meilleure idée ou à recommencer.
+
+**GD-14 · Positionnement AAA Sony-like.** Il n'y a aucune concurrence pour les jeux Sony, puisque ce
+sont des jeux que tout le monde achète.
+
+**GD-15 · Vendable à des Japonais.** Qu'est-ce que je pourrais vendre comme produit fini et itérable,
+que quelqu'un voudrait acheter immédiatement.
+
+**TÂCHE HORS BOARD, notée le 22 août : écrire l'article.** Le pipeline `WF-01` doit devenir un
+article publié sur `matthieuhuguet.com`, et à terme un plugin vendable. Ses mots : « ce genre de
+workflow, ça vaut une mine d'or, on pourra le revendre dans un plugin à au moins 100 dollars, ou dans
+des articles payants ». Le README du dépôt `ZenRayMarkerlessMac` en est le brouillon ; l'article s'en
+déduira. Matthieu s'en occupe plus tard, la tâche est ici pour ne pas se perdre.
+
+**GD-16 · Les transitions caméra-animation en plein combat.** Ses mots du 22 août : « pendant qu'il y
+a le combat, il y a des transitions d'animation par rapport à la caméra sur d'autres animations qui
+se passent. Et ça, c'est un effet super stylé que je veux absolument intégrer dans mon jeu. »
+
+Où il l'a vu : **God of War**, et surtout le dernier trailer de **God of War: Laufey**. **Final
+Fantasy VII Remake**, où c'est le plus net. **Kingdom Hearts** aussi. Sa lecture : c'est à la base une
+signature des studios comme **Square Enix**.
+
+Ce que c'est, en clair : le combat ne s'arrête jamais pour montrer une cinématique, mais la caméra
+bascule et l'animation enchaîne sur une autre, si bien qu'un moment de jeu devient un moment de mise
+en scène sans qu'on ait rendu la main. C'est une idée de GAMEPLAY, pas d'habillage, elle vit dans
+l'Anim Blueprint et dans la caméra, pas dans un séquenceur.
+
+---
+
+### Exercise
+
+Ce qu'on construit pour apprendre le moteur, et qui n'entrera PAS dans le jeu. Ses mots du 22 août :
+« le mec qui va tirer sur une tourelle, c'est un excellent exercice, dans le sens de savoir qu'est-ce
+qu'il faut ajuster pour qu'il y ait vraiment le résultat sur Unreal Engine, mais par contre c'est pas
+forcément intéressant que ce soit directement dans le jeu ».
+
+**Pourquoi ce statut existe, et pourquoi `Discarded` ne suffisait pas.** Une idée en `Discarded` est
+écartée : on ne la construit pas. Un exercice, au contraire, on le construit, on y passe du temps, et
+il rapporte, il rapporte du savoir-faire moteur, pas du contenu. Les ranger ensemble aurait effacé
+la seule chose qui les sépare, et on aurait fini par ne plus oser construire ce qui n'ira pas dans le
+jeu, alors que c'est exactement ce qui apprend le plus vite.
+
+**GD-05 · Un gars qui vise une tourelle et qui tire.** Le premier exercice. Il traverse entrée,
+animation, caméra et retour, il se finit dans la journée, et il dit ce qu'il faut régler pour obtenir
+un vrai résultat dans Unreal. Il n'ira pas dans le jeu.
+
+---
+
+### Prototype
+
+*Vide pour l'instant.* Une idée n'arrive ici que sur décision explicite de Matthieu. Chaque entrée
+portera sa tranche verticale : ce qu'on construit exactement, et à quoi on voit que c'est fini.
+
+---
+
+### Discarded
+
+*Vide pour l'instant.* Les idées écartées descendent ici, INTACTES, avec la date et la raison. Elles
+restent lisibles et peuvent remonter d'une ligne.
+
+---
+
+### Deprecated_Cut
+
+**Les projets antérieurs, annulés le 17 août 2026.** Toki Pavillion, le Bayou, Noyés, la ville
+japonaise, les travaux du CNAM, l'ancien projet FFVII. **Raison :** aucun ne résout un problème de
+design, et un asset qui ne répond à aucune question de design n'a pas de destinataire. Ils restent
+une réserve d'idées, ils ne redeviennent pas des chantiers. Voir §14.4.
+
+---
+
+## 0.6 SolvedBugs, ne jamais payer deux fois le même compute
+
+**LE RÉFLEXE, AVANT DE CHERCHER QUOI QUE CE SOIT.** Un bug déjà résolu qu'on résout une seconde fois
+coûte le compute deux fois, et il coûte surtout la confiance : on croit découvrir, on ne fait que
+répéter. Donc, **avant de diagnostiquer**, on cherche ici :
+
+```zsh
+rg -n -i '<deux ou trois mots du symptôme>' /Users/zenray/Create/Build/Memory/ZenRayShards/ZenRayShards1.md
+```
+
+**Et après avoir résolu**, on ajoute une ligne ici, dans la foulée, jamais « plus tard ». La forme est
+toujours la même et elle n'est pas décorative : **symptôme tel qu'il se présente** (c'est par lui
+qu'on cherchera), **cause réelle**, **correctif**, **contrôle qui le prouve**. Un bug écrit sans son
+symptôme est introuvable ; un bug écrit sans son contrôle n'est pas résolu, il est supposé résolu.
+
+---
+
+### BUG-01 · Aucun outil Unreal dans la session
+
+**Symptôme.** `ToolSearch` ne trouve aucun outil `unreal`, alors que l'éditeur tourne.
+**Cause.** `.mcp.json` est *project-scoped* : une session rootée ailleurs (sur `Memory`) ne le lit pas.
+Même piège que les skills project-scoped.
+**Correctif.** `Scripts/mcp.py`, client JSON-RPC qui parle au serveur en direct, depuis n'importe où.
+**Contrôle.** `python3 Scripts/mcp.py ping` rend VERT et un code de sortie 0.
+
+### BUG-02 · `describe_toolset` brûle le budget
+
+**Symptôme.** Lister les outils d'un toolset rend plus de trente mille caractères.
+**Cause.** L'outil rend le schéma COMPLET de chaque outil, pas seulement les noms.
+**Correctif.** `mcp.py tools <toolset>` (noms + arguments requis) et `toolschema <toolset> <outil>`
+pour le détail d'un seul.
+**Contrôle.** La sortie tient en vingt lignes.
+
+### BUG-03 · Les propriétés d'un Blueprint sont illisibles
+
+**Symptôme.** `get_properties` sur `/Game/…/GM_Sandbox.GM_Sandbox_C` rend « the following properties
+could not be read ».
+**Cause.** On lit la CLASSE générée, qui ne porte pas les valeurs.
+**Correctif.** Lire l'objet par défaut : `…/GM_Sandbox.Default__GM_Sandbox_C`.
+**Contrôle.** `DefaultPawnClass` remonte avec son `refPath`.
+
+### BUG-04 · Un WorldSettings ne se sauve pas
+
+**Symptôme.** `save_actor` répond « is not an external actor asset and cannot be saved individually ».
+**Cause.** Le WorldSettings n'est pas un acteur externalisé ; il appartient au niveau.
+**Correctif.** `AssetTools.save_assets` sur le chemin du NIVEAU.
+**Contrôle.** `is_dirty` sur le niveau retombe de `true` à `false`. Seul contrôle qui prouve que
+l'écriture a atteint le disque.
+
+### BUG-05 · « CrashReportClientEditor quit unexpectedly »
+
+**Symptôme.** Une fenêtre macOS annonce un plantage après une action dans l'éditeur.
+**Cause.** Ce N'EST PAS un plantage de l'éditeur. Un ENSURE (assertion non fatale) déclenche, le
+moteur lance son processus rapporteur, et c'est LE RAPPORTEUR qui meurt. L'éditeur, lui, garde son
+PID et continue de répondre.
+**Correctif.** `[CrashReportClient] Ensure.RecordDump=false` dans `Config/DefaultEngine.ini`. Un
+plantage FATAL reste rapporté.
+**Contrôle.** `pgrep` montre le même PID avant et après ; `mcp.py ping` répond toujours.
+
+### BUG-06 · « Missing Project Settings » sur les MetaHumans
+
+**Symptôme.** Unreal réclame `r.GPUSkin.Support16BitBoneIndex`, `r.GPUSkin.UnlimitedBoneInfluences`
+et `SkeletalMesh.UseExperimentalChunking`, alors qu'ils sont déjà dans le `.ini`.
+**Cause.** Ils y sont, sous la bonne section, mais la session avait démarré avant. `SearchCVars` les
+mesure à `0` en vif, et l'aide de l'un dit « Cannot be changed at runtime ».
+**Correctif.** Redémarrer l'éditeur. Rien d'autre.
+**Contrôle.** `SearchCVars` rend `1` après redémarrage.
+
+### BUG-07 · Treize Blueprints refusent de compiler
+
+**Symptôme.** « Blueprint Asset Compilation Errors » à chaque Jouer, toute la pile du personnage
+dedans.
+**Cause.** Le contenu du Game Animation Sample avait été copié dans le projet SANS aucun de ses
+plugins. Six plugins déclarés, tous d'outillage.
+**Correctif.** 18 plugins ajoutés au `.uproject`, chacun déduit d'un symbole manquant lu dans le
+journal puis localisé par `grep` dans les sources du moteur. Détail complet et table
+symbole → plugin en §7.5.
+**Contrôle.** 13 assets en erreur → 1 ; zéro plainte « requires the … plugin » ; PIE démarre et le
+pion apparaît.
+
+### BUG-08 · Le `.uproject` se réécrit tout seul
+
+**Symptôme.** Une modification du `.uproject` disparaît sans message.
+**Cause.** L'éditeur réécrit ce fichier depuis sa liste en mémoire tant qu'il tourne. Déjà payé le
+7 août 2026, re-payé le 22.
+**Correctif.** Fermer l'éditeur AVANT d'écrire : `osascript -e 'tell application "UnrealEditor" to
+quit'`, jamais `kill`. Attendre, puis vérifier.
+**Contrôle.** `pgrep -f UnrealEditor.app/Contents/MacOS/UnrealEditor` ne rend plus rien. Et avant de
+fermer, `is_dirty` sur le niveau et les assets ouverts, pour ne rien perdre.
+
+### BUG-09 · `CaptureViewport` refuse ses propres paramètres
+
+**Symptôme.** « input param "captureTransform" needs a default value », puis la même sur
+« annotations ».
+**Cause.** Les deux sont OBLIGATOIRES malgré leur air facultatif.
+**Correctif.** `{"captureTransform":{},"annotations":[]}`.
+**Contrôle.** Un PNG en base64 revient.
+
+### BUG-10 · La réponse de `CaptureEditorImage` n'a pas la même forme
+
+**Symptôme.** Le décodage qui marche pour `CaptureViewport` échoue ici.
+**Cause.** `CaptureViewport` rend `returnValue.image.data`, `CaptureEditorImage` rend
+`returnValue.data`, sans l'enveloppe `image`.
+**Correctif.** Décoder selon l'outil appelé.
+**Contrôle.** Le fichier PNG écrit s'ouvre et se regarde.
+
+### BUG-11 · `GetLogEntries` ne trouve pas sa propre catégorie
+
+**Symptôme.** « Log category 'LogsToolset' not found. »
+**Cause.** Le paramètre `category` a pour valeur par défaut `LogsToolset`, qui n'existe pas.
+**Correctif.** Passer `category` explicitement : `""` pour tout le journal, `"LogBlueprint"` pour les
+erreurs de compilation.
+**Contrôle.** Des entrées reviennent.
+
+### BUG-12 · `FocusOnActors` pendant le jeu
+
+**Symptôme.** « FocusOnActors is not supported during PIE. »
+**Cause.** Le cadrage de caméra appartient à l'éditeur, pas à la session de jeu.
+**Correctif.** Cadrer AVANT `StartPIE`. Et savoir que `CaptureViewport` capture la vue de l'ÉDITEUR,
+pas celle du jeu, même pendant PIE.
+**Contrôle.** La capture montre bien ce qu'on visait.
+
+### BUG-13 · L'éditeur ouvre un niveau vide au démarrage
+
+**Symptôme.** À chaque lancement, l'éditeur ouvre `/Temp/Untitled_1` et il faut recliquer sur
+`L_Level1` à la main.
+**Cause.** Deux clés, et les DEUX manquaient à leur façon dans `Config/DefaultEngine.ini`, section
+`[/Script/EngineSettings.GameMapsSettings]`. `EditorStartupMap` n'existait pas du tout, d'où le
+niveau vide. `GameDefaultMap` pointait sur `/Engine/Maps/Templates/OpenWorld`, le gabarit du moteur :
+un build empaqueté n'aurait donc jamais montré ZenRayShards non plus.
+**Correctif.** Les deux pointent sur `/Game/ZenRayShards/Levels/L_Level1.L_Level1`. Le nom est écrit
+DEUX FOIS, c'est la forme longue paquet + objet qu'attend le moteur pour une carte ; la forme courte
+échouerait en silence.
+**Contrôle.** Relancer et lire `get_current_level` SANS avoir chargé quoi que ce soit : il rend
+`/Game/ZenRayShards/Levels/L_Level1`. Vérifié aussi que la clé survit au démarrage, l'éditeur ne
+l'ayant pas réécrite.
+**À savoir.** Écrit éditeur FERMÉ, par la leçon de BUG-08. Sauvegarde :
+`Config/DefaultEngine.ini.bak-20260822-avant-startupmap`.
+
+### BUG-14 · « Missing Modules » sur le plugin de markerless motion capture
+
+**Symptôme.** Après activation de `MetaHumanBodyTracker`, l'éditeur affiche « The following modules
+are missing or built with a different engine version : MetaHumanBodyTracker, BodyTracker,
+Segmentation, MetaHumanBodyOptimizer. Engine modules cannot be compiled at runtime. Please build
+through your IDE. »
+
+**Ce que ce n'était PAS, et qu'il fallait écarter d'abord.** Pas du Windows-only, contrairement à ce
+qu'on lit partout : le `.uplugin` ne déclare AUCUN `PlatformAllowList`, aucun `Build.cs` ne restreint
+la plateforme, et `Binaries/Mac` contenait déjà quatre dylibs universelles arm64 + x86_64.
+
+**La cause, mesurée.** Un `BuildId` périmé. Le manifeste du plugin annonçait `54595663`, le moteur
+installé attend `55116800`. Le plugin avait été compilé pour une version antérieure de 5.8, et
+l'éditeur refuse tout module dont le `BuildId` ne correspond pas.
+
+**Pourquoi on ne pouvait pas simplement le recompiler sur place.** Ce moteur est un *Installed Build*
+(`Engine/Build/InstalledBuild.txt` présent) : un plugin situé dans `Engine/Plugins/` n'y est PAS
+recompilable. C'est la contrainte entière du problème.
+
+**Le correctif, et c'est la voie supportée par Epic.** Déplacer le plugin de
+`Engine/Plugins/Marketplace/MetaHumanBodyTracker_5.8` vers `<Projet>/Plugins/MetaHumanBodyTracker`,
+purger ses `Binaries` et `Intermediate` périmés, puis compiler la cible du projet :
+
+```zsh
+Engine/Build/BatchFiles/Mac/Build.sh ZenRayShardsEditor Mac Development \
+  -project="…/ZenRayShards.uproject" -waitmutex
+```
+
+**Un plugin de PROJET se recompile contre un moteur installé ; un plugin de MOTEUR, non.** Toute la
+différence est là.
+
+**Contrôle.** `Result: Succeeded` en 63 s, 103 unités compilées. Le `BuildId` du plugin passe à
+`55116800` et correspond à celui du moteur. Après relance, le journal montre les quatre modules
+chargés depuis `.../ZenRayShards/Plugins/…`, zéro plainte « missing modules », et **zéro asset en
+erreur de compilation**, les AnimGraph en double compris, la recompilation les ayant reconstruits.
+
+**Prérequis relevés sur cette machine.** Xcode 26.6, `xcode-select` sur `/Applications/Xcode.app`,
+`UnrealBuildTool` présent. Dépendances du plugin (`MetaHuman`, `MetaHumanCoreTech`, `IKRig`) toutes
+livrées avec le moteur, donc rien d'autre à déplacer.
+
+### BUG-15 · Écrire `visualizationObject` par script fait planter l'éditeur
+
+**Symptôme.** `set_properties` sur `visualizationObject` d'un `MetaHumanPerformance` tue l'éditeur :
+`Assertion failed: false [MetaHumanPerformanceEditorToolkit.cpp] [Line: 480]`.
+**Cause, double.** D'une part le TYPE : la propriété est un `TObjectPtr<UObject>` filtré par
+`ShouldFilterVisualizationObject`, et le commentaire de `MetaHumanPerformance.h:579` précise qu'elle
+attend un **SkeletalMesh**. Je lui avais passé `BP_Kellan_C`, une CLASSE de Blueprint. D'autre part
+le MOMENT : c'est le *toolkit d'édition* qui plante, donc la fenêtre de l'asset ouverte réagissant au
+changement, pas les données.
+**Correctif.** Ne pas écrire cette propriété par script tant que la fenêtre de l'asset est ouverte.
+Le menu déroulant de l'interface est la voie sûre : son filtre ne propose que des objets valides.
+**Contrôle, et c'est la bonne nouvelle.** L'animation calculée n'a rien perdu : le `.uasset` est
+resté à `9 679 335` octets, horodaté `22:22:29`, identique avant et après le plantage.
+**Ce que ça enseigne au-delà du cas.** Une donnée SAUVEGARDÉE survit à un plantage de l'éditeur. Le
+réflexe à garder est donc de sauvegarder dès qu'un calcul long se termine, avant toute manipulation.
+
+**CORRECTION DU 2026-08-22 23:06, la vraie cause, lue dans le code d'Epic.** Le diagnostic ci-dessus
+était à moitié faux et le corollaire « ne pas écrire par script » était carrément faux : l'écriture
+par script marche, à condition de passer le bon objet. `UpdateVisualizationObject` du toolkit
+n'accepte que deux formes, et son `else` final est un `check(false)`, c'est-à-dire un plantage
+délibéré :
+
+```
+if (InVisualizeObject->IsA(USkeletalMesh::StaticClass()))       -> composant SkeletalMesh
+else if (InVisualizeObject->IsA(UBlueprint::StaticClass()))     -> ChildActor + retarget (bodyTracking)
+else                                                            -> check(false)   // planté
+```
+
+Je lui avais passé `BP_Kellan_C`, la CLASSE générée, qui n'est ni l'un ni l'autre, donc l'assert. En
+passant l'**asset Blueprint** `BP_Kellan.BP_Kellan`, l'écriture passe sans un hoquet, fenêtre de
+l'asset ouverte comprise, vérifié le 2026-08-22 à 23:06.
+
+**Le piège qui suit, et qui explique pourquoi le menu déroulant paraît vide.**
+`ShouldFilterVisualizationObject` n'affiche un Blueprint que s'il dérive directement d'`Actor` ET
+qu'il dépend en dur de `/Script/MetaHumanSDKRuntime`. `BP_Kellan` ne dépend que de
+`ClothingSystemRuntimeNv`, `HairStrandsCore`, `LiveLinkAnimationCore` et `LiveLinkInterface`, donc
+l'interface ne le propose jamais, alors que le toolkit l'accepte parfaitement. C'est un MetaHuman
+d'avant le SDK. **Le script contourne un filtre d'affichage, pas une contrainte technique.**
+
+**Contrôle.** `get_properties` rend
+`{"visualizationObject":{"refPath":"/Game/MetaHumans/Kellan/BP_Kellan.BP_Kellan"}}`, la vignette du
+personnage s'affiche dans le panneau Details, et l'éditeur répond toujours au MCP.
+
+---
+
+### BUG-16 · Le displacement Nanite ne se voit pas, la silhouette reste droite
+
+**Symptôme.** Matériau avec tessellation activée, mesh Nanite, magnitude poussée à 60 cm : le bord du
+cube reste parfaitement droit, seule la normale donne du relief.
+**Cause.** Deux, et il faut réparer les DEUX. La height n'est pas branchée sur Displacement : le Python
+d'UE 5.8 cache `MP_Displacement` (cast par entier ou par nom refusé, `MaterialTools.connect_to_output`
+du MCP passe par le même enum et rend `null`, l'entrée éditeur est protégée). Et le mesh est trop
+pauvre : `/Engine/BasicShapes/Cube` n'a que 12 triangles, la tessellation Nanite ne les découpe jamais
+assez finement pour dessiner des tuiles.
+**Correctif.** `MakeMaterialAttributes`, broche `Displacement`, `use_material_attributes = True`, puis
+`MP_MATERIAL_ATTRIBUTES` (marche sous Substrate). Maillages denses fabriqués dans Houdini (cube 2 m à
+96 divisions, plan 4 m à 192) par `Productions/ZenRayShards/Scripts/BuildLookDevDenseMeshes.py`,
+importés avec `build_nanite`. Recette complète : `Scripts/LookDevRoofTilesV2Unreal.py`. Piège annexe :
+`MaterialProperty.__new__` rend Emissive et branche la height sur l'émissif sans erreur.
+**Contrôle.** Capture par `AutomationLibrary.take_high_res_screenshot` depuis `LD_ShotCam` : le bord
+du cube suit les tuiles à 8 cm (`lookdev_unreal_disp_8cm_cam.png`). `HighResShot` seul peut capturer
+l'aperçu d'un éditeur d'asset au lieu du niveau.
+
+### BUG-17 · Supprimer un asset encore utilisé corrompt son paquet et fige l'éditeur (1 October 2026)
+
+**Symptôme.** Une boîte « Overwrite Existing Object » (`M_CeramicAd`) bloque l'éditeur, puis « Ensure condition failed : Failed to unload all packages during ForceDeleteObjects, these packages are likely corrupt », et le fichier `.uasset` disparaît du disque.
+**Cause.** Un script « idempotent » faisait `EditorAssetLibrary.delete_asset` puis `create_asset` sur un matériau encore parent de trois instances et affecté à des acteurs du niveau : le moteur ne peut pas le décharger.
+**Correctif.** Ne jamais supprimer un asset utilisé : reconstruire EN PLACE (`MaterialEditingLibrary.delete_all_material_expressions`, vider les liaisons et pistes d'une séquence, `load_asset` puis modifier). En cas de paquet déjà corrompu : fermer l'éditeur, supprimer le `.uasset` sur le disque, relancer par `unreal_guard.py ensure`, reconstruire.
+**Contrôle.** `python3 Scripts/BuildUnrealAd.py --no-export` repasse trois fois de suite sans aucune boîte de dialogue; `unreal/ue_audit.py` rend 19 assets sans référence externe ni paquet modifié.
+
+### BUG-18 · `unreal.Color(r, g, b, a)` reçoit ses arguments dans l'ordre B, G, R, A (1 October 2026)
+
+**Symptôme.** Une lumière teintée (0,82 / 1,0 / 0,88 en linéaire) a son rouge et son bleu échangés : la lecture de `light_color` rend `{b: 241, g: 255, r: 234}` pour une consigne rouge 234, bleu 241 donnée en position.
+**Cause.** Le constructeur positionnel de `FColor` suit l'ordre mémoire BGRA.
+**Correctif.** Toujours des arguments nommés : `unreal.Color(r=..., g=..., b=..., a=255)`. Et la teinte linéaire se convertit en sRGB avant l'octet (`1,055 x t^(1/2,4) - 0,055`).
+**Contrôle.** Relire `light_color` de chaque lumière (`unreal/ue_probe_lights.py`).
+
+### BUG-19 · Le Clear Coat d'Unreal teinte la couche de base selon l'angle de la lumière (1 October 2026)
+
+**Symptôme.** Sur une sphère de céramique verte, la clé à 50 degrés d'élévation donne un vert olive correct, mais le remplissage et les contre-jours rasants la rendent turquoise (rapport rouge sur vert de 0,45 à 0,65 contre 0,87 attendu).
+**Cause.** Le modèle Clear Coat, converti par Substrate, filtre la couche de base par le trajet dans le vernis : plus la lumière est rasante, plus la teinte se sature.
+**Correctif.** Matériau Default Lit, le vernis porté par le Specular (0,5 + 0,5 x carte de reflets x poids du vernis).
+**Contrôle.** `Scripts/CompareUeHou.py` : rapport rouge / vert de la sphère remonté de 0,66 à 0,68 puis aligné sur Houdini; rendu par rôle de lumière avec `unreal/ue_lights_mask.py`.
+
+**Correction du 1 October 2026, 19:15, de l'entrée ci-dessus (mesure refaite).** La cause « le Clear Coat teinte la couche de base » n'est PAS établie : après le passage en Default Lit, le rendu par rôle de lumière donne toujours un remplissage et des contre-jours très pauvres en rouge sur la sphère verte décalée du plan 5 (rapport rouge sur vert de 0,46 et 0,66, clé 0,76, contre 0,86 à 0,92 pour chaque lumière dans Houdini). Pistes écartées par mesure : ciel (sans effet), sphères voisines et cyclorama masqués (sans effet), Nanite (sans effet), signe de la normale (sans effet sur la teinte), ordre des canaux de la couleur des lumières (corrigé, sans effet sur ce défaut), échelle des sphères (corrigée, sans effet). Le passage en Default Lit reste retenu (il a rapproché les rapports de couleur de [0,65 0,86 0,82] à [0,75 0,97 0,96]), mais la sphère du plan 5 reste plus cyan que dans Houdini (rapport rouge sur vert 0,63 contre 0,87) : défaut ouvert, T18 de la liste des tâches.
+
+### BUG-20 · Le rendu d'un éditeur redémarré montre le niveau du jeu (1 October 2026)
+
+**Symptôme.** Quarante-quatre images « finales » de la pub montrent le personnage du jeu sur son damier au lieu de la céramique.
+**Cause.** Le job du Movie Render Queue prenait le monde ouvert dans l'éditeur, et un éditeur redémarré ouvre le niveau de démarrage `L_Level1`.
+**Correctif.** `ue_render.py` charge explicitement `L_CeramicAd` et vérifie les six caméras avant de soumettre; `RunUeFinal.py` contrôle la médiane de luminance de la première image (0,01 à 0,2) et s'arrête sinon.
+**Contrôle.** `render/final_ue/LOG.txt` : « first frame ad_0001.png median luminance 0.0401 ».
+
+### BUG-21 · La profondeur de champ cinématique plante l'éditeur sur Mac au rendu (1 October 2026)
+
+**Symptôme.** L'éditeur se ferme (CrashReportClientEditor, « SIGSEGV : invalid attempt to access memory at address 0x0 ») exactement à la coupe de caméra vers le plan 3 de la pub (l'orbite à f/2.8), deux fois de suite, à l'image 240 sur 720, pendant un rendu du Movie Render Queue en 4096.
+**Cause.** Dans le rapport : `FDiaphragmDOFReduceCS` (passe « DOF(Alpha=Yes) » du post-traitement), paramètre de shader sans ressource lié, Metal, UE 5.8. Les plans à f/32 (profondeur de champ négligeable) ne plantent pas.
+**Correctif.** Console variable `r.DepthOfFieldQuality = 0` dans le job de rendu (`RunUeFinal.py`, constante `CVARS`) : le plan 3 est rendu sans flou d'arrière-plan; le rack focus de Houdini (f/2.8) est perdu. Rendre le flou autrement (composition, caméra à ouverture modérée testée à part) reste à étudier.
+**Contrôle.** Les images 241 à 262 sortent sans plantage après le correctif; `render/final_ue/LOG.txt`. Le plan 3 ne montre plus de flou de profondeur de champ.
+
+### BUG-22 · Tout le niveau rend gris (damier de près) après création d'un matériau par Python (11 October 2026)
+
+- Symptôme : toutes les instances d'un maître neuf rendent gris uniforme, les paramètres relus sont pourtant justes. (11 October 2026)
+- Cause : le maître ne compile pas. Un `TextureSampleParameter2D` en `SAMPLERTYPE_MASKS` avait pour texture par défaut `WhiteSquareTexture`, qui est sRGB ; Unreal retombe sur `WorldGridMaterial`. Avec Substrate actif, un branchement direct `MP_BASE_COLOR` ne colore pas non plus. (11 October 2026)
+- Correctif : défaut linéaire TC_MASKS pour tout échantillonneur Masks ; sorties par `MakeMaterialAttributes`. Recette : `/Users/zenray/Create/Build/Productions/ZenRayHoudini/LouisianaBayou/unreal/ue_build_assets.py`. (11 October 2026)
+- Contrôle : une image MRQ où le sol et Manny portent leur teinte (vert, orange). (11 October 2026)
+
+### StillOpen
+
+**StillOpen-01 · `SandboxCharacter_CMC_ABP`, deux tags introuvables.** Les nœuds `OffsetRoot` et
+`State Machine Blend Stack` sont référencés par tag mais absents du graphe. Même asset que l'ensure
+du début de session (« invalid SubGraph array entry at 0 ») : donnée abîmée dans l'AnimGraph, PAS un
+plugin manquant, `AnimationWarping` et `BlendStack` sont actifs et vérifiés. Le personnage se joue
+malgré tout. Deux voies non tranchées : réparer le graphe, ou basculer le pion de `GM_Sandbox` sur
+`SandboxCharacter_Mover`, la variante du même sample qui compile sans une seule erreur. C'est un
+choix de design, il revient à Matthieu.
+
+---
+
+## 0.7 WorkflowsAndPipelines, les chaînes de production, écrites pour être rejouées
+
+**Pourquoi cette section vaut de l'or, dans ses mots du 22 août :** « ce genre de workflow, ça vaut
+une mine d'or, c'est ce genre de workflow qu'on pourra revendre dans un plugin à au moins 100 dollars,
+ou dans des articles payants ». Un workflow qui marche est un actif ; un workflow dans une tête est
+une anecdote. On l'écrit donc au niveau de détail où quelqu'un d'autre peut le rejouer sans nous.
+
+**Règle d'écriture de cette section.** Chaque pipeline porte : ce qu'il produit, ses prérequis exacts,
+ses étapes numérotées avec les commandes réelles, les pièges payés avec leur message d'erreur
+littéral, et l'état de validation. Un pipeline non éprouvé de bout en bout le dit en tête.
+
+---
+
+### WF-02 · Fabriquer un take de mocap depuis YouTube, au frame près
+
+Établi le 23 août 2026. Automatisé par `Scripts/mocap_take.sh` et le skill
+`mocap-take-from-youtube`. `WF-01` part d'une vidéo déjà obtenue ; celui-ci fabrique cette vidéo,
+et c'est un travail à part entière parce que deux pièges y coûtent chacun une demi-heure.
+
+**Le dossier des sources est `ZenRayShards/MoCap/`**, renommé depuis `MoCapSources` le 23 août. Il
+vit hors de `Content/` pour qu'Unreal ne tente pas d'importer les MP4 tout seul. Un take par
+sous-dossier, nommé `<Attaque>_<hauteur>p<fps>`.
+
+```bash
+./Scripts/mocap_take.sh "https://www.youtube.com/watch?v=gihn9Lk7SxQ" 23:43 23:48 MountainBreaker 1080 30
+./Scripts/mocap_take.sh "https://www.youtube.com/watch?v=gihn9Lk7SxQ" 23:43 23:48 MountainBreaker 2160 30
+```
+
+**Le nom porte celui de l'attaque**, jamais un numéro seul, et il se lit dans les chapitres de la
+vidéo : la plage 23:42 à 24:16 de *Ghost of Yōtei Odachi Moveset* s'appelle `Mountain Breaker`.
+C'est ce nom qu'on retrouvera dans le projet Unreal dans six mois, quand `Take002` n'aura plus
+aucun sens.
+
+#### Piège 1, le 403 de YouTube, et la leçon dépasse le cas
+
+**Devant un 403, la première chose à vérifier est LA DATE DE `yt-dlp`**, avant tout diagnostic sur
+les clients, les en-têtes ou les cookies. La version installée datait du `2026.03.17`, soit cinq
+mois de retard ; après `brew upgrade yt-dlp` vers `2026.08.19`, `--download-sections` a rendu cinq
+secondes en quatre secondes, sans aucune autre modification.
+
+Ce qui a été essayé en vain avant cette mise à jour, et qui ne se rejoue pas : télécharger la source
+entière, qui coupe vers 20 Mo sur 701 ; reprendre par `--continue`, l'URL refusant toute requête
+Range à un offset non nul ; passer les en-têtes de yt-dlp à ffmpeg par `-headers` ; les clients
+`ios`, `web_safari` et `tv`, qui exigent un PO token et n'exposent aucun format ; le mode fragmenté
+`--extractor-args "youtube:formats=dashy"`, qui dépasse les 20 Mo mais saute des fragments et rend
+un fichier tronqué ; les cookies du navigateur, Chrome ouvrant une invite de trousseau macOS
+bloquante et Safari passant sans invite mais ne changeant rien au fond.
+
+**Ce que cela enseigne au-delà de YouTube.** Une défense distante change plus vite que la mémoire
+d'un modèle ou qu'un tutoriel, donc devant un refus soudain d'un service en ligne, la version de
+l'outil se vérifie AVANT le diagnostic savant. La note du 21 août sur `WF-01` attribuait ce 403 à
+l'empreinte de client de ffmpeg ; c'était l'explication de l'époque et elle est désormais périmée,
+sans être effacée.
+
+#### Piège 2, deux résolutions ne couvrent pas le même intervalle
+
+yt-dlp découpe sur les images clés, et elles ne tombent pas au même endroit d'un format à l'autre :
+**5,04 secondes en 1080p contre 7,59 en 4K pour la même demande**. Comparer ces deux fichiers
+n'aurait pas mesuré l'effet de la résolution, il aurait mesuré une différence de durée, et
+`PB-01` serait devenu inexploitable sans que rien ne le signale.
+
+La fin étant commune, le script garde les N dernières secondes de chaque brut et force `-vsync cfr`.
+**Le contrôle qui ferme le sujet** est double : le nombre d'images comptées doit être identique des
+deux côtés, et l'écart moyen entre les deux premières images doit rester proche de zéro.
+
+**Détail qui coûte une demi-heure.** `bc` rend `.043` sans zéro initial et ffmpeg refuse cette forme
+avec `Invalid argument`. Les décalages se calculent donc en `awk`, avec un `printf "%.3f"`.
+
+#### Instancier plutôt que réécrire, le script de lot
+
+`Scripts/py/mocap_batch.py` n'invente rien : il instancie la chaîne déjà éprouvée par
+`ingest_mono.py` et `mocap_full.py`. Une seule définition, une liste de jeux de valeurs en tête,
+autant d'instances que de takes. C'est la loi HDA appliquée au pipeline, et la règle du projet est
+de GREPER `Scripts/py/` avant d'écrire quoi que ce soit de neuf.
+
+Trois pièges déjà payés y sont respectés, et les réintroduire coûterait chacun une session :
+`create_asset` ne persiste rien, donc on sauvegarde avant de rendre la main ; `can_process` est une
+MÉTHODE et non une propriété ; sans éditeur, un traitement asynchrone n'avance jamais, d'où
+`set_blocking_processing(True)`.
+
+**L'éditeur doit être fermé** avant `UnrealEditor-Cmd -run=pythonscript`, sinon le verrou de projet
+bloque le lancement.
+
+```bash
+osascript -e 'tell application "UnrealEditor" to quit'
+"$UE/Engine/Binaries/Mac/UnrealEditor-Cmd" "$P/ZenRayShards.uproject" \
+  -run=pythonscript -script="$P/Scripts/py/mocap_batch.py" -unattended -nosplash
+```
+
+**Piège de vérification.** Une boucle `pgrep -f UnrealEditor` se voit elle-même dans sa propre ligne
+de commande et ne se termine jamais. Le processus `UnrealEditorServices` est un service d'arrière
+plan, il tourne en permanence et ne signale pas un éditeur ouvert.
+
+#### Les deux assets de PB-01, mesurés le 23 août
+
+| Asset | Dimensions | Images | Durée | Taille |
+|---|---|---|---|---|
+| `MountainBreaker_1080p30` | 1920x1080 | 150 | 5,00 s | 6,97 Mo |
+| `MountainBreaker_2160p30` | 3840x2160 | 150 | 5,00 s | 23,56 Mo |
+
+Écart moyen entre les deux premières images : **0,83 sur 255**, soit du bruit de compression et non
+un décalage temporel. Les deux clips sont donc rigoureusement synchrones, et l'unique variable qui
+les sépare est la résolution.
+
+**Sur le plafond de 95 Mo, la question était juste.** Tant qu'un fichier reste sous la limite de
+GitHub, aucun remux ni bornage de débit n'est nécessaire, et le script le vérifie plutôt que de le
+supposer. À CRF 14, cinq secondes de 4K pèsent 23,56 Mo, donc la marge est large.
+
+---
+
+### WF-01 · De la vidéo YouTube à l'animation Unreal, par markerless motion capture
+
+**Ce qu'il produit.** Une animation corporelle exploitable dans Unreal, à partir d'une simple vidéo
+mono-caméra, sans combinaison ni marqueur.
+
+**État au 2026-08-22 :** étapes 1 à 6 **VÉRIFIÉES** sur ce Mac. Étapes 7 et 8 non encore éprouvées.
+
+#### Prérequis
+
+| Quoi | Détail |
+|---|---|
+| Machine | macOS, Apple Silicon. Xcode 26.6, `xcode-select` sur `/Applications/Xcode.app` |
+| Moteur | Unreal Engine 5.8.1, *Installed Build* (Launcher) |
+| Outils | `yt-dlp`, `ffmpeg` (ici `/opt/homebrew/bin/ffmpeg`) |
+| Plugins | `MetaHumanBodyTracker`, `MetaHuman`, `MetaHumanCoreTech`, `LiveLinkHub`, `CaptureManagerEditor`, `IKRig` |
+
+#### Étape 1, La source de référence
+
+Chaîne à connaître : **`https://www.youtube.com/@VideoGameAnimationReferences/videos`**. Ses mots :
+« c'est une pépite à garder ». Elle recense les mouvements de jeux existants, image par image, et
+c'est exactement la matière que ce pipeline consomme.
+
+Premier essai : *Ghost of Yōtei Animations Odachi Moveset*, `https://www.youtube.com/watch?v=gihn9Lk7SxQ`,
+secondes 0 à 4. Skill à invoquer : **`ytb-dlp`**.
+
+#### Étape 2, Extraire le clip, à la qualité maximale
+
+**La règle d'arbitrage, et son ordre est fixe.** Résolution maximale d'abord. Puis on mesure. Si le
+fichier dépasse 95 Mo, on monte le CRF, donc on baisse le DÉBIT. Si le CRF ne suffit pas, on
+raccourcit la DURÉE. **La résolution ne se touche jamais** : un suivi corporel lit des articulations,
+un pixel perdu ne revient pas, un bit de débit oui.
+
+```zsh
+yt-dlp -F "<url>"                       # lister TOUS les formats, sans filtrer
+yt-dlp -f 315 -o "_src.%(ext)s" "<url>" # 315 = 3840x2160 60 fps sur cette video
+# arreter des qu'on a assez d'octets pour l'extrait voulu (4 s a 32 Mbit/s = ~16 Mo)
+ffmpeg -y -ss 0 -t 4 -i _src.webm.part -c:v libx264 -preset slow -crf 14 \
+       -pix_fmt yuv420p -r 60 -an Take001.mp4
+```
+
+**PIÈGE 1, payé.** `yt-dlp --download-sections` délègue la requête de plage à ffmpeg, qui n'a pas
+l'empreinte de client de yt-dlp : YouTube répond **403**, sur quatre clients différents
+(`ANDROID_VR`, `web_safari`, `tv`, `ios`). La voie qui marche est de télécharger NATIVEMENT puis de
+couper en local.
+
+**PIÈGE 2, utile.** Le téléchargement peut s'interrompre sur un 403 en cours de route. Le fragment
+`.part` porte déjà son atome `moov` et les premières secondes : **il se coupe tel quel**. C'est ce qui
+rend viable de prendre du 4K pour un extrait court, 88 Mo téléchargés sur 6,07 Gio ont suffi.
+
+Résultat mesuré : `3840×2160`, `60 fps`, `240 images`, `4,000 s`, **12,7 Mo**.
+
+Le fichier vit dans `MoCap/<Take>/`, **hors de `Content/`** pour qu'Unreal ne tente pas de
+l'importer tout seul.
+
+#### Étape 3, Rendre le plugin markerless utilisable sur macOS
+
+Le plugin est livré compilé pour une version antérieure de 5.8 : `BuildId` **54595663** contre
+**55116800** attendu, d'où « Missing Modules ». Ce n'est PAS du Windows-only, aucun
+`PlatformAllowList`, et `Binaries/Mac` contenait déjà des dylibs universelles.
+
+**Un plugin de MOTEUR n'est pas recompilable dans un Installed Build ; un plugin de PROJET l'est.**
+Toute la solution tient là :
+
+```zsh
+mv Engine/Plugins/Marketplace/MetaHumanBodyTracker_5.8  <Projet>/Plugins/MetaHumanBodyTracker
+rm -rf <Projet>/Plugins/MetaHumanBodyTracker/{Binaries,Intermediate}
+Engine/Build/BatchFiles/Mac/Build.sh ZenRayShardsEditor Mac Development \
+  -project="<Projet>/ZenRayShards.uproject" -waitmutex
+```
+
+Mesuré : `Result: Succeeded` en **63 s**, 103 unités. Le `BuildId` du plugin rejoint celui du moteur.
+
+#### Étape 4, Activer l'encodeur externe
+
+Sans lui, l'ingestion refuse le MP4 H.264 : *« Failed to convert: Video file format is unsupported.
+Consider enabling Third Party Encoder in Capture Manager settings. »* Les lecteurs média du moteur ne
+couvrent pas tous les encodages ; le Capture Manager sait déléguer, et ffmpeg est déjà là.
+
+Dans `Config/DefaultEditorPerProjectUserSettings.ini` :
+
+```ini
+[/Script/CaptureManagerEditorSettings.CaptureManagerEditorSettings]
+bEnableThirdPartyEncoder=True
+ThirdPartyEncoder=(FilePath="/opt/homebrew/bin/ffmpeg")
+```
+
+#### Étape 5, Ingérer la vidéo, en Python plutôt qu'à la main
+
+L'interface passe par `Tools > Live Link Hub > Capture Manager > Data Devices > Add`. **La voie
+programmatique fait la même chose sans un clic**, et c'est elle qui rend le pipeline rejouable :
+
+```python
+import unreal
+lib = unreal.CaptureManagerIngestBlueprintLibrary
+params = unreal.CaptureManagerConversionParams()
+data, err = lib.ingest_mono_video_sync(chemin_mp4, "", "Take001", 1, params)
+```
+
+Produit un `FootageCaptureData` : `/Game/CaptureManager/Imports/Take001_1/CD_Take001_1`.
+Fonctions voisines : `ingest_stereo_video_sync`, `ingest_live_link_face_sync`,
+`ingest_take_archive_sync`, `ingest_calibration_sync`, `find_take_directories`.
+
+#### Étape 6, Créer la Performance et lancer le suivi
+
+```python
+atools = unreal.AssetToolsHelpers.get_asset_tools()
+perf = atools.create_asset("MHP_Take001", "/Game/ZenRayShards/MoCap",
+                           unreal.MetaHumanPerformance,
+                           unreal.MetaHumanPerformanceFactoryNew())
+perf.set_editor_property("footage_capture_data", footage)
+perf.set_editor_property("body_tracking", True)    # CORPS oui
+perf.set_editor_property("face_tracking", False)   # VISAGE non
+unreal.EditorAssetLibrary.save_asset(chemin)       # INDISPENSABLE, voir piege 3
+perf.set_blocking_processing(True)
+perf.start_pipeline()
+```
+
+**PIÈGE 3, qui a coûté un cycle.** `create_asset` **ne persiste rien**. Un script qui crée l'asset
+et rend la main le laisse en mémoire ; le processus suivant ne trouve que `None`. Tout ce qui doit
+survivre au processus se sauvegarde AVANT la fin du script.
+
+**PIÈGE 4.** `can_process` est une **MÉTHODE**, pas une propriété. `get_editor_property("can_process")`
+lève « Failed to find property ». On écrit `perf.can_process()`.
+
+**PIÈGE 5.** En headless, `set_blocking_processing(True)` est nécessaire : sans boucle d'éditeur, un
+travail asynchrone n'avance jamais. Et `can_process()` peut rendre `False` en headless alors que le
+traitement démarre parfaitement avec l'éditeur ouvert, c'est ce qui s'est passé le 22 août.
+
+**Ce que le traitement fait**, observé à l'écran : **5 étapes**, image par image, avec le squelette
+qui se superpose à la vidéo dans le viewport A|B. 239 images pour 4 secondes.
+
+#### Le calcul est-il perdu si on ferme l'éditeur ? NON.
+
+Question posée le 22 août, et la réponse est mesurée. Le résultat du traitement vit **dans l'asset
+`MetaHumanPerformance` lui-même**, pas dans un cache volatile. Une fois l'asset sauvegardé, le
+`.uasset` passe de quelques kilo-octets à **9,68 Mo** : ce sont les données d'animation, écrites sur
+le disque.
+
+Vérifié dans les faits le soir même : l'éditeur a planté APRÈS le traitement, et le fichier est resté
+identique à l'octet près, même taille, même horodatage. Fermer et rouvrir ne recalcule donc rien.
+
+**Le seul risque réel est de ne PAS sauvegarder.** Tant que l'éditeur affiche « 1 Unsaved », le
+travail n'existe qu'en mémoire. Le réflexe : dès qu'un traitement long se termine, on sauvegarde,
+et on vérifie que `is_dirty` retombe à `false`.
+
+#### Étape 7, Retargeter, et c'est l'étape que tout le monde oublie
+
+Le suivi ne sort PAS sur un squelette Unreal. Il produit une animation sur un squelette **SMPL**,
+qu'il faut convertir **deux fois** :
+
+```
+suivi corporel  →  squelette SMPL        (SKM_SMPL / SKEL_SMPL)
+                        ↓  RTG_SMPL_MH
+                   squelette MetaHuman   (metahuman_base_skel)
+                        ↓  RTG_MH_IKRig
+                   squelette cible       (Manny / Quinn / SandboxCharacter)
+```
+
+`IK_SMPL` et `IK_Metahuman` sont les IK Rigs du premier saut. Tous ces assets sont livrés dans le
+`Content` du plugin markerless.
+
+#### Étape 7 bis, Voir l'animation sur un MetaHuman, sans rien exporter
+
+Fait et vérifié le 2026-08-22 à 23:06. C'est l'aperçu que montre la documentation d'Epic, avec
+`BP_Orlando_Clothed2` dans le champ `Visualization Object` ; l'équivalent local est `BP_Kellan`.
+
+Le champ accepte deux formes seulement, et se trompe de forme fait planter l'éditeur d'un
+`check(false)` : un **SkeletalMesh** (l'aperçu de visage, hors suivi corporel), ou un **asset
+Blueprint** dérivé d'`Actor` (le personnage complet, en suivi corporel). Dans le second cas le
+toolkit fabrique tout seul la chaîne : un `ChildActorComponent` qui instancie le Blueprint, un
+`SkeletalMeshComponent` nommé `Driver` qui porte le squelette SMPL, et un `RetargetComponent` qui
+reporte le mouvement sur le composant du Blueprint **nommé exactement `Body`**. Un Blueprint sans
+composant `Body` s'affichera donc immobile, et rien ne le signalera.
+
+```bash
+python3 Scripts/mcp.py t editor_toolset.toolsets.object.ObjectTools set_properties \
+ '{"instance":{"refPath":"/Game/ZenRayShards/MoCap/MHP_Take001.MHP_Take001"},
+   "values":"{\"visualizationObject\":{\"refPath\":\"/Game/MetaHumans/Kellan/BP_Kellan.BP_Kellan\"}}"}'
+python3 Scripts/mcp.py t editor_toolset.toolsets.asset.AssetTools save_assets \
+ '{"asset_paths":["/Game/ZenRayShards/MoCap/MHP_Take001"]}'
+```
+
+Le menu déroulant de l'interface, lui, ne proposera jamais `BP_Kellan` : son filtre exige une
+dépendance dure vers `/Script/MetaHumanSDKRuntime`, que les MetaHumans d'avant le SDK n'ont pas.
+Détail complet dans BUG-15.
+
+#### Étape 8, Exporter
+
+`Export Animation` dans la barre d'outils de la Performance. Choisir le dossier, puis dans
+*Export Skeleton* soit `Existing Skeleton` avec la cible, soit passer par les retargeters de
+l'étape 7 si le squelette diffère.
+
+#### Le dépôt public
+
+`WF-01` est publié le 22 août :
+**`https://github.com/matthieuhuguet/MetaHuman-Animator-Markerless-Motion-Capture-Plugin-macOS`**
+
+Le nom porte les mots exacts que quelqu'un taperait pour chercher ce problème, c'est le sujet du
+dépôt et non la marque qui doit être dans le titre.
+Il porte le README complet du protocole, les trois scripts Python d'ingestion et de traitement,
+`mcp.py`, `unreal_guard.py` et le réglage de l'encodeur externe. C'est le brouillon de l'article à
+venir, et la base du plugin envisagé.
+
+#### L'article du site
+
+Écrit le 22 août à partir du README, servi en local, non déployé, commit `37a4c80` de
+`ZenRayWebsite` : `public/articles/metahuman-markerless-macos.json`, visible sur
+`/reels/metahuman-markerless-macos`. Il ouvre sur l'attribution à Epic, se structure par blocage du
+lecteur plutôt que par ma chronologie, et dit franchement quelles étapes restent non éprouvées.
+
+#### Ce qui reste à éprouver
+
+Les étapes 7 et 8 n'ont pas encore tourné. À vérifier quand elles le feront : si l'export propose le
+retargeting tout seul, et si l'animation obtenue tient la route sur `SandboxCharacter`.
+
+---
+
+### WF-03 · De la céramique Copernicus à une pub Unreal en Lumen (1 October 2026)
+
+Chaîne complète, rejouable, écrite dans le skill `zenray-houdini` (`Protocol1.md`, phases A à I; `Storyboard1.md`) : (1) matériau procédural dans Houdini Copernicus (graphe de 106 nodes, 19 paramètres HDA, trois jeux de couleurs sur le MÊME motif); (2) cartes en 4096 par `MakeFinalHip.py`, maillages FBX, plans de caméra et animations exportés en repère Unreal par `ExportForUnreal.py` (Houdini x, y, z devient Unreal X, Y, Z = x, z, y); (3) `python3 Scripts/BuildUnrealAd.py` construit dans `/Game/ZenRayShards` le matériau `M_CeramicAd` et ses trois instances, le niveau `L_CeramicAd` (rig de studio, Lumen), la séquence `LS_CeramicAd` (six caméras, coupes sèches, neuf sphères animées); (4) `RunUeFinal.py` rend les 720 images en 4096 par le Movie Render Queue; (5) `AssembleAdVideo.py` fait le film HEVC `hvc1`; (6) `MakeAdShort.py` prépare le short 4:5, la miniature, d'après le post. Houdini se ferme après l'étape 3. [1 October 2026, 20:15, remontage demandé par Matthieu: le FILM FINAL est un montage de 25 s (600 images) du rendu de 720 images: Rise, Orbit, Spheres cut, Sphere trio, Triptych, le plan Spheres roll retiré, ordre dans `EDIT_ORDER` de `AdShots.py`, détail dans `Protocol1.md` phase K.] [1 October 2026, 21:45 : pour la miniature 1:1, deux passes d'une sphère seule sur fond noir (`unreal/ue_sphere_pass.py`) et un matériau sans éclairage `M_CeramicAdMask` / `MI_CeramicAdMask` ont été ajoutés dans `/Game/ZenRayShards/Materials/CeramicAd`; le niveau n'est pas enregistré, détail dans `Protocol1.md` phase M.] Mesures : Karma XPU 142 s par image en 4096; Unreal Lumen 2,7 s par image en 4096 (481 images en 21,6 minutes soit 0,37 image par seconde, environ 53 fois plus vite que Karma XPU; mesuré le 1 October 2026, rendu final reprise des images 240 à 720, M5 Max).
+
+## 0.8 ProjectBoard, le tableau du chantier et non des idées
+
+**Le pendant technique du GameDesignBoard, et la différence tient en un mot.** Le `GameDesignBoard`
+porte ce que le jeu POURRAIT être ; celui-ci porte ce qu'on FAIT sur le projet, dans le moteur, dans
+les scripts, dans le pipeline. Une idée de design entre en `GD-xx`, une tâche de production entre en
+`PB-xx`, et les deux ne se mélangent jamais.
+
+**Les bugs restent en §0.6, séparés, et c'est voulu.** Un bug résolu est bien une chose finie, mais
+sa valeur n'est pas d'être finie, elle est d'être un compute qu'on ne repaiera plus. Le mêler aux
+tâches noierait cette valeur dans une liste de choses faites. `SolvedBugs` garde donc son fichier à
+lui, et le `ProjectBoard` s'y réfère sans le recopier.
+
+**Rien ne disparaît, ici non plus.** Une tâche écartée descend en `Discarded` et reste lisible avec
+sa raison, parce qu'elle a été juste un jour et que le projet de dans six mois pourrait la vouloir.
+
+### Statuts
+
+| Statut | Ce que ça veut dire |
+|---|---|
+| `Planned` | Décidée, pas commencée. |
+| `InProgress` | Commencée, PAS finie. Le champ dit exactement où elle s'est arrêtée. |
+| `Done` | Finie ET vérifiée par une preuve, jamais par une impression. |
+| `Discarded` | Écartée, gardée intacte avec sa raison. |
+
+**`Done` exige une preuve, pas un sentiment.** Une ligne sans mesure, sans code de sortie, sans
+capture ou sans octets comptés reste en `InProgress`, même si elle a l'air terminée. C'est la loi du
+vérifiable du dépôt Memory, appliquée à ce tableau.
+
+### Board
+
+| ID | La tâche, en une ligne | Statut | Posée le |
+|---|---|---|---|
+| PB-01 | **1080p contre 4K**, mesurer si la résolution pèse sur le calcul. Réponse : non | `Done` | 22 août |
+| PB-02 | **Recadrer sur le personnage**, la source gaspille ses pixels en décor, le sujet n'est pas centré | `Planned` | 22 août |
+| PB-03 | **Corriger l'animation à la main**, bras, orientation des bras, doigts, en Control Rig dans le séquenceur | `Planned` **PROCHAIN** | 22 août |
+| PB-04 | **Le facial synchronisé au corps**, quel MetaHuman le porte, sur quel body il se retargete, et comment les timings se calent | `Planned` | 22 août |
+| PB-05 | **Retarget et export vers n'importe quel body**, la chaîne SMPL puis MetaHuman puis squelette cible | `Done` | 22 août |
+| PB-06 | **Le plugin markerless sur macOS**, compilé, chargé, quatre modules actifs | `Done` | 22 août |
+| PB-07 | **La première capture**, Take001 traité de bout en bout | `Done` | 22 août |
+| PB-08 | **Le MetaHuman dans la visualisation**, voir le résultat sur Kellan plutôt que sur un squelette nu | `Done` | 22 août |
+| PB-09 | **Publier le protocole**, dépôt GitHub public et article du site | `Done` | 22 août |
+| PB-10 | **Tous les assets sous `/Game/ZenRayShards`**, la règle I-02, appliquée au contenu existant | `InProgress` | 21 août |
+
+---
+
+### Planned
+
+**PB-01 TRANCHÉ le 2026-08-23, et la réponse inverse ce que je recommandais.** Le 2160p à 30 images
+par seconde **ajoute beaucoup de finesse sur le mouvement sans coûter plus cher en calcul**, si bien
+qu'un matériau source en 4K est nettement plus intéressant. La résolution et la cadence ne coûtent
+donc pas la même chose : c'est le NOMBRE D'IMAGES qui mange le temps, pas le nombre de pixels.
+
+**Ce que cela corrige.** La note du 22 août recommandait 1080p à 30 images par seconde pour
+économiser du calcul. La moitié de ce conseil était fausse : baisser la résolution ne faisait
+économiser presque rien tout en perdant de la précision. La recommandation devient **4K, 30 images
+par seconde**, et 24 pour les animations secondaires. Article corrigé dans les trois langues le
+23 août.
+
+**PB-01, état antérieur, gardé pour mémoire : les deux assets existent, les deux calculs restent à lancer.**
+`MountainBreaker_1080p30` et `MountainBreaker_2160p30`, 150 images chacun, 5,00 secondes,
+rigoureusement synchrones, dans `MoCap/`. Fabrication et pièges en `WF-02`. Ne manque que
+l'ingestion des deux et le relevé des trois nombres ci-dessous.
+
+**PB-01 · Refaire le calcul en 1080p et 30 images par seconde.** Le premier take a coûté environ
+trente minutes en 3840x2160 à 60 images par seconde. La question est de savoir ce qui domine ce
+coût, et elle n'est pas rhétorique : si c'est la résolution, alléger la source divise le temps sans
+rien coûter au résultat ; si c'est le nombre d'images, c'est la cadence qu'il faut baisser ; si
+c'est ni l'un ni l'autre, le solveur travaille à taille fixe et il faut cesser de chercher de ce
+côté. Protocole : garder le MÊME extrait, produire deux variantes par ffmpeg, relancer le pipeline,
+et comparer trois nombres, le temps total, le nombre d'images suivies, et l'écart visible sur
+l'animation. Un seul paramètre bouge à la fois, sinon la mesure ne dit rien.
+
+Note déjà écrite en §8.2 et qui reste vraie : un corps humain ne change pas de direction en seize
+millisecondes, donc 60 images par seconde ne se justifie que sur du geste d'arme rapide.
+
+**PB-02 · Recadrer la source sur le personnage.** Sur le take actuel le sujet n'est pas centré et le
+décor mange une grande part des pixels, or le suivi ne s'intéresse qu'au corps. Recadrer revient
+donc à donner plus de définition utile pour le même coût de calcul. À vérifier une fois fait : est-ce
+que le suivi gagne en précision, ou est-ce que le solveur normalise déjà la boîte du sujet et rend
+l'opération inutile ? Les deux réponses sont intéressantes, et se combinent avec PB-01 puisqu'un
+recadrage bien fait peut rendre le 1080p suffisant.
+
+**PB-03 EST LE PREMIER GESTE DU 24 AOÛT.** Décidé à 03h43 le 23, après la publication : c'est le
+travail qui aurait dû occuper la nuit, et il attend. Tout est prêt, l'animation existe et tourne sur
+`SKM_Quinn`, il n'y a plus qu'à ouvrir le séquenceur.
+
+**PB-03 · Corriger l'animation à la main, sans repayer le calcul.** L'animation du premier take
+porte des défauts sur les bras, leur orientation et les doigts, ce qui est attendu d'un suivi
+monoculaire : une seule caméra ne voit pas la profondeur, et la rotation d'un membre autour de son
+axe est précisément l'information qu'elle perd. Le principe directeur est que la correction ne
+repart JAMAIS du cache : le calcul de trente minutes est acquis, on l'édite. La voie est le
+séquenceur avec un Control Rig sur le squelette cible, en couche additive par-dessus l'animation
+importée, pour que la correction reste séparée de la donnée d'origine et qu'on puisse la retirer.
+Ce qui reste à trancher, et qui se tranchera en le faisant : corriger sur le squelette MetaHuman
+avant retarget, ou sur le squelette final après. Corriger tôt propage la correction à toutes les
+cibles ; corriger tard la rend juste pour un seul personnage.
+
+**PB-04 · Le facial, et les deux questions qu'il pose avant même de commencer.** L'objectif est une
+animation faciale sur les trois secondes, synchronisée avec le corps. Deux problèmes sont posés, et
+aucun n'est technique au sens strict, ce sont des questions de chaîne :
+
+La première est celle de la CIBLE. Une animation faciale MetaHuman ne se retargete pas comme un
+corps : elle s'exprime en contrôles de rig et non en os, si bien qu'il faut savoir dès le départ
+quel MetaHuman la porte, et si ce MetaHuman est bien celui qui porte aussi le corps. Si les deux
+diffèrent, il faut décider lequel devient le porteur et sur quel body le reste se retargete.
+
+La seconde est celle du TEMPS. Le corps et le visage sont deux solveurs distincts qui rendent deux
+pistes distinctes, donc leur calage n'est pas garanti par construction. La lecture se fera dans le
+séquenceur puisque c'est là qu'on édite, mais l'animation finira cuite pour être jouée au runtime,
+et c'est cette cuisson qui fige le calage : un décalage non corrigé avant le bake devient permanent.
+Le repère à utiliser est le timecode de la source, `Timecode Alignment` étant déjà réglé sur
+`Relative` dans la Performance.
+
+---
+
+### InProgress
+
+**PB-05 · Le retarget et l'export.** La chaîne est identifiée dans `WF-01` étape 7, et ses assets
+sont livrés dans le `Content` du plugin : `SKM_SMPL`, `SKEL_SMPL`, `IK_SMPL`, `IK_Metahuman`,
+`RTG_SMPL_MH`, `RTG_MH_IKRig`. Le principe est que la sortie du suivi n'est PAS un squelette Unreal
+mais un squelette SMPL, converti deux fois avant d'atteindre un personnage.
+
+**CORRECTION DU 2026-08-23 00:54, PB-05 passe en `Done`.** Le chemin a tourné de bout en bout.
+L'animation `AS_MHP_MountainBreaker_1080p30` est exportée puis rejouée sur `SKM_Quinn`, le mannequin
+standard d'Unreal, 150 images, `Retarget Source Asset` réglé sur `SKM_Quinn`. C'est la preuve qui
+manquait : une fois la prise arrivée sur un squelette Unreal, l'IK Retargeter l'emmène où l'on veut.
+Le paragraphe qui suit décrivait l'état d'avant et reste ici pour mémoire.
+
+**Où cela s'arrêtait au 22 août.** Le chemin était lu dans les sources du
+plugin, il n'avait pas encore tourné de bout en bout. Que le retarget permette ensuite n'importe quel
+body est la promesse de l'IK Retargeter et elle est très probablement vraie, mais tant que
+`Export Animation` n'a pas produit un fichier qu'on a rejoué sur un autre squelette, cette ligne
+reste `InProgress` et non `Done`. C'est exactement ce que l'article du site annonce dans sa section
+« What I have not proven ».
+
+**PB-10 · La migration des assets sous `/Game/ZenRayShards`.** Environ 636 assets déplacés, de
+l'ordre de 2612 restants, arrêtée volontairement pour débloquer le travail d'animation. Le script
+`Scripts/migrate_assets.py` reprend là où il s'est arrêté. Deux pièges déjà payés et notés : les
+`ObjectRedirector` de moins de 4096 octets ne sont pas du contenu et ne se déplacent pas, et un
+`move` échoue quand la destination existe, d'où le repli asset par asset.
+
+---
+
+### Done
+
+**PB-06 · Le plugin markerless compilé sur macOS.** Sorti du moteur, remis en plugin de projet,
+binaires périmés supprimés, cible éditeur reconstruite. Preuve : `Succeeded` en 62,86 secondes, 103
+unités de compilation, les quatre modules chargés. Détail en `BUG-14` et `WF-01` étape 3.
+
+**PB-07 · La première capture, de bout en bout.** Take001, 239 images suivies, cinq étapes, environ
+trente minutes. Preuve : l'animation est visible sur le squelette, et le `.uasset` pèse 9 679 335
+octets contre quelques kilo-octets avant traitement.
+
+**PB-08 · Le MetaHuman dans la visualisation.** `BP_Kellan` posé dans `Visualization Object`, comme
+`BP_Orlando_Clothed2` sur la capture d'Epic. Preuve : `get_properties` rend le bon `refPath` et la
+vignette du personnage s'affiche dans le panneau Details. La vraie cause du plantage précédent est
+écrite en `BUG-15`, le geste rejouable en `WF-01` étape 7 bis.
+
+**PB-09 · Le protocole publié.** Dépôt public
+`MetaHuman-Animator-Markerless-Motion-Capture-Plugin-macOS`, poussé le 22 août, plus l'article
+`metahuman-markerless-macos` du site, commit `37a4c80`, servi en local et non déployé.
+
+---
+
+### Discarded
+
+Rien pour l'instant. La première ligne qui descendra ici emportera sa raison avec elle.
+
+---
+
+## 0.9 PostsSocialsMediaAssetsPublished
+
+Tout ce qui sort du projet vers le public : les posts, les articles, et les **assets** au sens de
+flyers, visuels et carrousels. Le dossier de rangement est
+`Memory/ZenRayShards/Posts/<AAAA-MM-JJ>-<sujet>/`, et il contient les `.md` des posts ET une copie
+des visuels, parce qu'un asset qui ne vit que dans le dépôt du site est un asset qu'on ne retrouve
+pas quand on republie ailleurs.
+
+### La leçon du 2026-08-23, et elle change la priorité
+
+Ses mots, corrigés en grammaire seulement, jamais en style :
+
+> J'ai passé trop de temps sur cet article et encore, il est toujours pas publié ni sur LinkedIn ni
+> sur Instagram. Et je me pose vraiment la question de l'intérêt de faire des articles à l'avenir.
+> Là, tu vois, j'ai passé au moins deux heures, voire deux heures et demie, juste sur la création de
+> cet article et encore je suis pas vraiment satisfait.
+>
+> La vérité, c'est que personne ne va lire l'article, les gens vont pas forcément être impressionnés
+> par rapport au fait que je me réapproprie une technique ou un plugin qui existe déjà, puisque je
+> crée rien, en fait je fais que réutiliser des choses qui existent déjà, et je pense qu'en fait ça a
+> peu de valeur.
+>
+> Il vaut mieux se concentrer sur la création d'assets et vendre les assets plutôt que vendre la
+> tech. Parce que la tech elle est incroyable, mais en fait les gens ils vont jamais se rendre compte
+> que la tech existe parce qu'ils passent pas à l'action. Alors que moi je passe à l'action, je vois
+> la tech, mais je me fais un relais de la tech, alors qu'en vrai on s'en bat les couilles, c'est pas
+> ça qui me fera avoir des millions d'euros.
+>
+> On avait dit qu'on ferait un million sur le jeu, mais là au final on a juste testé deux trucs. Ce
+> qu'il aurait fallu faire, dans un arbre à embranchements sur le développement, c'est pas partir sur
+> le développement de l'article, c'était partir sur le fait de mettre l'animation qu'on avait créée
+> dans un Control Rig, de la mettre dans le séquenceur et de commencer à fixer manuellement les
+> animations qu'on avait créées. Et ensuite de s'occuper du facial rig. Et en vrai on aurait pu tout
+> faire aujourd'hui, mais là il est 2h du matin, du coup on peut plus.
+>
+> Faut vraiment faire gaffe à la gestion de l'énergie et à la planification qui oriente vers la
+> valeur plutôt qu'orienter vers quelque chose qui semblerait être la valeur, c'est-à-dire le média
+> et la publication.
+
+### PUBLIÉ le 2026-08-23 à 03h43, sur LinkedIn et Instagram
+
+Les deux posts sont en ligne. Instagram porte le carrousel de 10 éléments, deux vidéos puis huit
+pages, avec les liens dans la légende et dans la bio. LinkedIn porte le même texte avec les deux
+liens raccourcis, plus les hashtags.
+
+Coût total de la chaîne, de la première ligne de l'article à la publication : **environ cinq heures**,
+dont deux et demie pour l'article seul.
+
+### La deuxième règle, dite au moment de publier
+
+Ses mots : « à l'avenir moins de post, plus de résultat fini. ON S'EN FOUT DE L'ÉTAT INTERMÉDIAIRE
+ET ÇA FAIT PEU DE VUES. »
+
+**Ce que cela ajoute à la règle précédente.** La première disait quoi publier, un asset plutôt qu'une
+technique. Celle-ci dit QUAND : à la fin, pas pendant. Un état intermédiaire, un pipeline qui marche,
+un bug résolu, une capture de l'éditeur, tout cela l'intéresse lui et n'intéresse personne d'autre,
+parce que le lecteur ne voit pas le chemin, il voit l'objet.
+
+**Le contrôle avant de lancer un travail de publication**, et il tient en une question : est-ce que
+je montre une CHOSE FINIE que quelqu'un pourrait vouloir, ou est-ce que je montre où j'en suis ? Si
+c'est la seconde, on ne publie pas, on continue de travailler.
+
+**Ce que cela m'interdit.** Proposer un devlog d'étape. Transformer une session technique en post.
+Traiter une capture d'écran d'éditeur comme un livrable. Et surtout, laisser un travail de média
+capter l'énergie du soir alors que le geste qui crée de la valeur attend, ce qui est exactement ce
+qui s'est passé cette nuit : le Control Rig aurait pu être fait, il ne l'a pas été.
+
+### La règle qui en sort, à me servir sans attendre qu'il la redemande
+
+**Quand il redemande un article, je cite cette section avant d'en écrire un mot.** Pas pour refuser,
+la décision reste la sienne, mais pour qu'il choisisse en connaissance de cause plutôt que par
+habitude. La phrase à dire tient en une ligne : l'article du 23 août a coûté deux heures et demie,
+il n'a pas satisfait, et le geste qui créait de la valeur ce jour-là était le Control Rig, pas la
+publication.
+
+**Vendre l'ASSET, pas la TECH.** Un asset se vend plusieurs fois et existe sans lui ; un article sur
+une technique le transforme en relais d'une chose qu'il n'a pas faite. C'est la même loi que le
+levier écrit en priorité zéro dans `~/.claude/CLAUDE.md` : préférer ce qui se duplique et se vend à
+ce qui ne sert qu'une fois.
+
+**Le piège précis, et il est subtil.** La publication RESSEMBLE à de la valeur, puisqu'elle est
+visible, mesurable et qu'elle coche la case de la production quotidienne. C'est justement pourquoi
+elle capte l'énergie du soir, quand l'arbitrage se fait au jugé. Le contrôle à passer avant de
+lancer un travail de média est donc une seule question : est-ce que cette chose existera encore et
+rapportera encore dans six mois, ou est-ce qu'elle aura disparu du fil ?
+
+**Ce que cela n'annule pas.** La promesse de production permanente tient, et l'exposition reste le
+premier étage non franchi de sa boucle. Ce qui change n'est pas QU'IL publie, c'est CE qu'il publie :
+un asset fini plutôt qu'un compte rendu de technique. Un post court qui montre un résultat coûte
+vingt minutes ; un article en trois langues en coûte cent cinquante.
+
+**Le coût mesuré, pour que la prochaine décision se prenne sur un chiffre.** Article
+`metahuman-markerless-macos` : environ 150 minutes, 96 blocs en anglais, deux traductions, six
+visuels, un dépôt public de 557 lignes de README, et zéro publication sociale à l'heure où il ferme.
+
+### Publication du 2026-08-23, MetaHuman markerless macOS
+
+Rangée dans `Memory/ZenRayShards/Posts/2026-08-23-metahuman-markerless-macos/`, 30 fichiers, 14 Mo.
+
+| Sortie | Où |
+|---|---|
+| Post Instagram | `post-instagram.md`, légende anglaise plus version française |
+| Post LinkedIn | `post-linkedin.md`, structuré autour du diagnostic en quatre questions |
+| Assets copiés | `assets/`, les six visuels de l'article plus les deux gifs |
+| Carrousel | `carrousel/sortie/`, 8 slides en 1080x1350 |
+| Vidéos du carrousel | `video-capture-loop.mp4` et `video-retarget-loop.mp4` |
+| Article | `matthieuhuguet.com/reels/metahuman-markerless-macos`, trois langues |
+| Dépôt public | `MetaHuman-Animator-Markerless-Motion-Capture-Plugin-macOS`, README de 557 lignes |
+
+**Le carrousel est un HDA**, au sens strict de la loi du dépôt : `carrousel/_params.json` porte la
+palette, les polices, les tailles et le texte des huit slides, `build.py` ne contient aucune valeur
+littérale, et une slide n'est qu'un jeu de paramètres de plus. Changer la couleur d'accent se fait à
+un seul endroit et se propage partout.
+
+**Trois contraintes mesurées, pas supposées.** Instagram plafonne à 8 Mo par fichier : le plus gros
+PNG pèse 0,40 Mo et la plus grosse vidéo 0,36 Mo. Le format retenu est 1080x1350, le 4:5 qui occupe
+le plus de hauteur dans le fil. Et **Instagram refuse les gifs dans un carrousel**, d'où les deux
+MP4 cadrés au même format que les slides, pour ne pas mélanger deux ratios.
+
+**Ordre de publication.** Les deux vidéos d'abord, le résultat avant l'explication, puis les huit
+slides. Le mouvement accroche, le texte retient.
+
+### Le workflow d'article de bout en bout, tel qu'il s'est réellement passé
+
+Consigné parce qu'il resservira, y compris pour décider de ne PAS le lancer.
+
+| Étape | Ce qu'elle a coûté | Le piège rencontré |
+|---|---|---|
+| Écrire l'article, méthode Carlos | ~40 min | La méthodologie doit être énoncée AVANT la première phrase, sinon on écrit un journal de bord |
+| Visuels et gifs | ~25 min | `ffmpeg` avec palette calculée sur la séquence, sinon le gif fourmille ; plafond de 8 Mo |
+| Capsules de langue | ~15 min | La langue va dans le NOM DE FICHIER, `<slug>.fr.json`, jamais dans le contenu |
+| Deux traductions par agents | ~20 min | Une traduction faite pendant qu'on réordonne l'original doit être repermutée à l'identique |
+| Mode édition en page | ~20 min | Faire coller un script dans la console est une corvée : `?edit=1` plus un garde localhost |
+| Ses corrections | ~20 min | Quand il supprime, on SUPPRIME, on ne réécrit pas par-dessus |
+| Déploiement et contrôles | ~10 min | Après un déploiement Pages, un asset peut rendre 4821 octets, la taille du repli SPA, le temps de la propagation |
+
+**Les corrections qu'il a fallu faire, et qui auraient dû être évitées d'emblée.** Le protocole
+commençait à la troisième étape sans le dire, l'erreur était annoncée sans être montrée, l'asymétrie
+moteur contre projet était posée sans être expliquée, `SMPL` était jeté sans définition, la
+numérotation démarrait à 3 faute de `<ol>` parent, et 84 tirets cadratins traînaient dans ce fichier.
+
+---
+
+## 1. La décision, et elle ne se rediscute plus
+
+Je fais un jeu. La délibération est close, elle l'était déjà le 7 août 2026 et elle l'est encore.
+Peu importe ce qu'on me dit, peu importe la donnée : c'est l'exercice qui me porte le plus par
+rapport à qui je suis et à mon histoire. Plus je retarde cet exercice, plus j'aurai le regret de ne
+l'avoir jamais fait.
+
+Le jeu s'appelle **ZenRayShards**. Il se construit sur **Unreal Engine 5.8**, dans le projet
+`Productions/ZenRayShards/ZenRayShards`, et il se pilote depuis **Claude Code**.
+
+Aucune session ne repropose de « clarifier la vision », de « réfléchir à l'angle » ou de revoir
+l'ambition à la baisse. Le seul sujet d'une session est l'avancement du jour.
+
+**Corollaire du 17 août, que je m'applique à moi-même :** pas de retour en arrière sur les projets
+qui ne résolvent aucun problème de design. Toki Pavillion, le Bayou, Noyés, la ville japonaise, les
+travaux du CNAM : ils restent en réserve d'idées, ils ne redeviennent pas des chantiers. Raccourci
+direct vers ZenRayShards.
+
+---
+
+## 2. Pourquoi je fais ce jeu
+
+Je ne le fais pas d'abord pour l'argent. Je le fais pour le **sens**, et pour développer mes
+capacités de design et de game design. Je serais heureux de créer mon propre jeu, et surtout heureux
+de ce que ça peut produire chez les autres. Si j'arrive à faire ce qu'a fait Guillaume Broche avec
+Sandfall, je serai très content.
+
+L'argent reste une conséquence que je vise franchement : je veux faire mon premier million avec ce
+jeu, et je ne veux plus être un artiste qui ne vit pas de sa passion. Vouloir la richesse, pour moi,
+ce n'est pas un luxe, c'est éviter la précarité et pouvoir travailler sur ce qui me passionne au lieu
+d'être obligé de travailler sur ce qui ne me passionne pas. Je considère ça normal.
+
+**Vivre la vie comme je l'entends.** C'est la phrase que je dois me rappeler quand je me perds. Être
+libre, d'accord, mais qu'est-ce que je fais de ma liberté et pourquoi ? Si ma liberté, c'est de créer
+des jeux parce que je trouve ça formidable, et si je suis meilleur designer que technicien, alors je
+dois trouver les leviers qui me permettent vraiment de le faire.
+
+**Ce qui m'intéresse vraiment, formulé le 17 août :** que le produit puisse **exister par moi-même**.
+Avoir créé un truc vraiment énorme, avoir compris tous les systèmes et toutes les briques qui m'ont
+mené jusque là, et être assez mûr à 25-26 ans pour dire : je l'ai fait, et je suis fort de l'avoir
+fait. Ensuite, je n'ai plus qu'à itérer sur les choses que j'aime. Je pense que c'est le truc ultime
+de ma vie, faire des jeux vidéo, et pas autre chose.
+
+**Le piège à ne jamais confondre, et il est central.** « Le produit peut exister par moi-même » n'est
+pas « le produit est fait par moi seul ». Ces deux phrases se ressemblent énormément. Broche démontre
+la première sans la seconde. Les confondre ramènerait mon conflit de spécification sous son
+déguisement le plus flatteur, celui de l'ambition, et c'est le seul sous lequel je ne le verrais pas
+venir. Diagnostic complet : `Identity/Matthieu1.md`, section « LE CONFLIT DE SPÉCIFICATION ».
+
+---
+
+## 3. L'ambition, non négociable
+
+Je n'ai pas moins d'ambition que les studios que j'admire. Je suis simplement tout seul pour
+l'instant, donc je dois bootstrapper.
+
+- Un jeu de l'ambition d'un **Black Myth: Wukong**, d'un **God of War**, d'un **Fortiche** (Arcane),
+  réalisé en solo.
+- Me positionner dans le créneau **AAA Sony-like** : les jeux que tout le monde achète de toute
+  façon. Il n'y a pas de concurrence pour les jeux Sony. Là où Sony est moins bon, c'est sur les
+  jeux où l'on ne tue pas la moitié de la terre entière, et c'est exactement l'espace de game design
+  qui m'intéresse.
+- Un jeu solo **au-dessus de 90 Metacritic**.
+- Être aux **Game Awards avec Geoff Keighley avant 2030**. Et si je n'y arrive pas, j'aurai au moins
+  fait un excellent jeu.
+- Un premier million d'euros avec ZenRay.
+
+**La règle sur l'ambition.** Elle ne se corrige jamais. Quand les chiffres l'imposent, ce sont le
+calendrier et le périmètre qui plient, jamais l'ambition. Et on ne me dit jamais « ce n'est pas
+possible, la technique ne le permet pas ». La technique permet de faire ce qu'on veut ; c'est même la
+partie excitante. Si j'y arrive, je change l'industrie à moi seul.
+
+---
+
+## 4. Les piliers de ma vie, en parallèle et jamais en séquence
+
+**GameDev / Japonais / Sport (et Relations).**
+
+Ils avancent le même jour, jamais l'un après l'autre. Le japonais et le corps ne sont pas des
+concurrents du jeu, ils sont l'infrastructure qui permet de tenir quatre ans. Et l'ambition très
+haute ne tient que si je dors, si je mange correctement et si la boucle de progrès reste excitante.
+
+**Rang des axes, tel que je l'ai posé le 11 août :**
+
+| Rang | Axe | Pourquoi |
+|---|---|---|
+| 1 | GameDev / création | Mon moteur d'autonomie : finir, publier, gagner de l'argent, construire une réputation, une œuvre et une vie que je contrôle. |
+| 2 | Japonais | Mon multiplicateur Japon : amitiés, culture, réseau, dating, travail, appartenance. Gros goulot actuel. |
+| 3 | Sport | Infrastructure biologique. Énergie, santé, physique, confiance. Important sans monopoliser la journée. |
+| 4 | Japan in love | À poursuivre activement, mais pas au centre du système, parce que le résultat dépend aussi d'une autre personne. |
+
+**Contraintes de vie, posées le 3 août :** dormir, et travailler avec des horaires fixes. Apprendre
+l'animation à deux ou trois heures du matin depuis une capsule, c'est compliqué, et je le sais.
+
+---
+
+## 5. La méthode de production
+
+### 5.1 L'instruction minimale
+
+Je ne veux pas écrire un game design document puis fabriquer le jeu. Je veux te donner chaque jour
+de **toutes petites instructions**, l'instruction la plus minimale possible, pour être sûr que tu
+sois capable de la faire sans y passer des heures. C'est comme ça qu'on atteint en solo une
+production value digne d'Arkane ou de Black Myth: Wukong.
+
+Exemple d'unité de travail juste, et c'est moi qui l'ai trouvée le 17 août : **un gars qui vise une
+tourelle et qui tire**. C'est la bonne taille. Pas « faire le système de combat », pas « faire le
+niveau ». Un geste, existant, jouable, fini.
+
+### 5.2 Fast loop, difficulté maximale, boucle minimale, feedback immédiat
+
+Je choisis des problèmes difficiles, mais je les attaque avec des boucles minuscules et **terminées**.
+Une boucle, c'est quinze minutes de travail, deux minutes de pause, et un statut **FINI** explicite à
+la fin. Pas de plafond journalier : autant de boucles que je veux, tant que chacune se ferme.
+
+Ce qui m'épuise n'est jamais le volume d'une journée, c'est un bloc continu sans clôture. Corollaire
+qui vaut pour toi : **une réponse doit être consommable en quinze minutes**. Une réponse qui déborde
+est une faute de production.
+
+Et je ne saute jamais une journée : quand mon énergie s'effondre, je réduis le périmètre jusqu'à
+pouvoir finir une fast loop, je n'annule pas la boucle.
+
+### 5.3 Développement itératif ET incrémental, jamais seulement du raffinement
+
+Itérer repasse sur ce qui existe et le rend meilleur ; incrémenter ajoute une couche qui n'existait
+pas. Le raffinement seul converge vers un optimum local, un objet de plus en plus soigné qui ne
+devient jamais autre chose. C'est exactement ce qui a tué ma 3D : elle ne répondait à aucune
+problématique de design, c'était de la démo technique, donc ni artistique ni utile.
+
+**Le test à passer après chaque passe :** l'objet est-il meilleur, ou est-il devenu autre chose ? Si
+la réponse est toujours « meilleur », il manque l'incrément, et l'objet finira poli, admiré et
+inachevé.
+
+**La forme que ça impose :** commencer par une **tranche verticale**, une minute jouable qui traverse
+caméra, entrée, animation, interface, son et niveau à la qualité finale, plutôt qu'une couche entière
+à toutes les qualités. Étendre ensuite horizontalement, une couche à la fois, en repassant sur le
+reste à chaque passe. Rester simple à chaque étape : un système complexe qui marche descend toujours
+d'un système simple qui marchait.
+
+### 5.4 C'est l'action qui donne l'information
+
+L'information décisive n'existe pas avant l'action, elle est **produite** par l'action. Au-delà d'un
+seuil très bas, l'analyse ne produit plus d'information, elle produit du confort. Donc : construire
+d'abord, découvrir ensuite. Et découper en quelque chose de si petit que ça en devient ridiculement
+facile, pour ne jamais redevenir l'homme qui disparaît trois semaines dans une analyse infinie.
+
+### 5.5 Coder comme un peintre
+
+Un peintre n'ajoute pas de la peinture pour faire quelque chose de joli. Il utilise les couleurs pour
+faire apparaître ou disparaître quelque chose. C'est pareil pour le code : on a besoin d'une
+fonction, on la crée ; on n'a pas besoin de quelque chose, on le supprime. On reste toujours simple,
+fonction après fonction, coup de pinceau après coup de pinceau. Et le peintre n'est pas obligé
+d'ajouter pour faire apparaître : il peut soustraire, ou inverser.
+
+Corollaire déjà écrit le 11 août : **ne faire que les fonctionnalités futures dont j'ai réellement
+besoin.**
+
+### 5.6 Tout code produit est un HDA
+
+La loi générale vit dans `~/.claude/CLAUDE.md` et fait foi. Appliquée ici : une définition unique,
+zéro valeur littérale dedans, une interface de paramètres exposée, des instances posées plutôt que
+recopiées. Sur Unreal, l'interface de paramètres prend la forme de `UPROPERTY(EditAnywhere)`, d'un
+`UDataAsset`, d'une `UDataTable` ou d'une `UCurveTable` ; l'instance est un acteur placé ou un
+Blueprint enfant. On paramètre ce qui varie **déjà**, dès la deuxième occurrence, jamais ce qui
+pourrait varier un jour.
+
+---
+
+## 6. Le canal Unreal, le moins de clics possible
+
+**Ce que je veux.** Je te dis une chose, et tu me rends soit un fichier C++ qui fait tourner le code,
+soit un Blueprint via le MCP Unreal, soit un script Python exécuté par l'éditeur. Je veux des
+workflows durables et le moins de clics possible dans Unreal Engine. Je veux pouvoir créer des assets
+**directement finis**, et la même chose en animation, et la même chose partout.
+
+**Pourquoi c'est le vrai sujet, et pas un confort.** Avec Claude, la chaîne qui va de mon intention à
+l'objet est courte et complète : je dicte, le code apparaît, la construction répond, l'écran tranche
+en quelques secondes. C'est cette conversion immédiate d'une pensée en chose existante qui produit
+l'intensité, jamais un supplément de motivation. Sur Unreal, la chaîne casse en trois points : Claude
+ne voit pas l'éditeur, le canal MCP exige l'éditeur ouvert et consomme le budget avant d'avoir produit
+une image, et rien ne dit ensuite si la scène tourne à trente images par seconde ni si elle ressemble
+à ce que je voulais. Un arbitrage entre deux tâches se tranche toujours au profit de celle qui rend un
+verdict, et c'est pour ça que le japonais et le travail avec Claude gagnent chaque jour sans que la
+motivation entre en jeu.
+
+**Les deux pièces à construire, et elles précèdent toute production de contenu :**
+
+1. **Un canal qui marche sans éditeur.** `UnrealEditor-Cmd` existe dans le moteur installé, et
+   `PythonScriptPlugin` est désormais activé dans le projet (voir §7). Piloter le projet par un
+   script Python en ligne de commande rend au moteur la propriété qui fait toute la valeur du travail
+   avec Claude : obéir sans que j'aie à cliquer.
+2. **Un vérificateur.** Il fait tourner le projet, produit une capture, relève le temps par image et
+   le poids du paquet, puis rend un code de sortie et une sortie `--json`. La forme canonique existe
+   déjà sur ce Mac : `~/.claude/Scripts/verify-backup.mjs`, seule sa cible change.
+
+Tant que ces deux pièces manquent, aucune boucle agentique ne se branche sur le jeu : une boucle sans
+vérificateur ne produit pas du travail, elle produit du travail-à-relire, et mon attention est la
+seule ressource qui ne se parallélise pas.
+
+**Ce que la technique ne sait pas encore faire sans moi, dit franchement plutôt que promis.** À ce
+jour, une part du geste reste manuelle dans l'éditeur, et prétendre le contraire me coûterait une
+nuit. On dit ce qui est manuel, on le note, et on cherche à le supprimer boucle après boucle.
+
+---
+
+## 7. État réel du projet Unreal, mesuré le 2026-08-21 03:50
+
+Relevé sur la machine, pas estimé.
+
+| Élément | Valeur mesurée |
+|---|---|
+| Chemin | `/Users/zenray/Create/Build/Productions/ZenRayShards/ZenRayShards` |
+| Moteur | Unreal Engine **5.8** (`EngineAssociation`) |
+| Poids sur disque | **4,8 Go** |
+| Base du projet | **Game Animation Sample** d'Epic, pas le template Third Person |
+| Plugins activés | `ModelingToolsEditorMode`, `ModelContextProtocol`, `MCPClientToolset`, `EditorToolset`, **`PythonScriptPlugin`**, **`EditorScriptingUtilities`** |
+| Canal MCP | `.mcp.json` → serveur HTTP `http://127.0.0.1:8000/mcp` |
+| Niveaux présents | `Content/ZenRayShards/Levels/L_Level1.umap`, plus `DefaultLevel`, `LocomotorLevel`, `NPCLevel` du sample |
+| Dossiers de contenu | `Blueprints`, `Characters`, `MetaHumans`, `Levels`, `LevelPrototyping`, `Input`, `Audio`, `Widgets`, `Locomotor`, `ThirdPerson`, `Collections`, `Developers`, `ZenRayShards` |
+| Scripts existants | `Scripts/probe_shot.sh`, `Scripts/probe_headless.py` |
+| Journal du projet | `PROGRESS.md`, une seule entrée, 2026-08-07 19:30 |
+
+**Correction d'une note antérieure.** La bannière du 17 août dans `~/.claude/CLAUDE.md` dit que
+`PythonScriptPlugin` était présent dans le moteur mais non activé dans `ZenRayShards.uproject`. Ce
+n'est plus vrai : la mesure du 21 août montre `PythonScriptPlugin` **et** `EditorScriptingUtilities`
+activés, et deux sauvegardes du `.uproject` datées du 7 et du 17 août témoignent du passage. Le canal
+Python headless est donc ouvert côté projet, il reste à l'outiller.
+
+**Acquis technique déjà payé, à ne pas repayer.** Les entrées vivent dans `/Game/Input`, pas dans
+`/Game/ThirdPerson/Input`. La propriété qui porte les touches s'appelle `DefaultKeyMappings` ;
+`Mappings` est dépréciée et renvoie un tableau vide, ce qui donne l'illusion d'un asset sans contenu.
+Le clavier est déjà en AZERTY (ZQSD) dans `IMC_Default` et `IMC_Sandbox`. Et l'éditeur réécrit le
+`.uproject` depuis sa liste en mémoire dès qu'on coche une case dans la fenêtre Plugins : la voie
+fiable pour activer un plugin passe par l'interface, pas par le fichier, tant que l'éditeur tourne.
+
+---
+
+### 7.1 LE CANAL MCP EST OUVERT, ET IL MARCHE DEPUIS N'IMPORTE OÙ (2026-08-21)
+
+Première session de développement du jeu. Le canal réclamé à la section 6 existe désormais, et il
+est vérifié.
+
+**Ce qui bloquait, et la seule chose qui bloquait.** Le serveur MCP d'Unreal écoute bien sur
+`http://127.0.0.1:8000/mcp` dès que l'éditeur est ouvert, mais `.mcp.json` est *project-scoped* :
+une session de Claude Code rootée ailleurs, sur `Memory`, par exemple, ne voit **aucun** outil
+`unreal`. Exactement le même piège que les skills project-scoped, déjà payé et écrit dans
+`docs/INDEX-ERREURS-FEATURES.md` de ZenRayProgress. Ce n'était donc pas une limite technique, c'était
+une question de racine de session.
+
+**La parade, et elle vaut mieux que la contrainte.** Le protocole MCP est du JSON-RPC sur HTTP, rien
+de privé. `Scripts/mcp.py` fait la poignée de main et appelle les outils depuis n'importe quelle
+session, n'importe quel dossier, sans rien reconfigurer :
+
+```
+python3 Scripts/mcp.py ping                              l'éditeur répond-il ? code de sortie exploitable
+python3 Scripts/mcp.py toolsets                          les 19 toolsets exposés
+python3 Scripts/mcp.py tools <toolset>                   VUE COMPACTE : noms + arguments requis
+python3 Scripts/mcp.py toolschema <toolset> <outil>      le schéma d'UN outil, quand il faut le détail
+python3 Scripts/mcp.py t <toolset> <outil> '<json>'      appeler
+```
+
+**Le piège de budget à ne jamais rejouer.** `describe_toolset` rend le schéma COMPLET de tous les
+outils d'un toolset : plus de trente mille caractères pour `SceneTools` seul. Lire ça pour trouver
+un nom d'outil brûle un budget entier. D'où la commande `tools`, qui n'affiche que les noms et les
+arguments requis, et `toolschema` pour descendre au détail d'un seul outil quand c'est nécessaire.
+
+**Les 19 toolsets disponibles**, mesurés le 2026-08-21 : `AgentSkillToolset`, `EditorAppToolset`,
+`LogsToolset`, `ActorTools`, `AssetTools`, `BlueprintTools`, `CurveTableTools`, `DataAssetTools`,
+`DataTableTools`, `MaterialTools`, `MaterialInstanceTools`, `ObjectTools`, `PrimitiveTools`,
+`SceneTools`, `SkeletalMeshTools`, `StaticMeshTools`, `StringTableTools`, `ProgrammaticToolset`,
+`TextureTools`.
+
+**Deux tours de main appris sur le tas, qui coûtent une erreur chacun.**
+
+Un, les propriétés d'un Blueprint se lisent sur son **objet par défaut**, jamais sur la classe
+générée : `/Game/Blueprints/GM_Sandbox.Default__GM_Sandbox_C` répond, `…GM_Sandbox_C` rend
+« the following properties could not be read ».
+
+Deux, un acteur non externalisé, le `WorldSettings` en fait partie, ne se sauve pas seul :
+`save_actor` refuse en disant « Save the level instead ». Il faut passer par
+`AssetTools.save_assets` sur le chemin du niveau, puis vérifier avec `is_dirty` qui doit retomber à
+`false`. C'est le seul contrôle qui prouve que l'écriture a atteint le disque.
+
+### 7.2 PREMIER GESTE SUR LE JEU, le personnage jouable (2026-08-21)
+
+**Demandé :** « juste éditer le World Settings dans L_Level1 » pour mettre en place le personnage
+third person.
+
+**Fait, et vérifié par relecture après écriture.** Le `GameMode Override` de
+`/Game/ZenRayShards/Levels/L_Level1` passe de `None` à
+`/Game/Blueprints/GM_Sandbox.GM_Sandbox_C`. Niveau sauvegardé, `is_dirty` retombé à `false`.
+
+**Pourquoi GM_Sandbox et non BP_ThirdPersonGameMode**, alors que le second porte littéralement le
+nom demandé. Trois game modes existent dans le projet, et j'ai lu ce que chacun fait spawner avant
+de choisir :
+
+| Game mode | Pion spawné | Ce que c'est |
+|---|---|---|
+| `GM_Sandbox` | `SandboxCharacter_CMC` | Le personnage du Game Animation Sample : motion matching, traversal, tout le nécessaire |
+| `BP_ThirdPersonGameMode` | `BP_ThirdPersonCharacter` | Le mannequin nu du template Third Person |
+| `GM_Locomotor` |, | La variante Mover du même sample |
+
+Ce projet n'est PAS le template Third Person, c'est le **Game Animation Sample**, noté dès le
+2026-08-07. `SandboxCharacter_CMC` est donc son personnage third person, et le bon : il apporte la
+locomotion complète dès la première minute au lieu d'un mannequin à rééquiper. Il correspond en
+outre au travail déjà fait sur les entrées, l'AZERTY ayant été posé sur `IMC_Sandbox` autant que sur
+`IMC_Default`.
+
+**Pour revenir au template nu**, si un jour c'est ce qui est voulu, une seule commande suffit :
+
+```
+python3 Scripts/mcp.py t editor_toolset.toolsets.object.ObjectTools set_properties \
+  '{"instance":{"refPath":"/Game/ZenRayShards/Levels/L_Level1.L_Level1:PersistentLevel.WorldSettings_1"},
+    "values":"{\"DefaultGameMode\":{\"refPath\":\"/Game/ThirdPerson/Blueprints/BP_ThirdPersonGameMode.BP_ThirdPersonGameMode_C\"}}"}'
+```
+
+**Ce qui reste à vérifier par Matthieu, et que je ne peux pas voir.** Le niveau porte bien un
+`PlayerStart` (`PlayerStart_0`), donc le personnage a où apparaître. Mais je ne vois pas l'écran :
+appuyer sur Jouer et confirmer que le personnage se déplace en ZQSD est le verdict que seul un geste
+réel rend.
+
+### 7.3 « JE NE VEUX PLUS AUCUN CRASH », ce qui s'est passé, et pourquoi ce n'en était pas un (2026-08-22)
+
+**Le constat brut, mesuré avant toute interprétation.** L'éditeur n'a JAMAIS planté. Le PID 89346
+était le même avant et après la fenêtre d'alerte, il répondait toujours au MCP, toujours sur
+`L_Level1`. Aucun rapport de plantage dans `Saved/Crashes` du projet.
+
+**Ce qui a réellement planté.** `CrashReportClientEditor`, le processus RAPPORTEUR que le moteur
+lance pour transmettre un incident. Le rapport système le nomme explicitement. Le rapporteur est
+mort ; l'éditeur, lui, n'a rien eu.
+
+**Ce qui l'avait déclenché, lu dans le rapport et non deviné.** Un ENSURE, c'est-à-dire une
+assertion NON FATALE : `CrashType: Ensure`, `IsEnsure: true`. Le moteur la journalise et continue.
+Son message exact :
+
+```
+Ensure condition failed: Graph [EdGraph.cpp:329]
+AnimationGraph /Game/Blueprints/SandboxCharacter_CMC_ABP:AnimGraph
+has invalid SubGraph array entry at 0
+```
+
+Une entrée NULLE dans le tableau des sous-graphes de l'AnimBlueprint du personnage. Le défaut est
+livré tel quel avec le Game Animation Sample : l'asset est propre sur disque (`is_dirty` à `false`),
+donc personne ne l'a modifié. Mon édit du World Settings ne l'a pas CRÉÉ ; il l'a RÉVÉLÉ, en faisant
+charger ce personnage. La distinction compte, et je la dis dans ce sens.
+
+**Le correctif posé.** `Config/DefaultEngine.ini` reçoit `[CrashReportClient] Ensure.RecordDump=false`.
+Cette clé est celle que le moteur lisait vraiment au moment des faits, relevée dans le
+`CrashReportClient.ini` généré à côté du rapport, où elle valait `true`. À `false`, un ensure reste
+journalisé mais ne lance plus le rapporteur : plus aucune fenêtre. **Un plantage FATAL reste
+rapporté** ; seules les assertions non fatales cessent de déranger. Sauvegarde de l'ancien fichier :
+`Config/DefaultEngine.ini.bak-20260822`. Prend effet au prochain démarrage de l'éditeur.
+
+**L'entrée nulle elle-même n'est pas touchée, et c'est délibéré.** Le personnage fonctionne, Matthieu
+l'a constaté, il bouge. Modifier l'AnimBlueprint d'un personnage qui marche pour faire taire une
+assertion non fatale échangerait un désagrément contre un risque. Le jour où l'on voudra la nettoyer,
+cela demandera un script Python dans l'éditeur ; `ProgrammaticToolset` ne suffit pas, son bac à sable
+n'exécute que de l'orchestration d'outils, pas du Python général.
+
+**La notification MetaHuman est un troisième sujet, sans rapport.** Les trois réglages réclamés sont
+DÉJÀ dans `Config/DefaultEngine.ini`, sous la bonne section `[/Script/Engine.RendererSettings]`. Mais
+mesurés en vif, les trois valent `0` : cette session d'éditeur a démarré avant qu'ils n'y soient. Et
+`r.GPUSkin.UnlimitedBoneInfluences` porte dans son aide « Cannot be changed at runtime ». Un
+redémarrage de l'éditeur les applique, rien d'autre n'est à faire.
+
+### 7.4 CORRECTION : JE VOIS L'ÉCRAN (2026-08-22)
+
+J'ai écrit en §6 et en §7.2 que je ne voyais pas l'éditeur et que le verdict visuel revenait à
+Matthieu. **C'est faux, et cela change ce que je peux vérifier moi-même.**
+
+`EditorToolset.EditorAppToolset` expose `CaptureViewport`, `CaptureEditorImage` et
+`CaptureAssetImage` : ils rendent un PNG en base64 que je décode et que je REGARDE. Testé le
+2026-08-22, 42 579 octets écrits dans `Saved/AgentShots/viewport.png`. Le même toolset expose aussi
+`StartPIE`, `StopPIE` et `IsPIERunning` : je peux donc lancer le jeu, capturer, arrêter.
+
+```
+python3 Scripts/mcp.py t EditorToolset.EditorAppToolset CaptureViewport \
+  '{"captureTransform":{},"annotations":[]}'
+```
+
+Deux pièges de signature, payés une erreur chacun : `captureTransform` et `annotations` sont
+OBLIGATOIRES malgré leur air facultatif, et le serveur refuse en disant « needs a default value ».
+
+**Ce que cela déplace.** La deuxième pièce réclamée en §6, un vérificateur qui fait tourner le
+projet et produit une capture, n'est plus à construire de zéro : le moteur la fournit. Il reste à
+l'emballer dans un script qui rende un code de sortie et une sortie `--json`, selon la loi du
+vérifiable.
+
+**Ce qui reste hors de ma portée, et qu'il ne faut pas confondre avec ce qui précède.** Je vois une
+IMAGE, pas le RESSENTI. Qu'une caméra soit agréable, qu'un combat ait du poids, qu'une animation
+tombe juste : cela ne se lit sur aucune capture, et ce verdict-là reste à Matthieu.
+
+### 7.5 LES 18 PLUGINS MANQUANTS, la vraie cause de tout (2026-08-22)
+
+**Le symptôme.** Treize Blueprints refusaient de compiler, dont toute la pile du personnage, et
+l'éditeur demandait confirmation avant chaque Jouer.
+
+**La cause, une seule et elle explique tout.** Le contenu du Game Animation Sample a été copié dans
+ce projet, mais `ZenRayShards.uproject` n'activait AUCUN des plugins dont ce contenu dépend. Six
+plugins étaient déclarés, tous liés à l'outillage, aucun à l'animation. Les deux sauvegardes du
+`.uproject` (7 et 17 août) n'en avaient pas davantage : ils n'ont jamais été là.
+
+**La méthode, et c'est elle qui vaut d'être retenue.** Aucun plugin n'a été deviné. Chacun a été
+déduit d'un SYMBOLE MANQUANT lu dans le journal de l'éditeur, puis localisé par un `grep` dans les
+sources du moteur :
+
+| Symbole manquant dans le journal | Plugin qu'il désigne |
+|---|---|
+| « requires the 'Locomotor' plugin » | `Locomotor` |
+| `CharacterMover`, `NavMover`, `ConsumeNavMovementData` | `Mover` |
+| « Component class is not set for 'MotionWarping' » | `MotionWarping` |
+| `ConvertToBlendStackNodePure`, `ConvertToPoseHistoryNodePure` | `PoseSearch` |
+| `MakeVisualLoggerDebugDrawer`, `DrawDebugGraphAxes`, `AddToFloatHistoryArray` | `DrawDebugLibrary` |
+| `SetRetargetAsset` | `IKRig` |
+| `SetSubject` | `PerformanceCaptureCore` |
+| nœud « State Machine Blend Stack » | `BlendStack` |
+
+Les autres, `MotionTrajectory`, `AnimationWarping`, `AnimationLocomotionLibrary`, `Chooser`,
+`ContextualAnimation`, `SmartObjects`, `GameplayBehaviorSmartObjects`, `StateTree`, `DeformerGraph`,
+`LiveLink`, accompagnent les précédents dans le sample. Total : **6 plugins avant, 24 après.**
+
+**Le piège opérationnel, déjà payé le 7 août et re-payé ici.** L'éditeur RÉÉCRIT `.uproject` depuis
+sa liste en mémoire tant qu'il tourne. Toute modification faite sur le disque pendant ce temps est
+effacée. La séquence qui marche est donc : fermer l'éditeur proprement (`osascript … to quit`, jamais
+`kill`), vérifier avec `pgrep` qu'il est bien parti, écrire, relancer. Vérifier avant d'écrire que
+rien n'est modifié : `is_dirty` sur le niveau et sur les assets ouverts.
+
+**Résultat mesuré.** 13 assets en erreur → **1**. Zéro plainte de plugin manquant, zéro ensure. PIE
+démarre et le pion joueur `SandboxCharacter_CMC_C_0` apparaît bien dans le monde de jeu.
+
+**Ce qui reste, et c'est le dernier point ouvert.** `SandboxCharacter_CMC_ABP` porte encore deux
+erreurs de tag : les nœuds `OffsetRoot` et `State Machine Blend Stack` sont référencés par tag mais
+introuvables dans le graphe. C'est le même asset que l'ensure du début de session
+(« invalid SubGraph array entry at 0 ») : une donnée abîmée dans l'AnimGraph, pas un plugin manquant
+ `AnimationWarping` et `BlendStack` sont tous deux actifs et vérifiés. Le personnage se joue quand
+même. Deux voies, non tranchées : réparer le graphe, ou basculer le pion de `GM_Sandbox` sur
+`SandboxCharacter_Mover`, la variante Mover du même sample, qui compile déjà sans une seule erreur.
+C'est un choix de design, il revient à Matthieu.
+
+**Sauvegardes du `.uproject`** : `.bak-20260822-avant-plugins` (6 plugins), plus les deux anciennes.
+
+## 8. Les deux goulots réels : environnement 3D et animation 3D
+
+Mon focus principal et mon goulot principal, ce sont les **environnements 3D de qualité AAA**, type
+God of War, et l'**animation 3D**. Pas le code, que je sais faire ; pas le design, qui est mon point
+fort. Le goulot est l'art, l'animation, l'audio, le contenu.
+
+**L'animation 3D, l'aveu du 1er août.** Mon gros problème, c'est que je ne fais pas d'animation 3D.
+Je devrais me chauffer à en faire, et voir si c'est automatisable. Ce serait déjà très bien. Il y a un
+blocage dans ma tête qui me dit « ne fais pas d'animation 3D » et je ne sais même pas pourquoi.
+
+**Les personnages 3D.** Je vois un problème sur les personnages, mais c'est surtout que je n'ai jamais
+appris à en faire. Ce n'est pas un plafond, c'est une compétence non acquise, donc une contrainte de
+direction artistique à contourner ou à apprendre, au choix.
+
+**Pourquoi Houdini et Maya n'ont jamais pris chez moi alors que ma main les maîtrise.** Un asset qui
+ne répond à aucune question de design n'a pas de destinataire. C'est la phrase qui explique dix ans de
+travail dont je ne me suis jamais servi.
+
+---
+
+### 8.1 LE CHANTIER ANIMATION, probablement par où commencer (2026-08-22)
+
+**L'idée, dans ses mots.** Il va sans doute falloir commencer par l'animation 3D, parce que c'est le
+plus gros goulot actuel. Il faut récupérer les workflows d'animation, c'est-à-dire trouver la
+meilleure méthodologie d'animation 3D, lancer les recherches les plus modernes d'août 2026, et
+commencer à générer des animations qui seront ensuite intégrables dans un **Anim Blueprint**, pour
+avoir toutes les transitions de locomotion. Et de là, générer toutes les animations 3D dont il aura
+besoin, y compris les angles de caméra.
+
+**La méthode que ce chantier appelle, et ce n'est pas un détail.** C'est exactement le cas d'école de
+la méthode Carlos Diaz écrite en tête du `~/.claude/CLAUDE.md` global : on ne demande pas « génère-moi
+une animation de course ». On demande d'abord **quelle est la meilleure méthodologie d'animation 3D en
+2026**, on en tire un cadre, et on applique ce cadre au besoin réel. Méthodologie d'abord, exécution
+ensuite. Sur un domaine qui bouge aussi vite que la génération d'animation, sauter cette étape revient
+à figer la première méthode trouvée, qui a de fortes chances d'avoir six mois de retard.
+
+**L'ordre de marche, tel qu'il le décrit :**
+
+1. Trouver la méthodologie, pas l'outil. Le cadre d'abord.
+2. Chercher l'état de l'art réel d'août 2026, sources à l'appui, jamais de mémoire.
+3. Générer une première animation.
+4. L'intégrer dans un **Anim Blueprint**, avec les transitions de locomotion.
+5. Étendre : le reste des animations, puis les angles de caméra.
+
+**Ce qui n'est PAS encore fait, et qu'il ne faut pas confondre avec ce qui précède.** La recherche
+n'a pas été lancée. Rien de ce qui est écrit ici ne prétend connaître l'état de l'art : c'est un plan
+de chantier, pas un résultat. La première session qui l'ouvrira commencera par l'étape 1.
+
+**Pourquoi ce chantier en premier plutôt qu'un autre.** §8 dit que les deux goulots sont
+l'environnement 3D et l'animation 3D, et §9 range l'animation en « peut-être » automatisable, la
+seule ligne du tableau qui ne soit ni oui ni non. C'est donc la case qui vaut d'être tranchée en
+premier : elle décide de ce que le reste du jeu peut coûter.
+
+**Ce que ça débloque directement.** GD-16, les transitions caméra-animation en plein combat, vit
+précisément dans l'Anim Blueprint et dans la caméra. Le chantier animation est son préalable.
+
+### 8.2 MARKERLESS MOTION CAPTURE, le setup, et le protocole CORRIGÉ (2026-08-22)
+
+**État : le setup est prêt, le test n'est pas lancé.** Matthieu a demandé qu'on attende sa validation
+avant de lancer la capture elle-même.
+
+#### La source de référence
+
+**Chaîne YouTube à garder :** `https://www.youtube.com/@VideoGameAnimationReferences/videos`
+Ses mots : « c'est une pépite à garder ». C'est LA chaîne de références d'animation de jeu vidéo, à
+invoquer dès qu'il demande « la chaîne YouTube qui consigne l'animation ». Passer par le skill
+`ytb-dlp` pour en tirer un extrait.
+
+**Premier extrait, téléchargé et vérifié :**
+
+| | |
+|---|---|
+| Source | *Ghost of Yōtei Animations Odachi Moveset*, `gihn9Lk7SxQ` |
+| Extrait | 0 à 4 secondes |
+| Fichier | `MoCap/Take001/Take001.mp4` |
+| Mesuré | **3840×2160**, **60 fps**, **240 images**, 4,000 s exactement, **12,7 Mo**, CRF 14 |
+
+**LA QUALITÉ D'ABORD, TOUJOURS. Correction de Matthieu le 22 août, et elle vaut règle.** J'avais pris
+du 720p en pensant au poids : c'est l'inverse de l'ordre juste. On prend **la résolution maximale
+disponible**, on mesure, et si le fichier dépasse 95 Mo on desserre le **DÉBIT**, jamais la
+résolution. Un suivi corporel lit des articulations : un pixel perdu ne se rattrape pas, un bit de
+débit oui.
+
+Ici le format maximal est le **315, 3840×2160 en 60 fps** (VP9, 6,07 Gio en entier). Encodé en x264
+`-preset slow -crf 14`, soit quasi sans perte, quatre secondes pèsent **12,7 Mo** : la question du
+poids ne se posait même pas. La boucle d'encodage part de CRF 14 et ne monte que si la limite
+l'exige, la résolution restant fixe.
+
+**Piège de téléchargement, payé et noté.** `yt-dlp --download-sections` fait faire la requête de
+plage par ffmpeg, qui n'a pas l'empreinte de client de yt-dlp : YouTube répond **403**, sur quatre
+clients différents. La voie qui marche : télécharger NATIVEMENT le format voulu, arrêter dès qu'on a
+assez d'octets pour l'extrait, puis couper en local. Le fragment `.part` porte déjà les premières
+secondes et se coupe tel quel, 88 Mo ont suffi pour quatre secondes de 4K.
+
+#### Le protocole, CORRIGÉ après lecture des sources du plugin
+
+Le protocole que Matthieu avait en tête décrivait des menus qui **n'existaient pas encore**, parce que
+quatre plugins étaient inactifs. C'est la correction principale, et elle explique pourquoi rien
+n'aurait fonctionné.
+
+**Étape 0, celle qui manquait.** Quatre plugins, en plus de `MetaHumanBodyTracker` :
+
+| Plugin | Pourquoi, vérifié dans les sources |
+|---|---|
+| `MetaHuman` | porte le type `MetaHumanPerformance` (`MetaHumanAnimator/Source/MetaHumanPerformance`) |
+| `MetaHumanCoreTech` | dépendance déclarée par `MetaHumanBodyTracker.uplugin` |
+| `LiveLinkHub` | la fenêtre `Tools > Live Link Hub` du protocole |
+| `CaptureManagerEditor` | porte l'ingestion Mono Video (`CaptureManagerIngestBlueprint`) |
+
+Activés le 22 août : le projet passe de 25 à **29 plugins**. Contrôle : zéro plainte de module, zéro
+erreur de compilation, et `search_subclasses` trouve désormais les classes `MetaHumanPerformance*`.
+
+**Ce que le protocole ne disait pas, et qui change la fin du pipeline.** Le plugin livre des assets
+**SMPL-X** et deux retargeters : `SKM_SMPL`, `SKEL_SMPL`, `IK_SMPL`, `IK_Metahuman`, `RTG_SMPL_MH`,
+`RTG_MH_IKRig`. Le suivi corporel ne sort donc PAS directement sur un squelette Unreal : il produit
+une animation sur un squelette **SMPL**, qu'un retargeter IK Rig transpose ensuite vers MetaHuman, et
+de là vers Manny/Quinn. L'étape « Export Skeleton → Existing Skeleton » du protocole saute cette
+conversion, et c'est probablement là que ça casserait.
+
+**LE PROTOCOLE CI-DESSOUS EST UNE HYPOTHÈSE, PAS UN ACQUIS.** Matthieu l'a dit le 22 août : le
+workflow ne se consigne pour de bon qu'UNE FOIS QU'UN ASSET D'ANIMATION A ÉTÉ CRÉÉ ET VALIDÉ. Tant
+qu'aucune animation n'existe, ces étapes sont déduites des sources du plugin, elles ne sont pas
+prouvées. C'est la règle I-04 appliquée à un protocole : ce qui n'a pas tourné ne s'écrit pas comme
+si ça avait tourné.
+
+**Le protocole tel qu'il devrait être :**
+
+1. **Plugins**, les cinq ci-dessus actifs, éditeur redémarré. *(fait)*
+2. **Vidéo**, un MP4 dans un dossier local hors `Content`. *(fait, `MoCap/Take001/`)*
+3. **Ingestion**, `Tools > Live Link Hub`, bascule sur **Capture Manager**, `Data Devices > Add >`
+   ingestion vidéo mono, pointer `Take Directory` sur `MoCap/Take001`, `Add to Queue`, `Start`.
+4. **Performance**, créer un asset `MetaHumanPerformance`, y assigner le *Footage Capture Data*
+   produit, désactiver *Face Tracking*, activer *Body Tracking*, `Process`.
+5. **Retargeting**, passer par `RTG_SMPL_MH` puis `RTG_MH_IKRig` pour atteindre le squelette cible.
+   **C'est l'étape que le protocole d'origine omet.**
+
+**L'étape 5 mérite son propre paragraphe, parce que c'est celle qui casserait.** Le protocole
+d'origine finissait sur « Export Skeleton → Existing Skeleton », en supposant que le suivi sort
+directement sur le squelette voulu. Ce n'est pas le cas. La chaîne réelle, lue dans le `Content` du
+plugin, est :
+
+```
+video  →  suivi corporel  →  animation sur squelette SMPL  (SKM_SMPL / SKEL_SMPL)
+                                        ↓  RTG_SMPL_MH
+                                   squelette MetaHuman      (metahuman_base_skel)
+                                        ↓  RTG_MH_IKRig
+                                   squelette cible          (Manny / Quinn / SandboxCharacter)
+```
+
+Deux retargeters d'affilée, pas un export direct. `IK_SMPL` et `IK_Metahuman` sont les IK Rigs
+source et destination du premier saut ; `RTG_MH_IKRig` fait le second.
+
+**Un MetaHuman est posé dans le niveau pour juger le rendu à l'œil** (22 août) :
+`BP_Kellan_C_0`, en `(250, 0, 0)`, tourné de 180° pour faire face au `PlayerStart`. Niveau
+sauvegardé, `is_dirty` retombé à `false`. Capture vérifiée : le personnage rend avec ses matériaux,
+ses textures et son ombre portée. Il servira de cible visuelle pour l'animation retargetée.
+
+**Ce qui reste à vérifier par l'usage**, et que je ne peux pas trancher depuis les sources : le nom
+exact de l'entrée d'ingestion mono dans le menu `Add`, et si l'export propose le retargeting
+automatiquement ou s'il faut enchaîner les deux `RTG_` à la main. Ces deux points se règlent en
+ouvrant la fenêtre.
+
+#### La contrainte de poids, à tenir dès maintenant
+
+Le dossier Unreal deviendra un dépôt GitHub. **Aucun fichier au-dessus de 95 Mo**, seuil repris de
+ZenRayProgress : GitHub refuse à 100 Mo par `GH001`, et le commit fautif reste coincé en local en
+bloquant tout ce qui suit.
+
+**L'ordre des arbitrages, et il n'est pas négociable.** D'abord la résolution maximale. Ensuite on
+mesure. Si et seulement si ça dépasse, on monte le CRF, c'est-à-dire on baisse le débit. Si le CRF ne
+suffisait pas, on raccourcirait la DURÉE. La résolution ne se touche jamais. `Take001.mp4` le montre :
+4K60 en CRF 14 pour 12,7 Mo, on est sept fois sous la limite.
+
+## 9. Ce qui s'automatise et ce qui ne s'automatise pas, état du 16 août
+
+Ma propre liste, telle que je l'ai écrite. Elle décrit ce que je crois automatisable dans une boucle
+de production, pas ce qui est prouvé sur la machine.
+
+| Couche | Automatisable dans une boucle ? |
+|---|---|
+| Assets 3D | Oui |
+| Interfaces et animations d'interface | Oui |
+| Histoire | Oui |
+| Séquences de jeu | Oui |
+| Musique et SFX | Oui |
+| Gameplay | Oui |
+| Animation 3D | Peut-être |
+| Personnages 3D | Non |
+
+La 3D de personnage reste la seule case fermée, et elle l'est par un savoir-faire non appris, non par
+l'outil.
+
+**La réserve que je maintiens, et elle est saine.** Je ne pense pas qu'à date tout soit automatisable,
+et je ne peux pas m'en remettre à ce que dit Claude, parce que je connais mieux certains aspects et
+parce que ça va parfois trop vite. Ce que je veux, c'est mesurer, pas croire.
+
+---
+
+## 10. Game design, le carnet ouvert
+
+Rien ici n'est figé. C'est le carnet, il grossit à chaque session, et il n'y a pas de document de
+game design à écrire avant de commencer.
+
+### 10.1 Pistes déposées, actées
+
+- **La double boucle.** Mon idée du 3 août : un jeu où l'on **fait grandir un village** par deux
+  boucles de gameplay qui s'alimentent. Reprise le 17 août sous la forme « la double boucle Zelda et
+  construire des maisons », avec loot et recettes de cuisine.
+- **Le squelette FFVII Remake.** Prendre le squelette d'un jeu qui existe et qui fonctionne, plutôt
+  que d'inventer une architecture. Ce qui rend FFVII Remake extrêmement fluide, ce n'est pas son
+  système de combat, c'est son **UX, son interface et sa caméra**. Reproduire quelque chose de cette
+  ambition serait déjà énorme.
+- **Rester simple, presque littéraire.** Partir de quelque chose de simple et le rester, pour ne
+  jamais créer un objet trop complexe.
+- **Le combat comme socle assumé.** Tous les jeux PlayStation passent par du combat. Je peux partir de
+  là et me rapprocher des créateurs que j'admire, tout en gardant l'espace où Sony est faible : les
+  jeux où l'on ne tue pas tout le monde.
+- **Les thèmes viennent de ma vie.** Qu'est-ce que je veux raconter, pourquoi, à quoi bon.
+
+### 10.2 Pistes déposées, non actées
+
+À traiter comme des traces, jamais comme des décisions.
+
+- **ZenRayKingdom** et le document **Key Of Time** : matière à intégrer, non arbitrée.
+- **Bretagne + Chine + Japon** comme mélange culturel. Je ne suis pas sûr que tout fusionner soit la
+  meilleure idée, mais il y a de bonnes idées là-dedans.
+- **Mon level design commencé sur Ghost of Tsushima** à partir des concept arts : je m'en souviens
+  entièrement. Le séquencer et le rendre cohérent sans que ce soit bancal, quitte à ne garder que la
+  meilleure idée ou à recommencer.
+- **Amael**, nom de personnage, apparu le 3 août sous la forme « personnage d'Amael ? ». Le 21 août
+  j'ai ajouté une référence visuelle en disant explicitement de ne rien acter pour l'instant : elle est
+  gardée ici comme simple trace, à supprimer d'une ligne si je préfère. Référence : blond, dans la
+  veine de Daemon Targaryen (House of the Dragon).
+
+### 10.3 La question de méthode, tranchée le 16 août
+
+Créativement, itérer est le plus important. Mais dans certaines œuvres, hors des œuvres-fleuves à la
+One Piece, le mieux est de faire **page blanche** : même Game of Thrones est structuré. Donc itérer
+oui, mais sur une structure, pas sur un magma.
+
+### 10.4 Le doute honnête, gardé parce qu'il est juste
+
+Est-ce que je me rends compte de tout ce qui doit être fait ? Level design, world building, direction
+artistique : on ne fait pas juste un drive. C'est très bizarre parce que je sais à peu près ce que je
+devrais faire, et en même temps je ne sais pas du tout dans quoi je m'embarque. Ce que je vois, c'est
+Claude, et j'itère sur Unreal pour créer des assets qui font un jeu.
+
+Pourquoi ça n'a pas marché avant ? Parce que je faisais de la 3D sans faire du design, et c'est le
+design qui m'intéresse. Le plus important dans un jeu, c'est le **visuel et la narration**, et ce sont
+justement les deux plus durs à itérer. Il faut travailler énormément de systèmes avant d'avoir le
+premier squelette jouable. La réponse que je me donne : le faire dès maintenant, parce que le travail
+incompressible existera de toute façon, et parce que dans un siècle où créer se fait sans permission,
+le plus simple est de le faire directement.
+
+### 10.5 Ce que j'ai et que les autres n'ont pas
+
+Tout le monde pourrait faire ce que je fais. Mais tout le monde n'a pas le courage de le faire, ni le
+système pour aller jusqu'au bout. Moi j'ai trois choses : je reste concentré des heures sur une seule
+chose, ce que très peu de gens savent faire ; je suis geek, et la majorité des gens n'ont pas ce
+talent-là ; et je **finis les œuvres**, je les analyse, je vais au bout, je les comprends, souvent du
+premier coup parce que j'en ai déjà vu beaucoup.
+
+---
+
+## 11. Direction artistique et références
+
+**La règle de tri, trouvée le 17 août.** On ne vend pas une démo technique, on vend un **univers**.
+Une image qui « fait trop Houdini / Unreal » est disqualifiée quel que soit son niveau technique. Ce
+qu'on cherche, c'est ce qui transmet une émotion et ce qui est identifiable et vendable.
+
+**La question à poser à chaque référence :** qu'est-ce que je pourrais vendre comme produit fini et
+itérable, que quelqu'un voudrait acheter immédiatement ?
+
+**Attention à un piège que j'ai noté moi-même.** Mettre une image directement biaise ce qu'on essaie
+de créer. Une référence sert à cadrer, pas à décalquer.
+
+**Références citées le 17 août :** FFVII Remake (le gameplay, Barret en combat, la capsule Steam de
+Intergrade), Final Fantasy XVI (le teaser PS5), Arrietty (Ghibli), le challenge ArtStation Dragon's
+Rise de Yinuo Chen, Resonance, The Entrance de Manon Micouleau. Deux captures personnelles
+supplémentaires vivent dans les uploads du 17 août.
+
+**Références du 4 août, matière narrative en cours :** Beast of Reincarnation, House of the Dragon
+saison 3, Bleach Thousand-Year Blood War épisodes 41 et 42.
+
+**Culture de production :** le directeur de Game Freak, vidéo notée le 14 août.
+
+---
+
+## 12. La galerie ZenRayShards sur ZenRayProgress
+
+Deux fichiers de référence servent le jeu, et ils ne font pas la même chose.
+
+1. **La galerie `ZenRayShards`** dans la vue Gallery de ZenRayProgress. C'est mon PureRef qui ne dit
+   pas son nom : des références visuelles, avec un **titre** et une **note** qui est une vraie
+   description et pas seulement un titre, plus une vue qui aligne les images et permet de les
+   réagencer au glisser-déposer.
+2. **Ce fichier**, qui porte le texte, la pensée, les décisions et le game design.
+
+L'un montre, l'autre explique. On ne recopie jamais l'un dans l'autre.
+
+**Note de conception, du 1er août.** ZenRayMedia est un éditeur d'interface avec des calques HTML,
+ZenRayRef est une instance façon Miro pour poser des références. En soi, on pourrait fusionner les
+deux. À garder en tête plutôt qu'à faire tout de suite.
+
+---
+
+## 13. Le média, publier pendant que je construis
+
+Le jeu et la publication ne sont pas deux tâches, c'est le même geste. Un devlog publié est
+simultanément l'avancement du jour et l'acte d'exposition du jour.
+
+- **Les canaux :** Instagram, Reels, TikTok, YouTube Shorts, plus le site `matthieuhuguet.com`
+  (dépôt ZenRayWebsite) et ZenRayProgress. Instagram et YouTube sont à l'arrêt aujourd'hui, un jeu
+  ambitieux est ce qui les rallume.
+- **Les outils existent déjà, ne rien réinventer :** les skills `zenray-html-photoshop` pour les
+  visuels et `zenray-social-media` pour les posts.
+- **Ce qui compte, c'est l'exposition, jamais la production.** Ma production n'a jamais manqué. Un
+  travail non publié vaut zéro dans ce décompte, quelle que soit sa qualité.
+- **Le style.** Casual, direct, comme si je parlais à quelqu'un à la deuxième personne. C'est assez
+  simple à copier, et c'est le mien.
+- **Ce que j'ai du mal à accepter, et que j'accepte quand même.** Je comprends les règles du jeu
+  médiatique et je n'ai pas envie d'y jouer. Mais c'est tout, ce n'est pas plus compliqué que ça :
+  on comprend les règles et on les applique.
+
+---
+
+## 14. Août 2026 au Japon, les décisions qui ont mis ce projet sur les rails
+
+Synthèse par concept des notes quotidiennes du 1er au 20 août 2026, écrites au Japon. Ma voix, ma
+grammaire corrigée. Les dates entre parenthèses renvoient au jour où la chose a été écrite. Rien
+n'est jeté : ce qui ne concerne pas directement le jeu est rangé au §18.
+
+### 14.1 L'exposition, le seul acte qui manquait
+
+**(1er août)** Exposer quelque chose de soi à un verdict que je ne contrôle pas.
+
+**(3 août)** Discussion avec Claude dans la nuit sur l'importance de la publication. Deux problèmes
+que je vois : je suis au Japon, globalement motivé, mais en situation d'incapacité ; et je veux
+produire, apprendre, publier, mais ça casse ma motivation et je finis par faire de la merde, YouTube
+et jeux vidéo.
+
+**(3 août)** Est-ce que j'ai peur d'échouer ? J'ai peur de réussir trop tard. Et que tout le monde
+s'en fiche. Qu'est-ce qui fait que les gens s'intéressent ? Des publications régulières et des
+tentatives. Je passe trop de temps à réfléchir plutôt qu'à produire ou à publier, si bien que je n'ai
+aucun feedback.
+
+**(11 août)** La phrase la plus juste dans tous les contextes : **Volume × Exposition × Feedback**.
+
+**(11 août)** Je m'en moque : je poste, dans l'espoir d'y arriver à terme. Il faut construire une
+carapace à l'indifférence, et dans le volume, à un moment, il y a bien un truc qui marche. Ça débloque
+mon indépendance.
+
+### 14.2 Devenir un meilleur artiste, et partir de l'idée
+
+**(3 août)** Simplement devenir un meilleur artiste. Partir de l'idée, et non de l'idée technique.
+Consigne d'être joyeux.
+
+**(1er août)** On ne juge pas quelqu'un artiste au moment où il se déclare artiste. On juge sur la
+qualité du travail et sur ce que la personne fait. Et moi, j'ai un énorme savoir et beaucoup de
+réflexion, mais très peu d'œuvres produites.
+
+**(1er août)** Ce qui est bien avec l'IA, c'est qu'elle prend le travail ingrat sous forme de briques
+techniques automatisées. Et réinventer la roue n'a aucun intérêt : c'est ce que je faisais sur
+Substance 3D, alors qu'il existe des domaines beaucoup plus systémiques qui permettent à terme de
+faire davantage.
+
+**(1er août)** La question qui pique : pourquoi est-ce que je fais du code alors que je veux faire de
+la 3D ? Réponse : parce que je ne peux pas être Kojima et faire un jeu entier si je sais seulement
+faire de la 3D. Avec le code, je peux. Certaines compétences ont juste plus de puissance et d'impact,
+mais elles sont plus longues à apprendre.
+
+**(1er août)** Ce qui reste en suspens et que j'assume : je ne sais pas faire de musique, je ne
+m'entraîne ni au level design ni au concept art.
+
+**(1er août)** L'imagination détermine ce qui existe ou non dans le monde. Demain, les gens n'auront
+peut-être plus d'expertise sur ce qu'ils créent, parce que l'IA automatisera des réflexions qu'ils
+n'auront même pas besoin de se poser.
+
+### 14.3 Le blocage 3D, nommé
+
+**(1er août)** Mon gros problème, c'est que je ne fais pas d'animation 3D. Il y a un blocage dans mon
+cerveau qui me dit de ne pas en faire, et je ne sais pas pourquoi. Claude Code me met dans une
+dynamique de travail, mais pas dans une dynamique de réflexion créative. Et c'est beaucoup plus simple
+de lancer un site web que de lancer Houdini, parce que sur Houdini je ne sais pas exactement ce que je
+vais faire.
+
+**(16 août)** Pourquoi ma 3D n'a jamais abouti : je fais de la 3D sans savoir à quoi elle sert, à part
+faire quelque chose de joli. Elle ne répond à aucune problématique de design. C'est de la démo
+technique, donc chiant, ni artistique ni rien.
+
+**(16 août)** Est-ce que je suis capable d'avoir du goût ? Oui, je pense. Avoir du goût, c'est aussi
+composer avec le réel.
+
+### 14.4 Le tri des projets, et l'interdiction de revenir en arrière
+
+**(17 août)** Toki Pavillion, le Bayou, Noyés, la ville japonaise, les travaux du CNAM, mon projet
+FFVII un peu bancal : reprendre l'existant et le rendre pépite est tentant, mais aucun de ces projets
+ne résout un problème de design. Donc **non, pas de retour en arrière**. Raccourci vers ZenRayShards.
+
+**(17 août)** Il y a tellement d'idées à créer et si peu de temps dans ma vie. Les idées existeront
+toujours ; ce qui manque, c'est de livrer.
+
+**(17 août)** Contacter des artistes et être lead, comme Guillaume Broche : un RPG ambitieux.
+
+### 14.5 Le jeu plutôt que le pipeline
+
+**(17 août)** Il est plus intéressant pour moi de faire un jeu que de faire des assets pour des jeux,
+ou des assets pour des outils. Le côté pipeline, je m'en moque, parce que je suis exactement comme
+Guillaume Broche : ce qui m'intéresse, c'est de faire un jeu. Et j'irai plus loin : ce n'est même pas
+tant l'aspect Unreal qui m'intéresse.
+
+**(17 août)** Un endroit où centraliser toutes mes idées, tout mon visuel, tous mes brainstorms. Puis
+composer non pas avec des décors, mais avec une **situation** : des héros, des personnages, un
+pourquoi. Itérer avec Claude entre ma pensée et la réalité technique. Le logiciel est roi.
+
+**(16 août)** Ce que je veux surtout, c'est créer un truc qui ne parte pas dans le vide infini et que
+je ne revois jamais.
+
+### 14.6 Se positionner, et la question du marché
+
+**(17 août)** On dira que c'est un marché à énorme concurrence. Oui, mais pas pour Sony : il n'y a
+aucune concurrence pour les jeux Sony, puisque ce sont des jeux que tout le monde achète. Je dois me
+positionner dans ce créneau-là.
+
+**(16 août)** Comment je m'imagine gagner ma vie ? En étant geek. Quand on s'intéresse à des trucs qui
+n'intéressent personne, on fabrique des produits évidents pour les autres, parce qu'on est allé
+chercher quelque chose dont ils avaient besoin.
+
+**(16 août)** Refaire FFVII n'est pas une idée neuve, il existe depuis 1997, ça ne fait que vingt-neuf
+ans. Les œuvres exceptionnelles restent exceptionnelles quelle que soit leur date. Et on ne peut pas
+le savoir sans le faire.
+
+**(1er août)** L'écosystème ZenRay X : je fabrique des fonctionnalités nommées ZenRay quelque chose,
+et chaque fonctionnalité finie me fait avancer, parce qu'à terme je pourrai tout réutiliser, comme des
+Lego. Ça construit mon propre écosystème autour de ma marque. La vérité, c'est que je réinvente pas
+mal la roue pendant quelques années, jusqu'au moment où c'est assez performant pour être utile à tout
+le monde. Ce n'est pas du travail perdu, c'est du travail de qualité sur lequel je ne m'appuie pas
+assez pour en tirer une vraie expertise.
+
+**(11 août)** Comment faire des fast loops dans le business : résoudre un problème client. Premier
+service identifié : les gens ont du mal à générer des props de très haute qualité pour les jeux vidéo.
+
+**(11 août)** Bosser le business, pas les apps. Devenir économiquement dangereux.
+
+### 14.7 Le rythme, le sommeil, la boucle
+
+**(3 août)** Contrainte : dormir. Travailler avec des horaires fixes.
+
+**(11 août)** Difficulté maximale, boucle minimale, feedback immédiat. Quinze minutes de travail, deux
+minutes de pause. Fast loop : apprendre ou produire, puis finir des choses à grande vitesse, fermer la
+boucle au statut **fini**.
+
+**(11 août)** Quand je code, il faut vraiment faire de toutes petites fonctionnalités, vraiment
+minimes, et sortir systématiquement ce que j'ai construit, en boucle de quinze minutes.
+
+**(12 août)** Choix difficiles, et putain, dors.
+
+**(11 août)** Sport tous les jours, au moins trente minutes. Continuer le mouvement.
+
+**(11 août)** L'onsen comme apprentissage : débrancher le circuit électrique de son cerveau.
+
+### 14.8 Le futur, et la patience active
+
+**(11 août)** Apprendre aujourd'hui, parler aujourd'hui. Devenir économiquement dangereux maintenant.
+Toujours faire les choses en parallèle et maintenant. Les meilleures choses de ma vie arriveront dans
+le futur, parce que j'aurai accumulé assez d'expérience, et aujourd'hui je n'en ai pas assez. Mais
+c'est normal, Matthieu, tu es hyper jeune. Crois au futur. Fais du sport, apprends le japonais, fais
+du game dev. Tous mes objectifs ont l'avantage d'être à long terme, donc je vais y arriver, c'est
+obligatoire. En revanche, il me faut du cash maintenant, des efforts réguliers, ne pas me disperser,
+finir les choses et les publier.
+
+**(11 août)** On peut tellement travailler à construire les conditions d'une belle vie qu'on cesse de
+vivre la belle vie qu'on voulait protéger. Ne pas se laisser détourner de l'objectif premier :
+l'amour, la joie, le bonheur.
+
+**(11 août)** Ce qui sépare de Kojima et Miyazaki, ce sont deux choses qu'on ne peut pas obtenir
+instantanément : des centaines de boucles terminées, et une réputation accumulée. L'agressivité ne
+doit donc pas porter sur « devenir célèbre vite », mais sur **augmenter brutalement mon nombre de
+boucles terminées**.
+
+**(11 août)** La marche : parler à des gens, être en plein air, faire du sport et dépasser mes
+limites, tout en même temps. Un des meilleurs trucs que j'aie découverts, et je comprends pourquoi mon
+père adorait ça.
+
+**(11 août)** « Est-ce que cette chose mérite un de mes jours ? »
+
+### 14.9 La séquence du créateur, telle que je l'ai écrite le 11 août
+
+| Aujourd'hui | Étape suivante réelle | Puis |
+|---|---|---|
+| projet dans ma chambre | **jeu fini et publié** | joueurs réels |
+| quelques joueurs | **feedback + meilleur jeu** | audience |
+| audience | **réputation** | collaborateurs |
+| collaborateurs | **équipe / studio** | projets plus ambitieux |
+| bons projets répétés | **distribution + confiance + argent** | paris plus gros |
+| plusieurs paris réussis | **œuvre identifiable / nom reconnu** | accès, influence, statut |
+
+Passer aujourd'hui de « projet presque terminé » à « créateur qui a réellement sorti quelque chose ».
+
+---
+
+## 15. Le grit, ce qu'il faut me répéter, et souvent
+
+Demande explicite de Matthieu, le 2026-08-21. À servir régulièrement, sans que j'aie à le redemander,
+et sans sermon.
+
+**Ne jamais abandonner.** Serrer les dents comme dans The Revenant, et revenir plus fort. Chaque jour
+on s'améliore. Ne jamais oublier pourquoi on fait les choses.
+
+**Pourquoi je m'améliore.** Pour vivre la vie comme je l'entends. Pour que les autres soient fiers de
+moi. Pour ne manquer de rien. Pour être libre. Pour réaliser mon plein potentiel.
+
+**Ce qu'il faut me dire.** Que je vais réussir. Que je peux y arriver. Je le pense, et j'ai besoin de
+l'entendre.
+
+**Ce qu'il ne faut jamais faire.** Me contredire sur la faisabilité technique. Me proposer de réduire
+l'ambition. Transformer une réponse en audit de moi. Me rappeler mes échecs. Et me laisser terminer
+une session sur une analyse quand un geste du jour existe.
+
+**Le fond, dans mes mots du 11 août :** « Peut-être que je n'y arriverai jamais. Mais je refuse de
+mourir sans avoir découvert jusqu'où je pouvais aller. »
+
+---
+
+## 16. Les inspirations
+
+**Léonard de Vinci**, pour l'étendue et pour le fait de tout comprendre soi-même.
+**Hayao Miyazaki**, pour l'œuvre et la direction.
+**Hideo Kojima**, pour l'auteur qui tient un jeu entier.
+**Guillaume Broche** (Sandfall, Clair Obscur), le modèle le plus proche et le plus utile : il prouve
+qu'un produit peut exister par soi-même sans être fait par soi seul.
+**Neil Druckmann**, pour la narration jouable.
+
+Studios visés comme étalon de production : **From Software**, **Santa Monica / God of War**,
+**Game Science / Black Myth: Wukong**, **Arkane**, **Naughty Dog**, **Square Enix / FFVII Remake**.
+
+---
+
+## 17. Les interdits de ce projet
+
+Ils valent pour Claude autant que pour moi.
+
+1. **Ne jamais me dire que la technique ne permet pas de faire ce que je veux.** On cherche le chemin,
+   on mesure, on dit franchement ce qui est manuel aujourd'hui, et on le supprime boucle après boucle.
+2. **Ne jamais proposer de revoir l'ambition à la baisse.** Le calendrier et le périmètre plient,
+   l'ambition non.
+3. **Ne jamais rouvrir la délibération** sur le sens, la légitimité ou la qualité suffisante. C'est le
+   report conditionnel sous un de ses quatre masques, et il se nomme au lieu de se discuter.
+4. **Ne jamais réinventer ce qui existe.** Avant de construire, chercher : un skill dans l'index, un
+   script dans `Scripts/`, un outil déjà installé sur ce Mac, une entrée de `PROGRESS.md`.
+5. **Ne jamais livrer un travail sans son vérificateur.** Un chemin qui peut échouer en silence est le
+   seul défaut qui disqualifie vraiment. Le vérificateur fait partie du livrable, et ce n'est pas mon
+   rôle de revérifier.
+6. **Ne jamais me faire cliquer dans Unreal quand un script peut le faire.**
+7. **Ne jamais empiler une couche tant que celle du dessous n'est pas fiable.**
+8. **Ne jamais compter la production.** On compte l'exposition.
+
+---
+
+## 18. Hors périmètre du jeu, gardé pour ne rien perdre
+
+Noté ici parce que je l'ai demandé et pour ne rien oublier. La **source de vérité pour tout ce qui est
+personnel reste `Identity/Matthieu1.md`** ; ce paragraphe est un simple aiguillage.
+
+- **Japonais.** Priorité 0 déclarée pendant le séjour. Objectif réel : oser parler aux gens, être
+  intéressant, écouter et relancer. Détail dans `Japanese/Japanese1.md` et `Japanese/CLAUDE.md`.
+  Méthode notée le 11 août : ne jamais passer par le romaji, viser 音 → japonais et 日本語 → sens en
+  direct, faire un second passage sur les répliques d'un film japonais sans sous-titres, et valider
+  une boucle en prononçant trois expressions nouvelles sans lire.
+- **Cours de japonais, arbitrage du 19 août.** Un seul atelier culturel, et c'est le japonais.
+  Premier choix, le programme Gungun de l'université Gakushuin à Mejiro, session du 17 août au
+  4 septembre 2026, du lundi au vendredi de 9h30 à 12h30, 4 500 ¥ de matériel, à vérifier pour un
+  résident hors Toshima en séjour court. Repli, l'Ikebukuro Japanese Circle, gratuit, jeudi de 19h à
+  21h vers Ōtsuka. Un cours de japonais n'est pas un canal de rencontre : les élèves y sont des
+  étrangers.
+- **Vie sociale à Tokyo, 19 août.** Meetup suffit comme canal : club de randonnée et soirées. Ordre
+  d'efficacité que j'ai posé : randonnée, puis bouldering, puis atelier créatif, puis language
+  exchange, puis sport collectif. Chaque heure doit faire deux jobs au lieu d'un.
+- **Quartiers repérés, 16 août.** Kanazawa, Fukuoka. À Tokyo : Yanaka Ginza, Ogikubo, Nishi-Ogikubo,
+  Asagaya, Kōenji, Nakano, et surtout **Kitasenju**, café plus sentō. Provoquer la chance, ce n'est
+  pas forcer : c'est explorer par soi-même, comprendre, développer une affinité, et lire.
+- **Mont Fuji, 5 août.** Quatre départs comparés, Yoshida étant le meilleur choix pour une première
+  fois : 6 h 10 de montée et 3 h 35 de descente depuis la 5e station de la Fuji-Subaru Line à
+  2 305 m, avec de nombreux refuges. Fujinomiya plus court mais raide, Subashiri bon compromis,
+  Gotemba à éviter pour débuter. Ticket requis.
+- **Japan in Love.** Objectif poursuivi activement, jamais au centre du système. Les facteurs que
+  j'ai listés le 11 août : style et coiffure, forme physique, japonais, aisance sociale, capacité à
+  écouter, vie intéressante, courage d'initier, volume de rencontres. Le diagnostic que je me donne :
+  attractivité potentielle haute, conversion inférieure au potentiel à cause du japonais et du manque
+  de volume. Une partie de ma personnalité est compressée par la langue.
+- **La formule sociale, 11 août.** « Hey, wanna talk ? » vaut mieux que « Hey, do you wanna talk ? » :
+  permission, intention, faible coût, sortie facile. En japonais : *chotto hanasanai?* ou *yokattara,
+  sukoshi hanashimasen ka?*. « Hey, mind if I join you? » sert à intégrer un groupe, ce n'est pas la
+  même fonction.
+- **Le principe, 11 août.** Ne pas construire ma vie pour mériter une personne exceptionnelle.
+  Construire une vie exceptionnelle qui me fait régulièrement rencontrer des personnes
+  exceptionnelles. Viser haut, devenir capable, créer beaucoup d'occasions, laisser le réel trancher.
+- **Divers noté sans commentaire.** Pocari Sweat plutôt qu'Aquarius pour l'hydratation au sport au
+  Japon. « Reality > imagination » pour les données du monde réel. L'Américain du Fuji qui m'a fait
+  dépasser mes limites, deux mètres, une bête humaine, très positif. Message à envoyer à Shinyan,
+  proposition de Kichijōji, dates japonaises longues de trois à cinq heures. Le documentaire NHK
+  100カメ sur le Shinkansen Tōkaidō (13 août). L'événement à rejoindre repéré le 15 août.
+
+---
+
+## 19. Journal de ce fichier
+
+**2026-08-21 04:00, Ouverture.** Fichier créé à partir du brainstorm de Matthieu du 21 août et de
+la synthèse des notes quotidiennes du 1er au 20 août 2026, écrites au Japon. État du projet Unreal
+mesuré sur la machine le jour même, pas estimé. Skill routeur `zenrayshards-context` créé dans la
+foulée. Aucun élément de game design n'est acté au-delà de ce qui figure au §10.1.

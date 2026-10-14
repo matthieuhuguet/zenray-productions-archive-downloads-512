@@ -1,0 +1,195 @@
+# Les entités ZenRay, le retour au Japon et l'atelier de design
+
+> Extrait de `~/.claude/CLAUDE.md` le 2026-09-15 pour tenir sous la limite de 65536 octets
+> du contexte de démarrage des sous-agents. Le texte est intégral, rien n'a été résumé.
+> Le noyau de ces règles reste dans `CLAUDE.md`, qui pointe ici.
+
+<!-- TRIGGERS:START -->
+> **Charger ce fichier dès que la demande touche :** ZenRay entities, Japan 2027 and the design workshop.
+>
+> **Vocabulaire déclencheur (52 termes), volontairement sur-inclusif.** Mieux vaut le
+> charger pour rien que rater la doctrine qui gouverne la demande. Un seul terme suffit.
+>
+> zenray · zenraywebsite · zenraystudio · zenrayprogress · zenrayplan · zenraymedia · zenraycloud · matthieuhuguet.com · zenray.studio · store · boutique · drive · dashboard · assets · pages · cloudflare · namecheap · dns · domaine · japon · japan · pvt · visa · consulat · marseille · départ · 2027 · douze semaines · 10 000 · 20 000 · argent · revenu · freelance · gumroad · fab · chantier · tmp · curseur · slider · design · proposition · maquette · working holiday visa · japan move · store · landing · dashboard · asset drive · domain · dns · cloudflare pages · design proposal
+>
+> **Mémoire de projet à ouvrir en même temps :**
+> - `~/.claude/Memory1/Identity/Matthieu1.md`
+> - `~/.claude/Memory1/Business/Business1.md`
+> - `~/.claude/Memory1/Business/Freelance1.md`
+> - `~/.claude/Memory1/SocialMedia/SocialMedia1.md`
+>
+> Routage automatique : `node ~/.claude/skills/claude-md-global/scripts/which-rule.mjs "<la demande>"`
+<!-- TRIGGERS:END -->
+
+## PRIORITÉ 0 : RETOUR AU JAPON 2027, LES 12 SEMAINES (2026-09-10, validé par Matthieu)
+
+Du lundi 14 septembre au dimanche 6 décembre 2026, l'argent est la première carte du château :
+**10 000 € nets au minimum, 20 000 € visés**, avant un départ visé fin janvier à février 2027
+(le PVT se dépose au consulat de la résidence, donc Marseille pour Aix, jamais Strasbourg ; le
+calendrier 2027 n'ouvre que le 1er janvier). Trois moteurs, dans cet ordre de fiabilité : le
+freelance tech art porte le plancher, la boutique **zenray.studio** compose derrière (Fab et
+Gumroad), le contenu multiplie sans jamais être le plancher. **YouTube et le code du jeu sont en
+pause 90 jours** : les décors déjà modélisés (Louisiana Bayou d'abord, puis Toki Pavilion) en
+deviennent les produits vendus, ce qui ne recule pas l'ambition du jeu, seul son calendrier plie,
+exactement la règle déjà posée pour ZenRayShards.
+
+Les trois piliers quotidiens ne bougent jamais : production le matin, japonais l'après-midi, sport
+à 17h. Le plan complet, chiffré et sourcé, vit dans
+`Memory/PVT/2026-09-10-plan-retour-japon/03-plan-12-semaines.md` ; le carnet source dans les deux
+fichiers voisins du même dossier. Chaque dimanche, verdict cash sur les 10 000 €, jamais de charge
+réduite sans demande explicite de Matthieu.
+
+## PRIORITÉ 0 : LES TROIS ENTITÉS ZENRAY, À NE JAMAIS CONFONDRE (2026-09-11)
+
+Trois produits portent le nom ZenRay, chacun avec un rôle, un dépôt et une adresse propres. Une
+demande qui en nomme un ne touche jamais les deux autres sans le dire.
+
+| Entité | Ce que c'est | Dépôt | En ligne |
+|---|---|---|---|
+| **ZenRayWebsite** | matthieuhuguet.com, le blog et portfolio de Matthieu | `Productions/GithubProductions/ZenRayWebsite`, skill `zenray-website` | https://matthieuhuguet.com (Pages `matthieu-huguet`) |
+| **ZenRayStudio** | le store de Matthieu, qui lui assure son autonomie : 10 000 à 15 000 € en trois mois pour financer le retour au Japon, selon `Memory/PVT/2026-09-10-plan-retour-japon/03-plan-12-semaines.md` | `Productions/GithubProductions/ZenRayStudio` | https://zenray.studio (Pages `zenray-studio`, aussi www et zenray-studio.pages.dev) |
+| **ZenRayProgress** | le drive : dashboard et fichiers assets de Matthieu, photos, vidéos, images de référence, plans, goals | `Productions/GithubProductions/ZenRayProgress`, skill `zenrayprogress-context` | https://zenray-progress.pages.dev (Pages `zenray-progress`) |
+
+**Le design du store** vit dans le skill `zenray-html-photoshop-pdf-hda-socialmedia-shorts-reel`,
+dossier `templates/zenray-studio/`, sous deux états : `01-maquette-portfolio` (maquette validée,
+images réelles, aperçus clair et sombre) et `02-store-final` (version publiée, trois projets Lorem
+Ipsum, aucune image). Son `README.md` fait foi pour la mise en ligne et l'ajout d'un produit.
+
+**Les liens entre les trois.** matthieuhuguet.com porte l'entrée **Store** à gauche de Works, qui
+ouvre ZenRayStudio (`STORE_URL` dans `ZenRayWebsite/src/App.jsx`). Les assets déposés dans ZenRay
+Assets, sur ZenRayProgress, sont la matière des futurs produits du store.
+
+**Le domaine.** `zenray.studio`, acheté chez Namecheap le 2026-09-11 (renouvellement automatique,
+environ 42 $ par an), DNS tenu par Cloudflare (zone Free, serveurs `michelle` et `salvador`), apex et
+`www` en CNAME proxifié vers `zenray-studio.pages.dev`, certificat actif. Détail : `Identity/Matthieu1.md`.
+
+## PRIORITÉ 0 — TOUT RÉGLAGE VISUEL DEMANDÉ SE FAIT AU CURSEUR, JAMAIS À L'ESTIME (2026-08-20)
+
+C'est la loi HDA appliquée au moment du DESIGN, et elle en découle directement : dans Houdini, un HDA
+n'est pas seulement un réseau propre, c'est un réseau dont les paramètres peuvent être **exposés sur
+un panneau** pour que l'artiste tourne les boutons lui-même. Quand Matthieu demande les curseurs, un
+mockup HTML sans panneau recrée la même dette qu'un code truffé de valeurs en dur : chaque « un peu
+plus clair », « un poil moins flou » coûte un tour complet là où un curseur coûte trois secondes.
+
+**La portée, et c'est le point corrigé le 2026-08-20 au soir : ce n'est PAS réservé aux mockups.**
+Quand Matthieu demande les curseurs, ils s’appliquent à n'importe quelle page HTML et n'importe quel
+site, en production comme en brouillon. Si la page existe déjà, on sert la VRAIE page en localhost
+avec son panneau plutôt que de fabriquer un mockup à part : le contexte réel, contenu et composants
+voisins, est ce qui fait qu'une valeur paraît juste ou non. Mode d'emploi complet et recette copiable :
+**`zenray-html-photoshop-pdf-hda-socialmedia`**, qui rassemble désormais les visuels de communication, l’édition PDF et la section
+`design-sliders` pour toute page HTML ou site.
+
+**L’activation se fait sur demande explicite.** Même si Matthieu dit « trop petit », « trop gros »,
+« trop clair », « un peu moins flou » ou « pas assez espacé », aucun panneau ni localhost ne se
+prépare sans qu’il demande les curseurs. Lorsqu’il les réclame, il choisit directement la valeur.
+
+**Ce que cela impose, une fois les curseurs demandés.** Tout paramètre visuel dont la bonne valeur se
+juge à l'œil et non au raisonnement (taille et graisse de police, couleur, opacité, luminosité, flou,
+échelle, espacement, rayon, teinte, vitesse d'animation, position d'un calque) sort en **curseur**
+dans un panneau d'édition posé sur la page. Le panneau porte aussi un bouton **« Copier les valeurs pour le prompt »**
+qui rend une ligne collable telle quelle, pour que Matthieu ferme la boucle en un collage plutôt qu'en
+description. Un curseur n'écrit jamais un style en direct sur les éléments : il n'écrit **que** des
+variables CSS d'un `:root`, et tout le reste en découle, sinon on a fabriqué un HDA à dix instances
+non reliées.
+
+**L'interdit symétrique, qui n'a rien d'optionnel.** Le panneau est un outil d'atelier : il ne part
+JAMAIS en production, ni sur Cloudflare Pages, ni sur Vercel, ni ailleurs. Le fichier de mockup vit
+dans `Design/` du dépôt et n'entre pas dans le build ; s'il devait un jour partager le même fichier
+que la page réelle, le panneau se retire avant le déploiement, jamais après. Les valeurs choisies,
+elles, migrent dans le fichier de jetons du projet (`theme.js`, `tokens.css`, `_params.json` selon le
+langage), là où la loi HDA les attend déjà.
+
+**Un piège de perte, payé le 2026-08-20 sur le fond flou de matthieuhuguet.com.** Un effet coûteux à
+calculer se règle en direct pendant le design (le curseur pilote un `filter: blur()`), puis se **cuit
+hors-ligne** une fois la valeur arrêtée (ImageMagick, un asset figé), parce que ce qui est confortable
+pour l'artiste est ruineux pour le navigateur du visiteur. Le curseur sert à trouver le nombre, pas à
+le servir en production.
+
+## PRIORITÉ 0 : TOUT CHANTIER À ASSETS VIT DANS `~/.claude/tmp/tmp-<nom-parlant>` (2026-08-27, déplacé le 2026-09-13)
+
+Demande de Matthieu : « note dans claude.md de faire des dossiers dans
+/Users/zenray/Create/Share "tmp-<nom-parlant>" pour chaque nouveau projet ou assets à
+publier, notamment si ça contient des assets ».
+
+**Le chemin, une fois pour toutes.**
+
+```text
+/Users/zenray/.claude/tmp/tmp-<nom-parlant>/
+```
+
+**Décision du 2026-09-13.** Matthieu fait de `~/.claude` l'environnement principal : la racine des
+chantiers y entre, `~/.claude/tmp/`, exclue du git de `~/.claude` et du guet de la sauvegarde
+automatique. L'ancien `~/Create/Share` y a été déplacé tel quel (2 406 fichiers, octets identiques) et
+reste un lien vers `~/.claude/tmp`, donc les anciens chemins fonctionnent encore. Quand un chantier est
+fini, le skill `zenray-collect` le récolte vers ZenRay Assets, sur validation.
+
+**Décision du 2026-09-14 : `~/Downloads` reste vide.** Tout ce qui y arrive est un chantier temporaire :
+un téléchargement ou un nouveau chantier s'ouvre directement dans `~/.claude/tmp/tmp-<nom-parlant>`, jamais
+dans Downloads, et `zenray-collect` range le reste (tables et destinations dans son SKILL.md).
+
+**Ce qui va là.** Tout chantier qui produit des fichiers destinés à sortir : les assets
+d'un visuel fabriqué par `zenray-html-photoshop-pdf-hda-socialmedia`, les images d'un article avant
+publication, un lot média en préparation, les rendus intermédiaires d'une planche. En un
+mot, ce qui n'est ni du code versionné ni une source durable, mais qui doit survivre à la
+session et se retrouver sans le chercher.
+
+**Pourquoi pas `/tmp`, et c'est une erreur déjà payée.** `/tmp` est effacé entre deux
+sessions : un asset qui a coûté vingt minutes de composition y disparaît sans un mot, et
+l'on ne s'en aperçoit qu'en le cherchant, c'est-à-dire trop tard. `~/.claude/tmp` est un dossier
+réel, sur le disque de Matthieu, qu'il ouvre lui-même dans le Finder.
+
+**Le nom se choisit pour être retrouvé, jamais pour la circonstance.** `tmp-` dit que le
+dossier est un chantier et non une archive ; ce qui suit nomme le SUJET, pas la date ni
+l'étape. `tmp-zenray-progress-article-01` se retrouve dans six mois, `tmp-assets` et
+`tmp-2` ne se retrouvent jamais. Le numéro de fin sert quand une suite est prévue, comme
+un article qu'on refera plus tard pour montrer l'évolution.
+
+**Ce que cela n'est pas.** Ce n'est pas la destination d'un script, qui va dans
+`<projet>/Scripts/`, ni celle d'une connaissance durable, qui va dans le `Memory/**/*1.md`
+concerné, ni celle d'un livrable versionné, qui va dans son dépôt. C'est l'atelier, entre
+les deux.
+
+## 2 October 2026 : Demarrage automatique des projets par Assets V2
+
+- Premiere action de l'agent pour un nouveau chantier : rechercher l'identite existante dans Assets, puis executer `node /Users/zenray/Create/Build/Productions/GithubProductions/ZenRayProgress/scripts/Assets/BeginProject.mjs <project-id> --name="<nom>" --session-id="<identifiant-reel-fourni-par-hote>"` avec le veritable identifiant de session. Aucun clic de Matthieu n'est requis. (2 October 2026)
+- Nouveau projet : TMP `~/.claude/tmp/tmp-<id>`, memoire `~/.claude/Memory1/Projects/<id>`, FEEDBACK.md canonique, Project.json, instructions locales CLAUDE.md et AGENTS.md, surveillance active. Les instructions deja presentes restent intactes. (2 October 2026)
+- Reprise : conserver l'identite, toutes les sources et dependances deja reliees ; lire le feedback canonique et ses liens historiques ; relier la session actuelle. Un changement de sujet conserve les obligations de prompt-stacking, tout en rattachant les nouveaux fichiers et prompts au bon projet. (2 October 2026)
+- Ne jamais creer automatiquement un nouveau TMP par message, une copie de tout Unreal par texture, ou un nouveau PROGRESS.md par projet. Le registre et les instantanes cloud servent d'index ; CLAUDE.md porte le protocole et ne grossit pas d'une liste complete de tous les nouveaux projets. (2 October 2026)
+- Les fichiers de production restent dans leurs emplacements : l'agent ajoute au registre les sources Houdini et Unreal concernees, avec chemins et perimetres explicites. Les scripts reutilisables restent dans Scripts du projet ou dans le depot concerne ; les liens et references du chantier peuvent rester dans TMP. (2 October 2026)
+- Arret a mi-chemin : rejouer la commande ; les documents existants et les liens de production restent conserves. Les noms de session invalides et les chemins avec liens symboliques sont refuses. (2 October 2026)
+- La commande applique le protocole ; CLAUDE.md seul n'est pas un watcher. Les agents doivent executer le demarrage, et le LaunchAgent local assure ensuite le suivi sans conversation ouverte. Le cloud attend l'archive verifiee avant d'afficher une sauvegarde reussie. (2 October 2026)
+- Autorisation permanente pour les fichiers de travail relies au projet : archivage automatique des sources admises, hors secrets et caches. Un emplacement ambigu est signale au lieu d'etre rattache arbitrairement. (2 October 2026)
+
+## 3 October 2026 : Entrer par Assets pour toute conversation
+
+- La porte obligatoire devient lecture CLAUDE.md, lecture zenray-assets, BeginConversation, contexte et feedback, production dans les chemins mappes, checkpoint puis archive verifiee. Elle s applique aussi aux conversations sans livrable et aux autres sujets ; conserver le protocole de memoire et les limites de confidentialite propres a chacun. (3 October 2026) (nom corrigé le 14 October 2026 : zenray-assets-v2 devient zenray-assets)
+- BeginConversation reprend SessionBindings.json et refuse de reaffecter implicitement une conversation a un autre projet. Sans rattachement, son identite est conversation-<agent>-<empreinte stable du vrai sessionId> ; le nom humain se donne via --name. Cette empreinte identifie l espace Assets, elle ne remplace jamais le vrai sessionId. (3 October 2026)
+- La categorie reservee Conversations garde les discussions autonomes accessibles dans une collection distincte de la liste Projets. Les discussions d un projet existant restent dans son feedback et son historique ; la collection ne cree pas une copie des sources ni une liste de projets par prompt. (3 October 2026)
+- Passage a un autre projet dans la meme session : ne pas rejouer tout son historique sous une nouvelle identite. Le routeur refuse ce changement implicite ; conserver le mapping original et consigner explicitement le travail du second projet avec sa provenance. Les segments de conversation entre projets ne sont pas encore un mecanisme automatique verifie. (3 October 2026)
+- Le programme capture les messages pris en charge des transcripts locaux Codex et Claude lies. Il ne sauvegarde pas automatiquement toute conversation non liee ni tous les outils, ne decode pas les bases natives Gemini/Antigravity et ne constitue pas un hook universel installe dans ces quatre hotes. Leur agent doit executer le demarrage et la consignation. Un checkpoint n est pas une copie integrale de discussion. (3 October 2026)
+- Tous les nouveaux fichiers admis vont dans le TMP retourne ou une source explicitement reliee et surveillee. Un fichier arbitraire hors mapping n est pas couvert ; les secrets et caches restent exclus. Le registre vivant est l index unique ; la fiche Markdown generee est sa lecture, Project1.md porte le savoir durable et FEEDBACK.md les messages. (3 October 2026)
+- Verification : premier demarrage et reprise conservent la meme identite, une session absente est refusee, la liste Projets ne contient pas les conversations autonomes et une sauvegarde n est annoncee qu apres verification cloud. Cette section remplace les anciennes instructions imposant une reference CLAUDE.md pour chaque nouveau feedback. (3 October 2026)
+
+## 4 October 2026 : ZenRay Freelance est un moteur, pas un tableau à remplir à la main
+
+- 4 October 2026 : ZenRay Freelance (une vue de ZenRayProgress, pas une quatrième entité) est portée par un service Mac `com.zenray.freelance` qui cherche toutes les 6 heures sur 33 sources, écrit les lettres de candidature depuis son modèle (sa lettre Asobo), le CV publié du site et ses derniers travaux, et publie dans `zenray-data/freelance/`. Avant toute demande qui touche l'emploi, le freelance, les lettres ou les candidatures : lire `ZenRayProgress/docs/FREELANCE-ENGINE.md` et `Memory1/Business/Freelance1.md`, section du 4 October 2026. (4 October 2026)
+- 4 October 2026 : trois lois à retenir sans rouvrir le fichier : jamais d'envoi automatique ; ses paragraphes se reprennent mot pour mot et rien ne s'affirme que le CV ne dit pas ; un fichier JSON de plus d'1 Mio se lit VIDE par l'API contents de GitHub, donc se lit par son blob et ne se sauvegarde jamais depuis une lecture vide. (4 October 2026)
+
+## 5 October 2026 : Conversation liee au projet des le demarrage
+
+- Au debut de chaque conversation agentique, executer BeginConversation avec le vrai session-id, agent et project-id existant concerne ; lire ensuite context et le feedback canonique. SessionBindings.json est la liaison unique session/projet, jamais une inference par titre ni une nouvelle identite par prompt. Une discussion sans projet conserve sa collection Conversations ; toute ambiguite ou tentative de reattribution reste visible et refusee. (5 October 2026)
+- Chaque fiche projet expose ses discussions liees, titre, fournisseur et pastille Claude orange, Codex gris ou Gemini bleu, avec ouverture du lecteur natif et retour au meme projet. Le mapping et sa fiche de contexte recensent les identites de session et references du lecteur, sans recopier le transcript dans le global. Les originaux complets restent archives par le miroir ; le lecteur pagine les messages disponibles et signale les corps absents ou effaces. Une liaison ne prouve pas une archive complete ni un hook universel d hote. (5 October 2026)
+
+## 5 October 2026 : Reprise par chemin Assets
+
+- Quand Matthieu donne un chemin et demande de comprendre le contexte, appliquer zenray-assets puis `node /Users/zenray/Create/Build/Productions/GithubProductions/ZenRayProgress/scripts/Assets/Client.mjs context <chemin>`. Lire le contexte vivant et ses originaux : memoire, feedback, documents, conversations, sources et dependances. Index.md dans l atelier est une porte, jamais un second registre. Une source ou conversation non liee reste explicitement manquante. (5 October 2026) (nom corrigé le 14 October 2026 : zenray-assets-v2 devient zenray-assets)
+
+## 9 October 2026 : Nom courant du point d’entrée Assets
+
+- Les consignes antérieures qui demandent `zenray-assets-v2` sont historiques ; les nouveaux démarrages et lectures de contexte utilisent `zenray-assets`. (9 October 2026)
+- `zenray-assets-v2` reste un alias pour les anciennes invocations, tandis que son identifiant de projet et ses archives restent inchangés. (9 October 2026)
+
+## 10 October 2026 : Suppression de l’alias Assets
+
+- Correction des consignes du 3, 5 et 9 October 2026 : tout démarrage, reprise et lecture de contexte invoque uniquement zenray-assets ; le skill zenray-assets-v2 est supprimé, sans redirection de compatibilité. (10 October 2026)
+- L’identifiant historique de projet zenray-assets-v2 et ses données restent valides ; il ne faut ni le renommer ni le confondre avec un nom de skill. (10 October 2026)

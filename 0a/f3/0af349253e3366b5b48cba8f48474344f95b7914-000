@@ -1,0 +1,759 @@
+# Business1 — Narratif "aller chercher l'argent"
+
+> Fichier dédié au shift de narratif : sortir de la posture "artiste pur / prudent / profondeur technique" pour activer la posture "entrepreneur / distribution / capital". Append-only, sections datées.
+
+---
+
+## 2026-04-16 — Manifeste initial : 12 principes de poussée
+
+Contexte : demande explicite de Matthieu de changer le narratif. Ne plus tempérer. Argumenter la poussée, pas la prudence. Justifier pourquoi y aller, pas pourquoi rester prudent.
+
+### 1. L'asymétrie de compétences actuelle est un bug de marché
+La majorité des gens qui font 1M avec des solutions IA aujourd'hui ne codent pas mieux que Matthieu, ne conçoivent pas mieux. Ils ont compris que l'offre technique actuelle est catastrophique : interfaces moches, UX absurdes, produits bricolés en 3 jours vendus 97$/mois qui marchent parce que le besoin est là. Matthieu a Master Game Art ArtFX, maîtrise Houdini/VEX/UE5/Substance, œil visuel travaillé, code Python, comprend les systèmes procéduraux. Techniquement sur-qualifié pour la moyenne de ce qui se vend. Et pourtant ne le fait pas.
+
+### 2. Les fenêtres d'opportunité ne restent pas ouvertes
+Les 2-3 prochaines années sont une anomalie historique. L'IA permet de construire en 3 semaines ce qui prenait 18 mois. Barrières à l'entrée effondrées sur des marchés inaccessibles il y a 5 ans. Dans 24-36 mois : marchés saturés, marges compressées, standards UX rétablis, prime au mouvement rapide disparue. Chaque mois hors arène = mois où d'autres capturent le territoire.
+
+### 3. Confusion profondeur technique vs valeur de marché
+Apprendre japonais 2h/jour, guide Houdini 40 pages, peaufiner material shader = activités à forte intensité cognitive et faible rendement financier immédiat. Le marché ne paie pas la profondeur, il paie la solution à un problème. Pipeline procédural parfait sur 6 mois → personne n'achète. Outil en 3 semaines automatisant un workflow chiant pour 500 studios indés à 50€/mois → 25k/mois sur 18 mois même partiellement. La compétence déjà accumulée est suffisante. Le problème n'est plus la compétence, c'est la conversion en offre.
+
+### 4. Profil structurellement business, camouflé en profil artiste
+MEMORY1 écrit : "Devenir Principal (propriétaire) et non Agent (employé)". Parle de Value Proposition, Grand Slam Offer, scale, "magnificient obsession mentally emotionally spiritually financially". Cite Hormozi, Jobs, Ive. A écrit en février 2025 : "avec l'IA dans 3-5 ans il n'y aura plus besoin de travailler donc la seule chose à faire sera d'automatiser des business". Ce n'est pas un artiste qui parle, c'est un entrepreneur déguisé en artiste depuis des années. La part entrepreneur est systématiquement étouffée par la part artiste qui lui fait croire qu'elle est "pure", "noble", "non-commerciale". Hiérarchie fausse auto-imposée.
+
+### 5. L'effet de levier du produit écrase le freelance
+Freelance 350€/jour plafonne : 200 jours max/an → 70k brut → 40-45k net. SaaS 29€/mois × 300 clients = 8700€/mois récurrents = 104k/an, coût marginal → 0. 300 clients accessibles en 12 mois avec produit résolvant vrai problème, zéro pub payante, contenu organique (que Matthieu fait déjà gratuitement pour Zenray). Freelance = étape de transition, pas destination. Obsession "freelance Tech Art" = version plafonnée de l'ambition réelle.
+
+### 6. La distribution est le multiplicateur manquant, et apprenable vite
+Il ne manque pas une révélation business. Il manque une pratique : poster des trucs qui résolvent un problème visible, sur un public visible, avec lien d'achat ou contact visible. Les gens qui font 1M rapidement ont compris que la distribution compte autant que le produit. Matthieu a déjà 5000 vues/post LinkedIn dans sa niche technique (MEMORY1). Fait déjà de la distribution sans monétisation. Rajouter la monétisation = switch, pas construction.
+
+### 7. Coût d'opportunité massif et invisible du japonais + guides gratuits
+Japonais pour voyage 12 juin 2026 = cohérent. Mais 2h/jour × 300 jours = 600h. 600h appliquées à un SaaS tech art = produit livré, testé, itéré, vendu. Le coût ne se voit pas parce que le japonais fait du bien, gratifiant, rapprochement d'un rêve. Mais 600h = 600h. Univers alternatif : outil sorti en 6 mois → billet Japon sans compter. Univers actuel : voyage avec angoisse fin du RSA.
+
+### 8. "Je ne sais pas quoi vendre" est faux
+Au moins 5 produits activables immédiatement :
+- **a.** Outil de génération de matériaux Substance basé sur prompts (devs indés galèrent à créer textures cohérentes ; pipeline Megascans→SBSAR déjà documenté dans MEMORY1)
+- **b.** Pack d'outils Houdini procéduraux UE5 (grass, roof tiles, bayou church…) vendu marketplace Unreal ou Gumroad, 49-99€/outil, 200 ventes/mois en passif après 6 mois de distribution
+- **c.** "Tech Art as a Service" pour studios indés sans moyens d'un tech artist senior, abonnement mensuel (savoir déjà accumulé, packagé, zéro nouveau skill)
+- **d.** Cours Houdini for Games sur Gumroad/Teachable, 197€, basé sur guides existants. 100 ventes = 19 700€
+- **e.** MCP server ou extension IA pour Houdini/Substance (déjà expérimenté Houdini MCP selon MEMORY1), marché émergent, zéro concurrence sérieuse
+
+Chaque produit : faisable en 4-8 semaines. Générable entre 500€ et 50k€/mois selon exécution. Pas un problème d'idée, un problème de décision.
+
+### 9. La peur du rejet commercial = la peur de la prospection freelance, déplacée
+Évitement prospection studios (0 messages envoyés au 13 avril selon MEMORY1) = même mécanisme que l'évitement de lancer un produit payant. Une seule peur : que quelqu'un voie l'offre et dise non, ou pire, que personne ne dise rien. Lancer un produit = même exposition, levier infiniment supérieur. Donc autant affronter la peur au niveau où le payoff est maximal.
+
+### 10. "M'enrichir tellement vite" n'est pas indécent, c'est rationnel
+Culpabilité à monétiser fort = conditionnement. L'argent n'est pas récompense morale pour la vertu, c'est mesure de la valeur que le marché attribue à une solution. Outil faisant gagner 10h/mois à 1000 studios = 10 000h de travail collectif gagnées. Facturer 29€/mois chacun = 29 000€/mois, ROI écrasant pour eux. Personne ne perd. Gagner "vite" = pas suspect, juste accepté plus tôt que la valeur se monnaye.
+
+### 11. Paradoxe non-vu : la startup IA est le chemin le plus court vers le Japon et vers Ghibli
+Ambition longue durée (MEMORY1) : jeux niveau Miyazaki, studio libéré des éditeurs. Demande du capital. Plusieurs millions pour premier jeu studio indé sérieux. Jamais levable en freelance Houdini à 350€/jour. Levable en construisant entreprise générant cash récurrent, revendue ou extraite pour lancer le studio. Startup IA ≠ trahison du rêve Ghibli. Seul véhicule financier permettant d'atteindre Ghibli sans dépendance éditeur. Jobs → Apple → Pixar. Miyazaki → réussite commerciale premiers films → Ghibli. Le capital précède la liberté créative, toujours.
+
+### 12. "Être prêt" ≠ "commencer"
+Les mecs qui lancent des SaaS à 1M en quelques mois ne sont pas prêts : bugs, UX moche, offre imparfaite, code sale. Ils lancent quand même. Matthieu attend d'être prêt depuis 2 ans. Pendant ce temps leur produit sale génère du cash, son produit propre imaginaire génère zéro. Qualité premier lancement = quasi-nul impact sur trajectoire à 18 mois. Ce qui a un impact = date du premier lancement. Avancer de 3 mois = 3 mois d'itération en plus = qualité finale supérieure au produit "parfait" lancé 3 mois plus tard.
+
+---
+
+### Question ouverte (à résoudre dans les 48h)
+Quelle est la première décision à prendre dans les 48h pour transformer cet état d'esprit en action observable ?
+
+### Règle de relecture
+Ce fichier se relit à chaque fois qu'arrive :
+- une dérive vers "il me manque encore X mois de préparation"
+- une justification par la profondeur technique au détriment du lancement
+- une culpabilité à monétiser fort ou vite
+- une priorisation du japonais/guide gratuit contre un produit payant
+- un énième "je me lancerai quand je serai prêt"
+
+---
+
+## 2026-04-17 — Process checkpoints pour tâches difficiles
+
+Méthode pour traverser une tâche difficile sans l'abandonner. Trois checkpoints déclenchés selon l'avancement réel du travail.
+
+### Les trois checkpoints
+- **20% — Cadrer.** Tâche à peine entamée. Poser le périmètre, l'output attendu, le critère de fin. Empêche de partir dans le flou et d'agrandir la tâche en cours de route.
+- **50% — Trier.** Moitié du travail fait, moitié restante visible. Séparer ce qui compte de ce qui décore. Couper les branches non essentielles, identifier les blocages concrets.
+- **80% — Fermer.** Presque fini. Lutter contre la tentation de re-polir indéfiniment. Forcer l'envoi, la publication, la livraison. Le dernier 20% est la zone d'abandon et de perfectionnisme parasite.
+
+### Règle à chaque checkpoint
+Écrire dans le carnet **2-3 sous-tâches** qui divisent l'étape en petits blocs exécutables. Pas plus. Pas d'arborescence infinie. Juste 2-3 blocs concrets, faisables dans la session.
+
+### Pourquoi ça marche
+L'effort de clarté mentale au checkpoint rend la tâche plus simple à exécuter ensuite. Le carnet externalise la charge cognitive. Les sous-tâches explicites rendent le prochain geste évident, ce qui coupe l'hésitation et protège contre l'abandon (particulièrement critique sur profil TDAH inattentif où la friction d'initiation est le principal point de rupture).
+
+---
+
+~~## 2026-04-18 — Leçon 1 (IN 12h49 setup non exécuté → reprise IN 17h13 guidée micro-steps, durée cible 20 min) : Équation fondamentale du business + WTP + typologie de la valeur~~ [OBSOLÈTE 2026-04-18 — remplacé par ligne ci-dessous, violation append-only corrigée]
+
+## 2026-04-18 — Leçon 1 (IN 17h13 → OUT 19h36, durée réelle 2h23) : Value Stick HBS + WTP + Hiérarchie de la valeur
+
+### Rôle de Claude sur cette leçon
+Professeur émérite. Niveau zéro business formel supposé. Ancrage permanent sur les 5 produits Zenray listés au manifeste (principe 8). Pas de cas d'école fictif. Pas de spoil — indices puis autonomie.
+
+### Résultat L1 — 2026-04-18 OUT 19h36
+
+| Concept | Statut | Note |
+|---|---|---|
+| Value Stick HBS (WTP/P/C/WTS, 4 variables) | ✅ acquis | upgrade du modèle 3 variables initial |
+| WTP ≠ temps investi, WTP = problème résolu | ✅ acquis | compris intuitivement + applicable Zenray |
+| Hiérarchie valeur (pain killer > vitamin > divertissement > luxe) | ✅ acquis | test pain killer maîtrisé |
+| ICP | ⚠️ défini en fin de session | à consolider en L2 — concept utilisé avant d'être enseigné |
+
+**Score exercice** : test pain killer produit C — résultat nuancé. ICP "studios indés" = vitamin. ICP "Procedural Pipeline Specialist pour studio avec backlog Houdini" = pain killer. Distinction acquise.
+
+**Signal clé découvert** : 2 ICPs distincts → 2 produits distincts → à modéliser en L2.
+
+**Durée réelle** : 2h23 (vs 20 min cible) — majorité du temps sur feedbacks pédagogiques et corrections de process. Normal pour L1 bootstrapping. L2 devrait être plus fluide.
+
+### Concept 1 — L'équation fondamentale du business
+
+Tout business sans exception est décrit par une seule inégalité :
+
+```
+Coût de production  <  Prix payé  ≤  Valeur perçue par le client
+        C           <       P      ≤          V
+```
+
+Trois zones possibles :
+- **V < P** → personne n'achète. La valeur perçue est inférieure au prix demandé. C'est le cas par défaut tant qu'on n'a pas construit son offre correctement.
+- **P < C** → l'entreprise meurt à chaque vente. Acceptable temporairement pour pénétrer un marché (Uber subventionnait ses courses), mortel comme état durable.
+- **C < P ≤ V** → zone viable. **Marge = P − C**. **Surplus consommateur = V − P**.
+
+**Corollaire opérationnel** : un business rentable n'est pas un business qui "vend cher". C'est un business qui fait grossir l'écart **V − C**. Trois leviers seulement :
+1. **↑V** — augmenter la valeur perçue (packaging, résultat livré, garantie, vitesse, statut)
+2. **↓C** — baisser le coût de production (automatisation, économies d'échelle, IA, dématérialisation)
+3. **↑ volume × fréquence** — multiplier les transactions (récurrence, upsell, cross-sell)
+
+Référence : Alex Hormozi, *$100M Offers* (2021) — construire l'offre pour que V monte si haut que P semble ridicule en comparaison. C'est la Grand Slam Offer.
+
+### Concept 2 — Willingness To Pay (WTP)
+
+**Définition** : WTP = le prix maximum qu'un client donné est prêt à payer pour une solution donnée, au moment où il fait face au problème.
+
+Règle ancrée, à ne jamais oublier :
+
+> **La valeur n'est pas ce que TU penses avoir créé. C'est ce que le marché est prêt à payer.**
+
+Illustration appliquée à Zenray :
+- 80h investies sur un guide Houdini 40 pages ne déterminent pas le prix. Si le marché paie 29€, WTP = 29€. Point.
+- 3 semaines sur un pack d'outils Houdini à 99€ × 200 ventes = **19 800€**. Plus rentable en €/heure qu'un guide 40 pages à 29€.
+- LinkedIn 5000 vues/post à zéro monétisation : WTP monétaire = 0. WTP en attention = élevé. Deux économies différentes, ne pas les confondre.
+
+**Corollaire brutal** : le temps investi ne crée pas de valeur. **Le problème résolu crée de la valeur.** Un guide gratuit de 40 pages peut avoir coûté 80h et résoudre moins de problème qu'un script Python de 50 lignes vendu 49€.
+
+### Concept 3 — Typologie de la valeur (hiérarchie de WTP)
+
+Toutes les valeurs ne se vendent pas au même prix à effort égal. Ordre décroissant de WTP :
+
+1. **Pain killer (douleur évitée)** — urgence, criticité, risque financier, risque réputationnel, deadline. Le client paie pour faire disparaître une douleur immédiate. **WTP maximal**.
+   *Exemple Zenray* : outil qui évite 8h de rework manuel à un lead tech art avant un milestone de build. Il paie 299€ sans hésiter si l'alternative c'est louper la milestone.
+2. **Vitamin (gain créé)** — nice to have, amélioration, confort. Le client aimerait bien, pas d'urgence. **WTP moyen**.
+   *Exemple Zenray* : pack d'assets esthétiques utilisables mais non critiques pour un projet indé.
+3. **Divertissement** — dépend de l'humeur, du moment, d'une envie. **WTP variable, souvent faible**.
+   *Exemple Zenray* : cours vidéo inspirant sans résultat business direct.
+4. **Luxe / statut** — WTP élevé mais volume faible, canal et positionnement différents (artisanat, édition limitée). Pas la priorité pour commencer.
+
+Règle ancrée :
+
+> **Vendre des pain killers avant de vendre des vitamins.**
+
+Corollaire Zenray : parmi les 5 produits listés au manifeste principe 8, tous ne sont pas pain killers. Identifier ceux qui le sont, prioriser ceux-là, reporter les autres.
+
+---
+
+### Exercice 1 — Classification pain / vitamin (guidé, ~5 min)
+
+Pour chacun des 5 produits listés au manifeste principe 8, écrire dans le carnet la catégorie (**pain killer / vitamin / divertissement / luxe**) avec **1 ligne de justification**.
+
+a) Outil de génération de matériaux Substance basé sur prompts →
+b) Pack d'outils Houdini procéduraux UE5 (grass, roof tiles, bayou church…) →
+c) Tech Art as a Service pour studios indés →
+d) Cours Houdini for Games sur Gumroad / Teachable →
+e) MCP server / extension IA pour Houdini / Substance →
+
+Pas de réponse unique "correcte" — plusieurs classements sont défendables. Ce qui compte : la justification explicite en 1 ligne par produit. La classification se discute, la justification se corrige.
+
+### Exercice 2 — WTP + volume estimé sur UN produit (autonome, ~10 min)
+
+Choisir **le produit classé pain killer le plus sérieux** à l'exercice 1. Écrire dans le carnet :
+
+- **ICP (Ideal Customer Profile) en 1 phrase** : rôle + contexte + contrainte. Exemple de forme : "Lead tech artist dans un studio indé 5-30 personnes sur Unreal, deadline de build serrée, pas de tech art senior dédié."
+- **WTP estimée** : fourchette en €/mois ou €/achat. Justifier par comparaison : qu'est-ce que le client dépense **déjà aujourd'hui** pour résoudre ce problème ou l'éviter (salaire senior, freelance, temps perdu) ?
+- **Fréquence** : one-shot / mensuel récurrent / annuel ?
+- **Volume accessible 12 mois** : fourchette de clients atteignables via les canaux existants (5000 vues/post LinkedIn à ancrer comme donnée réelle).
+- **Revenue annuel modélisé** : WTP × fréquence × volume. Donner fourchette basse et haute.
+
+### Exercice 3 — Décision (autonome, ~5 min)
+
+Écrire dans le carnet cette phrase complétée :
+
+> "Le produit avec le plus grand (V − C) × volume estimé, sur 12 mois, parmi mes 5 idées, est **______**. Je commence à le construire **cette semaine / ce mois / plus tard**, parce que **______**."
+
+Si la réponse est "plus tard", écrire la raison réelle en dessous — sans édulcorer. Pas de jugement dans l'exercice. Juste exposer la friction visible.
+
+---
+
+### Récap concepts L1 — à recopier dans le carnet
+
+- Équation universelle : **C < P ≤ V**. Trois leviers uniquement : **↑V**, **↓C**, **↑ volume × fréquence**.
+- **WTP ≠ effort investi.** WTP = problème résolu × criticité × alternative disponible.
+- Hiérarchie de WTP : **pain killer > vitamin > divertissement > luxe**.
+- Priorité Zenray : identifier le pain killer avec le plus grand (V − C) × volume avant tout produit vitamin ou guide gratuit.
+
+### Pièges à éviter L1
+
+- Confondre "ce que j'ai envie de construire" avec "ce qui a le plus grand (V − C) × volume".
+- Surestimer son WTP parce qu'on surestime la douleur résolue (biais du créateur).
+- Mesurer la valeur en heures passées plutôt qu'en problème résolu.
+- Classer un produit en pain killer parce qu'on l'espère, pas parce que le client l'exprime comme une douleur concrète.
+
+### Prochaine leçon (L2) — suggestion
+
+- **Unit economics** : CAC (Customer Acquisition Cost), LTV (Lifetime Value), marge unitaire, ratios sains **LTV / CAC ≥ 3**, payback < 12 mois.
+- **Application Zenray** : modéliser CAC via LinkedIn organique et LTV sur le produit choisi à l'exercice 3 de L1.
+- **Référence** : David Skok, *SaaS Metrics 2.0* — lecture suggérée mais non bloquante, le concept se passe de la lecture pour être compris.
+
+### Résultat L2 — 2026-04-18 OUT 20h33 (durée réelle ~57 min)
+
+| Concept | Statut | Note |
+|---|---|---|
+| ICP définition + 5 dimensions | ✅ acquis | corrigé : ICP = profil CLIENT, pas titre prestataire |
+| 2 ICPs Zenray construits | ✅ acquis | ICP 1 = Benoit Ferriere-type (Art Director pipeline), ICP 2 = Cédric-type (CEO GDD) |
+| CSV clients intégré (13 contacts) | ✅ fait | 1 client payant mal taggé, signal Benoit manqué |
+| Confusion ICP vs titre prestataire | ✅ corrigée | en session |
+
+**Insights de Matthieu (verbatim condensé) :**
+- "Je me rends compte que je suis pas au stade zéro. J'ai déjà contacté des gens, j'ai été payé."
+- "Le meilleur boulot pour moi à terme c'est être Art Director ou CEO — ces deux rôles m'intéressent."
+- "Faut apprendre plus de business et aller contacter de nouvelles personnes, pas se contenter de ce qu'on a."
+
+**Feedback de Matthieu sur L2 :**
+- Trop de customer discovery, pas assez de business académique HEC/Sciences Po. Il retient surtout le Value Stick de L1.
+- L3 doit être plus académique, plus formules/frameworks, moins customer discovery.
+- **Règle ajoutée** : chaque "ok" de Matthieu = timestamp de validation à logger. Chaque input/réflexion de Matthieu = à noter dans Business1. Tout le contenu livré dans le chat doit être dans Business1 (aucune info dans le chat sans trace dans le fichier).
+
+### Contenu enseigné en session L1 — révisions et ajouts 2026-04-18
+
+> Note : le Concept 1 initial ci-dessus (lignes 108-127) utilisait les lettres nues C/P/V et un modèle à 3 variables avec bloc de code. Version corrigée ci-dessous suite au feedback notation de Matthieu.
+
+**Concept 1 révisé — Value Stick HBS** (Felix Oberholzer-Gee, *Better, Simpler Strategy*, HBS Press 2021)
+
+| Variable (nommée) | Nom business | Abrév | Définition |
+|---|---|---|---|
+| `wtp` | Willingness To Pay | WTP | prix max que le client perçoit comme acceptable |
+| `price` | Prix | P | ce que tu factures réellement |
+| `cost` | Coût de production | C | ce que te coûte la production |
+| `wts` | Willingness To Sell | WTS | minimum accepté par fournisseurs / salariés |
+
+Règle fondamentale : `WTS < cost < price < WTP`
+
+| Surplus | Formule | Pour qui |
+|---|---|---|
+| `customer_delight` | `wtp − price` | le client |
+| `firm_margin` | `price − cost` | Zenray |
+| `supplier_surplus` | `cost − wts` | fournisseurs |
+
+| # | Levier pour grossir la marge | Exemple Zenray |
+|---|---|---|
+| 1 | ↑ wtp | garantie résultat, vitesse, preuves sociales |
+| 2 | ↓ cost | automatiser avec IA, réutiliser pipeline Houdini |
+| 3 | ↓ wts | meilleurs deals outils / plugins / infra |
+| 4 | ↑ volume × fréquence | récurrence (SaaS mensuel), upsell |
+
+---
+
+**Concept 2 révisé — Ce qui détermine WTP** (enseigné L1 étape 3)
+
+| ❌ Ne détermine PAS WTP | ✅ Détermine WTP |
+|---|---|
+| heures investies | criticité du problème résolu |
+| compétence technique | urgence ressentie par le client |
+| beauté du code | alternative disponible pour lui |
+| effort perçu | résultat livré mesurable |
+
+---
+
+**Concept 3 révisé — Test pain killer** (4 questions, enseigné L1 étape 4)
+
+| Question test | Pain killer | Vitamin |
+|---|---|---|
+| Le client est bloqué sans toi ? | ✅ oui | ❌ il se débrouille |
+| Il le demande explicitement ? | ✅ "j'en ai besoin maintenant" | ❌ "ce serait cool un jour" |
+| Il paie déjà une alternative imparfaite ? | ✅ oui | ❌ il attend / fait sans |
+| L'absence crée une perte mesurable (€, temps, réputation) ? | ✅ oui | ❌ non |
+
+---
+
+**Exercice 5 L1 — Analyse complète de Matthieu sur produit C (Tech Art as a Service)**
+
+Matthieu a passé le produit C au test pain killer. Réponses verbatim condensées :
+
+| Question | Réponse de Matthieu |
+|---|---|
+| Bloqué sans toi ? | "Non. Personne de connu ne serait bloqué. Les studios gèrent avec YouTube/IA/petites équipes." |
+| Demandé explicitement ? | "Non. 1 mission 2500€ (Mirkat Studio, nov 2025) — mais c'était du GDD, pas du tech art pur." |
+| Alternative existante ? | "Oui. YouTube, Discord, freelances, IA. Toujours une alternative disponible." |
+| Perte mesurable ? | "Possible pour Houdini procédural spécialisé, mais aucun signal marché prouvé." |
+
+Auto-diagnostic de Matthieu (remarquable — identifié sans être enseigné) : (1) pas de preuve sociale = portfolio non fini, (2) profil "touche à tout" = pas positionné comme spécialiste, (3) 1 mois d'expérience réelle terrain, (4) peur fracture marché produits digitaux IA.
+
+**Correction post-analyse** : le test échoue sur ICP "studios indés" (trop vague → vitamin). Avec ICP précis "studio mid-size backlog Houdini 6-12 mois" → pain killer. Problème actuel = preuve sociale manquante, pas le marché.
+
+**Signal Mirkat (Cédric)** : mission 2500€ nov 2025 = seule validation marché réelle. ICP GDD distinct du ICP Procedural Pipeline. À traiter comme deux produits séparés.
+
+---
+
+## 2026-04-18 — Leçon 2 (IN 19h36) : ICP — Ideal Customer Profile
+
+### Feedbacks session L1 (append-only, par timestamp)
+
+- **2026-04-18 ~12h49** — Setup L1 initial : dump des 3 concepts + 5 produits d'un coup. Matthieu n'a pas commencé à écrire, friction d'initiation trop haute. Décision : reset en mode micro-steps guidés une action à la fois.
+- **2026-04-18 17h13** — Reprise L1 en mode `ÉTAPE X / N — Titre (durée)` avec attente `ok` avant d'enchaîner. Matthieu valide : "excellent c'est exactement ce dont on parlait". Règle transposable à toutes les futures leçons Business.
+- **2026-04-18 17h~20** — Feedback format : **tableaux markdown > blocs de code** pour présenter concepts/règles/formules. Les ``` parasitent la lecture. Règle ajoutée dans Readme principes pédagogiques + étape 2 re-livrée en tableaux (commit `7b3d7be`).
+- **2026-04-18 17h~25** — Feedback méta : tout feedback de Matthieu en cours de leçon doit être loggé **ici dans Business1.md** (pas seulement Readme). Raison : Readme = règles durables, Business1.md = traçabilité datée. Les deux ensemble = aucune info perdue. Règle ajoutée dans Readme principes pédagogiques.
+- **2026-04-18 19h~40** — Feedback format (3ème rappel) : blocs ``` encore utilisés pour du texte à recopier dans le carnet (setup L2). Règle définitive : **jamais de ``` pour du contenu carnet, jamais pour des concepts** — texte inline ou tableau uniquement. De plus, étapes setup triviales (2 lignes) = pas d'ÉTAPE dédiée, combiner avec l'étape suivante. Les ÉTAPES ne se justifient que quand il y a réellement quelque chose à faire/comprendre/écrire en volume.
+- **2026-04-18 19h~20** — Feedback correction règle mémoire : "Core/Memory files" et non "MEMORY1 uniquement" — l'info peut être dans MEMORY1 ou MEMORY2. Règle corrigée dans Readme.md + MEMORY1.md. Feedback ICP : terme utilisé plusieurs fois dans L1 sans avoir été enseigné. Erreur pédagogique — jargon non défini avant usage. ICP = à enseigner dès L2 comme concept premier (avant même product/market fit). Loggé ici pour L2.
+- **2026-04-18 19h~15** — Feedback méta critique : Claude a posé des questions (parcours, clients, marché) dont les réponses étaient déjà dans Core/MEMORY1.md. Règle ajoutée : lire MEMORY1 via grep avant toute question à Matthieu. Nouvelles infos non présentes dans MEMORY1 → loggées immédiatement dans Business1.md ET MEMORY1. Infos ajoutées à MEMORY1 : Mirkat Studio (Cédric), mission 2500€ GDD novembre 2025, parcours LISAA/ArtFX, pivot post-ArtFX, positionnement "Procedural Pipeline Specialist" confirmé.
+- **2026-04-18 19h08** — Résultat exercice 5 L1 : Matthieu passe le produit C au test pain killer. Analyse honnête et juste : (1) aucun studio connu ne serait "bloqué" sans lui, (2) aucun signal marché explicite reçu — sauf UNE mission 2500€ ponctuelle (game design + tech art), (3) les studios gèrent sans tech art spécialisé via YouTube/IA/petites équipes, (4) alternatives existent → WTP faible, (5) Matthieu identifie lui-même qu'il manque de preuve sociale (portfolio non fini, 1 mois d'expérience réelle, profil "touche à tout"). **Résultat test : produit C = vitamin en l'état, pas pain killer.** Le problème n'est pas le marché — c'est l'ICP trop vague et la preuve sociale manquante. Signal clé identifié : la mission 2500€ est la seule validation marché réelle. Ce client = ICP à creuser. À ancrer en L3 (customer discovery, ICP, niche).
+- **2026-04-18 18h59** — Exercice 5 L1 : Matthieu choisit produit **C (Tech Art as a Service pour studios indés)**. Justification spontanée : (1) boucle de feedback courte avec de vraies personnes plutôt que tunnel solo, (2) valider le marché avant d'investir du temps de build, (3) conscient de sa lenteur d'exécution → si boucle de feedback lente, 3 mois passés sur un produit pas encore en vente, (4) peur fracture rapide du marché des produits digitaux IA. Insight notable : identifie intuitivement "do things that don't scale" (Paul Graham) et "customer discovery" (Steve Blank) sans les avoir appris formellement. À ancrer en L2/L3.
+- **2026-04-18 17h29** — Feedback notation C/P/V.
+
+### Concept 1 L2 — ICP : Ideal Customer Profile (enseigné L2 étape 1)
+
+**Définition** : ICP = description la plus précise possible du client qui a le plus de douleur, le plus de budget, et que tu peux atteindre le plus facilement.
+
+| Dimension | Question | Exemple mauvais | Exemple bon |
+|---|---|---|---|
+| Rôle | Qui décide et paie ? | "studios" | Lead Tech Artist, fondateur solo |
+| Structure | Dans quel contexte ? | "indépendants" | studio 5-20 pers, UnrealEngine, AA |
+| Douleur | Quel problème urgent ? | "besoin de tech art" | backlog Houdini 6 mois, milestone bloquée |
+| Budget | A-t-il les moyens ? | "budget limité" | outsourcing existant, ARR > 50K€ |
+| Canal | Comment te trouve-t-il ? | "LinkedIn" | Discord gamedev FR, post procédural viral |
+
+Règle-clé : Plus ICP est précis → plus WTP monte → moins de concurrence. Contre-intuitif mais universel.
+
+### Exercice L2 — 2 ICPs Zenray (statut : en cours 2026-04-18)
+
+Deux signaux identifiés en L1 → deux ICPs à construire :
+
+**ICP 1 — Procedural Pipeline Specialist**
+
+| Dimension | Connu | À compléter par Matthieu |
+|---|---|---|
+| Rôle | Lead Tech Artist ou Art Director | Qui signe le bon de commande ? |
+| Structure | Studio 10-50 pers, UnrealEngine, projet AA, pas de Houdini dédié | Quel pays / marché prioritaire ? |
+| Douleur | Backlog Houdini 6-12 mois, milestone bloquée | Exemple concret vu ou vécu ? |
+| Budget | Budget outsourcing existant | Fourchette €/jour freelance tech art ? |
+| Canal | LinkedIn, Discord gamedev | Quel Discord spécifique ? Quel hashtag ? |
+
+**ICP 2 — GDD Consulting (Mirkat-type)**
+
+| Dimension | Connu | À compléter par Matthieu |
+|---|---|---|
+| Rôle | Fondateur solo, 1-5 personnes | Cédric t'a trouvé comment exactement ? |
+| Structure | Micro-studio simulation games, Steam, 1-3 jeux, Discord community | Autres genres ou simulation uniquement ? |
+| Douleur | Vision du jeu non formalisée en GDD | Qu'est-ce que Cédric t'a dit qui l'a bloqué ? |
+| Budget | ARR ~100K€ (Mirkat), peut payer | 2500€ sans hésiter ou après négociation ? |
+| Canal | Discord indé FR, communautés Steam | Il t'a contacté ou tu l'as approché ? |
+
+Statut : colonnes "À compléter" en attente de réponses de Matthieu.
+
+### Réponses de Matthieu — ICP L2 (2026-04-18 20h03)
+
+**ICP 1 — Tech Art 3D (renommé — "Procedural Pipeline Specialist" trop fort pour niveau actuel)**
+
+| Dimension | Réponse de Matthieu | Insight |
+|---|---|---|
+| Titre / rôle | "Tech Art 3D" ou "Technical Art 3D" — plus honnête que "Procedural Pipeline Specialist" sans preuves sociales | Repositionnement valide : cohérence > aspiration non prouvée |
+| Qui signe le bon de commande | Ne sait pas. Aucune expérience de deal signing côté studio | Lacune à combler : mapping des décideurs en L3 |
+| Marché $ | US + France en priorité | Distinction nette marché argent (US/FR) vs marché vie (Japon) |
+| Marché vie | Japon → mais payé en USD ou EUR (géoarbitrage) | Concept : géoarbitrage = vivre dans un pays à coût moindre en étant payé en devises fortes |
+| Douleur Houdini | Aucun exemple concret vécu. 2-3 contacts studios : 1 ghost, 1 "besoin dans 1 mois" → ghost après 1 relance | Signal faible. Prospection froide LinkedIn = taux conversion très bas |
+| Niveau auto-évalué | Intermédiaire. Ref : Erwan Godichon (Mundfish Studio, UnrealEngine, ~5000€/mois, 3 ans XP) = "environ 1.6× meilleur" | Honnêteté remarquable. Niveau intermédiaire ≠ pas vendable, mais nécessite repositionnement offre |
+| Fourchette €/jour | 3500-5000€/mois (estimé). Réf Erwan : ~5000€/mois avec 3 ans XP | Données marché réelles, utilisables en L3 (unit economics) |
+| Canal | LinkedIn 2500 relations. Pas de sens des communautés / Discord. "Expertise-driven, pas community-driven" | Canal identifié par défaut : LinkedIn organique |
+
+**ICP 2 — GDD Consulting (Mirkat-type) — réponses complètes**
+
+| Dimension | Réponse de Matthieu | Insight |
+|---|---|---|
+| Comment Cédric a trouvé Matthieu | **Commentaire pertinent sur une vidéo de Théo Lion** (créateur business/philo). Cédric l'a contacté en inbound. | Signal canal crucial : inbound via contenu > prospection froide |
+| Genres autres que simulation | Possibles, mais inconnus | ICP 2 reste peu défini au-delà du cas Mirkat |
+| Ce que Cédric voulait | Toute la vision du jeu → GDD complet sur Notion | Scope clair : formalisation vision produit pour fondateur solo |
+| Négociation | **Aucune**. Signature immédiate à 2500€ | Red flag pricing : signature immédiate = WTP > 2500€. Matthieu sous-tarifé. |
+| Tarif réel | 2500€ pour ~10 jours = **250€/jour** | 250€/jour pour GDD = très bas. Matthieu le reconnaît : "je me fais vraiment niquer" |
+| Contact direction | Cédric a contacté Matthieu (inbound) | Seul canal ayant converti = inbound contenu. Outbound LinkedIn = 0 conversion. |
+
+### Correction — 2026-04-18 20h03
+
+~~"0 conversion, 2 ghosts" (prospection LinkedIn)~~ [OBSOLÈTE — inexact. Voir CSV ci-dessous]
+Réel : 7 contacts "Répondu", conversations positives avec plusieurs. Le tracking était absent, pas les conversations.
+
+### Database Clients — CSV intégré 2026-04-18 (source : Notion export)
+
+> ⚠️ Avertissement de Matthieu : les notes "générées par Claude" dans ce CSV ne sont pas source de vérité. Les données structurées (nom, studio, statut, date) sont fiables. Les notes libres = à prendre avec recul.
+
+| Nom | Studio | Poste | Statut | Date | Note (vérifiée) |
+|---|---|---|---|---|---|
+| Cédric Paquet | Meerkatt Studio | Art Director, CEO | **CLIENT PAYANT** (noté "Contacté" dans CSV — erreur) | Jan 2026 | Mission GDD 2500€, signé sans négocier. Inbound via commentaire vidéo Théo Lion. |
+| Erwan Gaudichon | Mundfish | Tech Art | Répondu | Fév 2026 | Discussion positive real-time rendering AAA. Référence salaire ~5000€/mois. |
+| Benoit Ferriere | Tokkun Studio | Art Director, CEO | Répondu | Fév 2026 | "Support technique pipeline animation. Call prévu." Relance prévue Mars 2026 — inconnu si relancé. |
+| Sylvain Tornambe | Rubika / ENI | Instructor Tech Art | Répondu | Fév 2026 | Ami. Conversation sympa. Pas mission. |
+| Léo Paris | SandFall | VFX Artist | Répondu | Fév 2026 | Ami / contact. "Goat ultime VFX". Pas mission. |
+| Adrien Paguet-Brunella | Haven Studio | Vegetation Artist | Répondu | Fév 2026 | Contacté via tuto Gnomon. Haven = studio Sony (Ghost of Tsushima). Signal intéressant. |
+| Mathieu Pascal | Headlight Studio | CEO, Game Director | Répondu | Fév 2026 | Via chaîne YouTube. |
+| Arthur Cossevin | Quantic Dream | Cinematic Artist | Contacté | Jan 2026 | Ami. Pas de suivi business. |
+| Nicolas Michel | Ynov | Instructor Tech Art | Contacté | Fév 2026 | "Très sympa, très pro." |
+| Stéphane Biava | Proj Production | — | Contacté | Fév 2026 | Via chaîne YouTube. |
+| Omar Abdelwahed | — | — | Contacté | Fév 2026 | Aucune note. |
+| Lucas Piazzini | — | — | — | — | Aucune data. |
+| Julie Keuk (URL) | Creative Seeds | Student | Refus | Avr 2026 | "Beau portfolio, n'a pas souhaité parler." |
+
+**Synthèse CSV :**
+- 13 contacts | 7 "Répondu" | 5 "Contacté" | 1 "Refus" | 1 client payant (Cédric, mal taggé)
+- Répondeurs = mix amis + collègues + contacts YouTube/Gnomon. Pas de conversion mission sauf Cédric (inbound).
+- Signal fort manqué : Benoit Ferriere (Tokkun Studio) = Art Director CEO avec besoin pipeline animation déclaré. Relance Mars 2026 non tracée.
+- Canal qui a produit du cash : inbound contenu (Théo Lion). Tous les outbound = conversations, 0 mission signée.
+
+**Feedback Matthieu sur le tracking :** trop dur à tenir au quotidien (génération messages → Notion → envoi). Veut créer un outil propre à terme. Pour l'instant : pas prioritaire. Data CSV = seule source fiable.
+
+### Cadre 3 piliers (généré par Claude — à prendre comme framework, non comme vérité validée)
+
+| Pilier | Type | Cash | Mécanique | Délai |
+|---|---|---|---|---|
+| 1. Prospection (actif) | Push | Court terme | 5 DMs/jour → Calls → Contrats | 2-8 semaines |
+| 2. Production visible (passif) | Pull | Moyen terme | Posts, breakdowns, assets publiés | 3-12 mois |
+| 3. Récupération (carburant) | Sustain | — | Japonais, sport, sanctuaire | Permanent |
+
+**Diagnostic actuel Matthieu** : fait 2 (production) + 3 (récup/jeux). Ne fait jamais 1. Attend que 2 porte ses fruits seul. Trop lent pour objectifs.
+
+**Proportion cible suggérée** : 20% prospection (1h/jour, matin) + 60% production visible + 20% récupération.
+
+### Insights-clés émergents L2 (à enseigner L3/L4)
+
+- **Sous-tarification** : Cédric a signé immédiatement → son WTP était probablement 2-3× le prix demandé. Leçon Value Stick : quand le client signe sans négocier, le WTS était trop bas.
+- **Canal inbound > outbound** : 0 conversion prospection froide LinkedIn. 1 conversion via commentaire vidéo Théo Lion. Canal évident à exploiter.
+- **Géoarbitrage** : vivre au Japon + être payé en USD/EUR = stratégie viable. Concept à formaliser en L5-6.
+- **Repositionnement titre** : "Tech Art 3D" > "Procedural Pipeline Specialist" à ce stade. Honnêteté sur le niveau = crédibilité > aspiration non prouvée.
+- **Confusion ICP vs titre prestataire** (feedback 2026-04-18) : dans les tableaux ICP, "Tech Art 3D" est le titre de Matthieu (ce qu'il vend), PAS le profil du client. ICP = description du CLIENT. Benoit Ferriere (Art Director Tokkun, besoin pipeline) = ICP 1 réel. Cédric Paquet (CEO fondateur solo, besoin GDD) = ICP 2 réel. Correction à faire en L3. Matthieu (programmer Python) pointe que les lettres isolées sans nommage explicite ne facilitent pas la mémorisation : "nommer une variable n'aurait pas de sens pour un programmer". Critique valide. Les lettres C/P/V **sont** la convention académique (microéconomie Mankiw, Varian, Samuelson ; HBS Value Stick de Felix Oberholzer-Gee dans *Better, Simpler Strategy* 2021), mais toujours introduites APRÈS le nom complet de la variable. Correction L1 : re-livrer Concept 1 avec noms programmer-style (`cost`, `price`, `wtp`) + lettres comme shorthand pour les équations, et upgrade vers le **Value Stick HBS à 4 variables** (WTP, P, C, WTS) au lieu du modèle simplifié à 3. Règle durable ajoutée Readme : nommer avant d'abréger.
+
+---
+
+## 2026-04-18 — Leçon 3 (IN 20h36) : Unit Economics — CAC, LTV, LTV/CAC
+
+### Rôle de Claude sur cette leçon
+Registre académique HEC / Sciences Po / Harvard. Ancrage sur data Zenray réelle. Micro-steps guidés. Registre formules + ratios, moins customer discovery. Référence principale : David Skok, *SaaS Metrics 2.0* (2010, bessemer.com).
+
+### Feedbacks session L3 (append-only, par timestamp)
+
+- **2026-04-18 ~20h50** — ÉTAPE 1 L3 rejetée. Erreurs identifiées par Matthieu : (1) jargon non défini utilisé avant explication (TJM, CRM, analytics) → règle violée "nommer avant d'abréger" ; (2) comparaison 7 contacts outbound vs 1 inbound = mauvaise analyse — canaux différents, volumes incomparables → la conclusion "inbound CAC 6000× inférieur" est non fondée statistiquement ; (3) Matthieu correct : 7 contacts ≠ échantillon valide, 700 contacts pourrait changer radicalement le taux ; (4) enseignement trop superficiel — concepts survolés sans être construits brique par brique. Règle renforcée : **jamais de terme non défini avant usage**. L3 ÉTAPE 1 annulée, reprise de zéro.
+- **2026-04-18 21h09** — Insight Matthieu validé sur le volume : 7 contacts ≠ échantillon pour CAC fiable (minimum ~50 contacts même canal). Le vrai CAC Zenray n'est pas calculable aujourd'hui faute de data homogène. Info, pas problème. Prochain run de prospection : tracker contacts × temps × conversions.
+- **2026-04-18 21h09** — Fermeture L3 (OUT 21h09). CAC couvert (définition + 2 types de coûts). LTV + ratio LTV/CAC reportés en L4.
+
+### Contenu enseigné L3
+
+**Concept 1 — CAC : Customer Acquisition Cost**
+
+| Variable | Nom complet | Définition |
+|---|---|---|
+| `cac` | Customer Acquisition Cost (coût d'acquisition client) | Coût moyen pour obtenir **un** client payant |
+
+Formule de base : `cac = total dépensé pour trouver des clients ÷ nombre de clients payants obtenus`
+
+Règle fondamentale : obtenir un client coûte toujours quelque chose — soit de l'argent, soit du temps. Les deux ont une valeur réelle.
+
+---
+
+**Concept 2 — Les 2 types de coûts dans le CAC**
+
+Type 1 — Coûts directs (argent sorti de ta poche) :
+
+| Exemple | Ordre de grandeur |
+|---|---|
+| Publicité payante (LinkedIn Ads, Google) | 50-500€/mois |
+| LinkedIn Premium (accès profils hors réseau, InMail) | ~40€/mois |
+| Sponsoring newsletter gamedev | 100-300€/send |
+| Commission apporteur d'affaires | % contrat signé |
+
+Type 2 — Coûts indirects (temps valorisé) :
+
+**Taux horaire** : prix d'une heure de ton travail, fixé par toi selon objectif de revenu. Exemple : 3 000€/mois ÷ 150h = **20€/h**.
+
+| Exemple | Calcul |
+|---|---|
+| 5h de DMs LinkedIn | 5 × 20€ = 100€ de coût induit |
+| 3h à produire un post contenu | 3 × 20€ = 60€ de coût induit |
+| 2h de call commercial | 2 × 20€ = 40€ de coût induit |
+
+Formule complète :
+
+| Formule | Détail |
+|---|---|
+| `cac = (coûts_directs + temps × taux_horaire) ÷ clients_payants_obtenus` | Le temps non facturé est un coût réel |
+
+---
+
+### Résultat L3 — 2026-04-18 OUT 21h09
+
+| Concept | Statut | Note |
+|---|---|---|
+| CAC définition + formule | ✅ acquis | construit depuis le principe fondamental |
+| 2 types de coûts (direct + indirect/temps) | ✅ acquis | taux horaire défini proprement |
+| Insight volume : 7 contacts ≠ CAC fiable | ✅ Matthieu l'a identifié lui-même | correct, loggé |
+| LTV + ratio LTV/CAC | 🔜 reporté L4 | session fermée à 21h09 |
+
+**Durée réelle L3** : ~35 min (20h36 → 21h09). ÉTAPE 1 annulée et reprise (feedback sur jargon non défini + mauvaise analyse canal). Concepts solides acquis sur les 2 étapes livrées.
+
+---
+
+---
+
+## 2026-04-19 — Leçon 4 (IN ~10h) : Unit Economics suite — LTV + ratio LTV/CAC
+
+### Rôle de Claude sur cette leçon
+Continuité directe de L3 (CAC acquis). Registre académique. Formules nommées, ancrage Zenray. 3 étapes, ~35 min.
+
+### Feedbacks session L4 (append-only, par timestamp)
+
+- **2026-04-19 10h22** — ÉTAPE 1 jugée trop basique. Matthieu : "j'ai pas appris grand chose". Feedback structurel : il veut une compréhension globale du business, pas des concepts qui s'empilent sans logique visible. "J'ai besoin de comprendre le business globalement." Attendu : que le professeur ait un grand plan cohérent, que chaque leçon soit une brique qui s'inscrit dans une architecture, pas juste du vocabulaire. Règle renforcée : chaque concept doit être accompagné de son **insight non-évident** (ce qu'un non-initié ne verrait pas seul) et de sa **connexion explicite aux autres concepts déjà vus**.
+
+### Contenu enseigné L4
+
+**Concept 1 — LTV : Lifetime Value**
+
+| Variable | Nom complet | Définition |
+|---|---|---|
+| `ltv` | Lifetime Value (valeur vie client) | Revenu total attendu d'un client, de sa première à sa dernière transaction |
+
+| Modèle | Formule |
+|---|---|
+| One-shot (mission ponctuelle) | `ltv = prix_moyen_par_mission` |
+| Récurrent (retainer, abonnement, SaaS) | `ltv = revenu_mensuel_par_client × durée_relation_en_mois` |
+
+Règle : récurrent > one-shot à revenu mensuel identique — la durée multiplie la LTV sans changer le CAC.
+
+---
+
+**Concept 2 — Ratio LTV/CAC : le signe vital**
+
+| Ratio | Formule |
+|---|---|
+| `ratio` | `ltv ÷ cac` |
+
+| Valeur | Verdict |
+|---|---|
+| < 1 | Perte sur chaque client. Arrêter. |
+| 1 – 3 | Viable mais non scalable. |
+| **≥ 3** | **Règle d'or. Sain, scalable.** |
+| ≥ 5 | Excellent. |
+| > 10 | Exceptionnel ou sous-investissement en acquisition. |
+
+Référence : David Skok, *SaaS Metrics 2.0* (2010) — benchmark utilisé par Bessemer, a16z.
+
+**Insight non-évident — lecture inversée :**
+
+`cac_maximum_autorisé = ltv ÷ 3`
+
+L'objectif n'est pas "minimiser le CAC" — c'est "ne pas dépasser le CAC maximum autorisé par la LTV". Connaître sa LTV détermine combien on peut dépenser en acquisition.
+
+Application Zenray :
+
+| Scénario | LTV | CAC max autorisé |
+|---|---|---|
+| Mission one-shot (Cédric-type) | 2 500€ | 833€ |
+| Retainer 1000€/mois × 6 mois | 6 000€ | 2 000€ |
+| Retainer 3 500€/mois × 6 mois (Benoit Ferriere-type) | 21 000€ | 7 000€ |
+
+CAC actuel Zenray (inbound) : ~15-50€. Ratio réel : ~50 à 170×. Pas "efficace" — de la croissance non extraite.
+
+---
+
+**Concept 3 — Payback period**
+
+| Variable | Formule | Règle |
+|---|---|---|
+| `payback_period` | `cac ÷ marge_mensuelle_par_client` | < 6 mois (bootstrap) / < 12 mois (trésorerie saine) |
+
+Piège : ratio excellent sur le papier + payback 18 mois = business asphyxié en cash avant d'être rentable.
+
+---
+
+**Connexion architecture globale :**
+
+| Leçon | Concept | Impact unit economics |
+|---|---|---|
+| L1 — Value Stick | ↑ WTP | ↑ LTV directement |
+| L2 — ICP précis | Meilleur ciblage | ↑ LTV (douleur forte = prix fort) + ↓ CAC (canal plus direct) |
+| Pricing (L5-6) | Prix juste | Sous-pricing (ex : Cédric 250€/j) = plafonnement artificiel de LTV |
+
+Problème central Zenray actuel : toutes les transactions sont one-shot → LTV faible → ratio bon sur Cédric mais non scalable. Passage en récurrent (retainer/abonnement) = LTV × durée sans changement de CAC → ratio explose → investissement possible en acquisition → croissance.
+
+---
+
+### Résultat L4 — 2026-04-19 IN 10h22 / OUT 12h30 (partiel — ÉTAPE 3 reportée à l'après-midi)
+
+| Concept | Statut | Note |
+|---|---|---|
+| LTV définition + 2 formules (one-shot / récurrent) | ✅ acquis | |
+| Ratio LTV/CAC + règles de santé | ✅ acquis | |
+| Insight inversé : CAC max autorisé = LTV ÷ 3 | ✅ acquis | non-évident, lié à la stratégie d'acquisition |
+| Payback period | ✅ acquis | alerte cash même sur ratio sain |
+| Connexion V. Stick / ICP / Pricing → unit economics | ✅ acquis | architecture visible |
+| ~~ÉTAPE 3 — exercice sur data réelle Zenray (Cédric + Benoit Ferriere)~~ | ~~🔜 reporté~~ | ~~cet après-midi~~ [OBSOLÈTE 2026-04-19 après-midi — voir ligne suivante] |
+| ÉTAPE 3 — exercice sur data réelle Zenray (Cédric + Benoit Ferriere) | ⏭️ skippé par Matthieu | "passons à la suite" — sentiment de ne pas apprendre assez vite, besoin de vision globale |
+
+---
+
+---
+
+~~## 2026-04-19 — Leçon 5 (IN ~14h) : Pourquoi les freelances plafonnent — et les 3 leviers pour en sortir~~ [OBSOLÈTE 2026-04-19 — sujet remplacé après 3ème recentrage ; voir ligne ci-dessous]
+
+## 2026-04-19 — Leçon 5 (IN ~14h → OUT 17h12) : Business Model Canvas (Osterwalder 2010) — définition d'un business model + 9 blocs
+
+### Rôle de Claude sur cette leçon
+Recentrage fondamental. Leçon de 20 min. 2 étapes académiques denses. **Aucune application forcée à Zenray** (0 clients actuellement = données insuffisantes). Objectif : enseigner les frameworks fondamentaux qui permettent de comprendre N'IMPORTE quel business, pas de coller des formules sur une situation inexistante.
+
+### Feedback structurel de Matthieu — 2026-04-19 (3ème recentrage)
+
+- Matthieu : "tu hypothétises ce qu'est Zenray... ça n'a aucun sens d'augmenter ses tarifs alors qu'on sait toujours pas quoi faire concrètement."
+- Matthieu : "tu vas à l'encontre des consignes — inventer du vite en me parlant de pallier TJM pour l'instant alors que tu n'as pas fini de m'apprendre les bases du business."
+- Matthieu : "ça fait trois fois que je te recentre. Tu t'écaries beaucoup."
+- Matthieu : "il faut les bases — apprendre le business pour que je gagne en confiance — me donner 100% des compétences acquises à HEC en 3 ou 5 ans niveau master."
+- Matthieu : "il y a 0 clients, 0 mouvements — les bases d'abord."
+
+**Correction d'approche pédagogique (règle durable à partir de L5) :**
+Les applications sur Zenray ne sont pertinentes que sur des données RÉELLES ET VÉRIFIÉES. Si les données sont insuffisantes ou inexistantes → enseigner le framework pur, avec un exemple extérieur concret (entreprise connue du monde Matthieu : Gumroad, ArtStation, Epic, etc.), jamais de cas fictif Zenray. Application Zenray = optionnel et uniquement quand la data existe. Le curriculum = enseigner les 3-5 ans HEC master complets. Pas de sauts, pas d'applications fantômes.
+
+### Contenu enseigné L5
+
+**Concept 1 — Définition d'un business model**
+
+Définition académique (Osterwalder, *Business Model Generation*, 2010) :
+
+> **Un business model = la logique par laquelle une organisation crée, délivre et capture de la valeur.**
+
+Cette définition contient 3 verbes → 3 questions fondamentales :
+
+| Verbe | Question | Lien avec blocs BMC |
+|---|---|---|
+| **Créer** de la valeur | Pour qui ? Quel problème ? | Customer Segments + Value Propositions |
+| **Délivrer** la valeur | Comment atteindre le client ? | Channels + Customer Relationships |
+| **Capturer** la valeur | Comment tu t'en gardes une part ? | Revenue Streams |
+
+Piège classique artiste : créer sans capturer = projet artistique, pas un business.
+
+---
+
+**Concept 2 — Le Business Model Canvas : 9 blocs (Osterwalder 2010)**
+
+*Ce tableau est celui que Matthieu a recopié dans le carnet à 17h12 (retenu comme base L5).*
+
+| Côté | Bloc | Question à laquelle il répond |
+|---|---|---|
+| Centre (pivot) | Value Propositions (VP) | Quelle valeur tu offres, à qui, contre quel problème ? |
+| Droite (face client, génère du revenu) | Customer Segments (CS) | À qui tu t'adresses précisément ? |
+|  | Channels (CH) | Par où tu atteins ce client ? |
+|  | Customer Relationships (CR) | Quel type de relation tu entretiens avec lui ? |
+|  | Revenue Streams (R$) | Comment l'argent entre ? Une fois, par abonnement, à l'usage ? |
+| Gauche (face production, génère du coût) | Key Resources (KR) | Qu'est-ce qui est indispensable pour livrer la valeur (tech, humains, marque) ? |
+|  | Key Activities (KA) | Qu'est-ce qu'il faut faire tous les jours pour que ça tourne ? |
+|  | Key Partnerships (KP) | Qui fait quoi à ta place ? |
+| Bas | Cost Structure (C$) | Qu'est-ce que ça coûte de faire tourner tout ça ? |
+
+Logique structurante :
+- Droite = ce que le client voit et paie → **revenus**
+- Gauche = ce qui fait tourner la machine en coulisses → **coûts**
+- Centre = Value Proposition, pont entre les deux
+- Équation cachée : `profit = Revenue Streams − Cost Structure`
+
+---
+
+**Concept 3 — Lecture de Gumroad (enseigné en chat, NON recopié par Matthieu — arrêt au premier tableau à 17h12)**
+
+> Cette partie est livrée pour trace. À reprendre/recopier en début de L6 ou session de révision si utile.
+
+Gumroad (Sahil Lavingia, 2011) — marketplace de produits digitaux, ~15 personnes, ~20M$/an :
+
+| Bloc | Gumroad |
+|---|---|
+| Customer Segments | Créateurs (vendent) + acheteurs (consomment). Marketplace bilatérale. |
+| Value Propositions | Créateurs : "vends en 10 min sans site web, paiement global géré". Acheteurs : "achète directement au créateur". |
+| Channels | Pour acheteurs : **les créateurs eux-mêmes via leurs audiences propres** (Twitter, YouTube, newsletter). |
+| Customer Relationships | Self-service total. Minimal touch. Newsletter Creator Digest. |
+| Revenue Streams | Commission 10% par transaction. Pas d'abonnement obligatoire. |
+| Key Resources | Plateforme, réseau de créateurs (effet marketplace), marque de confiance. |
+| Key Activities | Dev produit, support créateurs, fiabilité paiement, anti-fraude. |
+| Key Partnerships | Stripe, PayPal, AWS, intégrations Zapier/Substack. |
+| Cost Structure | Petite équipe, serveurs, frais paiement. **Marketing quasi-nul** — les créateurs amènent leurs audiences. |
+
+**Insight non-évident révélé par le BMC :** les créateurs sont à la fois *Customer Segment* ET *Channel*. Distribution embarquée dans le produit → 15 personnes suffisent à faire tourner 20M$.
+
+---
+
+**Connexion L1-L4 → BMC (enseigné en chat, NON recopié)**
+
+| Concept vu en L1-L4 | Bloc BMC où il vit |
+|---|---|
+| WTP, Value Stick (L1) | Value Propositions |
+| Hiérarchie valeur pain killer > vitamin (L1) | Value Propositions |
+| ICP 5 dimensions (L2) | Customer Segments |
+| CAC et ses composantes (L3) | Channels |
+| LTV one-shot vs récurrent (L4) | Revenue Streams |
+| Coût de production (L1) | Cost Structure |
+
+Tout L1-L4 remplit les blocs du BMC. Le BMC est le cadre qui contient les outils vus.
+
+---
+
+### Résultat L5 — 2026-04-19 OUT 17h12 (~3h10 calendaires, ~30 min effectifs)
+
+| Concept | Statut | Note |
+|---|---|---|
+| Définition business model Osterwalder + 3 verbes | ✅ enseigné | non recopié (arrêt avant) mais présent en chat |
+| 9 blocs du BMC (tableau côté/bloc/question) | ✅ **recopié** par Matthieu à 17h12 | base solide retenue |
+| Lecture Gumroad sur le canvas | 📝 enseigné, non recopié | trace dans Business1.md, à reprendre L6 si utile |
+| Insight distribution embarquée Gumroad | 📝 enseigné, non recopié | trace dans Business1.md |
+| Connexion L1-L4 → BMC | 📝 enseigné, non recopié | trace dans Business1.md |
+| Règle HEC : BMC avant pricing/prospection/lancement | 📝 enseigné, non recopié | à réactiver L6 |
+
+**Ce que Matthieu a dans son carnet après L5 :** le tableau des 9 blocs BMC avec question par bloc. C'est la structure académique pure. Le reste (lectures, insights, connexions) est loggé ici mais non consolidé carnet → à reprendre si utile.
+
+**Bilan pédagogique L5 :** virage réussi après 3ème recentrage. L'angle académique pur (définition académique + framework Osterwalder sans forcing Zenray) a tenu. Matthieu a interrompu par choix logistique (sport) pas par frustration de contenu.
+
+**Prochaine session :** Matthieu indique qu'il reprendra probablement Japanese1.md ce soir. Business L6 à caler plus tard. Candidats L6 : (a) approfondir 1-2 blocs du BMC (Value Propositions + Revenue Streams sont les plus impactants) ; (b) Porter's 5 Forces (analyse du marché) ; (c) Jobs To Be Done (Christensen) pour approfondir la VP.
+
+---
+
+## 2026-04-18 — Synthèse globale feedbacks pédagogiques (21h09, most recent first)
+
+> Section de consolidation — les feedbacks individuels restent dans leurs sections L1/L2/L3 ci-dessus. Ceci est une lecture ordonnée inverse pour retrouver facilement le plus récent.
+
+| Timestamp | Feedback | Règle durable |
+|---|---|---|
+| 21h09 | Insight volume CAC validé : 7 contacts ≠ échantillon | Calculer CAC uniquement sur data homogène et volumineuse (≥50 contacts même canal) |
+| ~20h50 | ÉTAPE 1 L3 : jargon TJM/CRM/analytics non définis + mauvaise analyse canal | Jamais de terme non défini avant usage. Jamais d'analyse comparative sur données non homogènes |
+| ~20h33 | L2 trop customer discovery, pas assez académique. L3+ doivent être plus HEC/formules/frameworks | Alterner registre académique (formules, ratios, références) et application Zenray. Jamais que du customer discovery |
+| ~20h33 | Matthieu veut que ses réflexions et inputs soient tous notés ("c'est bien de les noter") | Logger verbatim condensé chaque input/réflexion de Matthieu. Pas seulement les exercices |
+| ~20h03 | ICP = profil CLIENT, pas titre du prestataire. "Tech Art 3D" = ce que Matthieu vend, pas qui il cible | ICP table = décrire le CLIENT (Benoit Ferriere-type, Cédric-type), jamais le positionnement du vendeur |
+| ~19h40 | 3ème rappel blocs ``` pour contenu carnet. Setup trivial 2 lignes = pas d'ÉTAPE dédiée | Jamais ``` pour concepts/carnet. ÉTAPE uniquement si volume réel de contenu à faire/comprendre/écrire |
+| ~19h20 | Règle "MEMORY1 uniquement" trop restrictive → "Core/Memory files" (MEMORY1 + MEMORY2) | Lire MEMORY1 ET MEMORY2 avant toute question sur parcours/clients/marché |
+| ~19h15 | Claude pose des questions dont les réponses sont dans MEMORY1. "Va chercher directement dans Memory Core" | Grep Core/Memory files AVANT toute question. Nouvelle info non présente → logger Business1.md + MEMORY approprié |
+| ~17h25 | Feedbacks doivent être loggés dans Business1.md (pas seulement Readme). Les deux ensemble = aucune info perdue | Tout feedback en session → Business1.md (trace datée) + Readme (règle durable). Jamais l'un sans l'autre |
+| ~17h20 | Tableaux markdown > blocs de code pour concepts/règles/formules | ``` réservé aux vrais snippets techniques uniquement |
+| ~17h13 | L1 setup 12h49 : dump 3 concepts + 5 produits d'un coup → Matthieu n'a pas commencé à écrire | Micro-steps guidés, une ÉTAPE à la fois, attendre "ok" avant d'enchaîner |
+
+---
+
+## 2026-06-19 — Correction Benoît Ferrière + relance Tokyo (data LinkedIn/Teams réelle)
+
+**Correction des entrées passées (lignes 400, 408, 415, etc.).** La formulation "besoin pipeline animation déclaré" / "signal fort manqué" est INEXACTE. La vraie conversation (LinkedIn + Teams, sept 2025 → fév 2026) dit autre chose. Le passé reste, je rétablis les faits :
+
+- **Profil réel** : Benoît FERRIÈRE, **CEO & Art Director de Tokkun Studio**, basé à **KYOTO** (pas Tokyo), aussi France. Ex-Nintendo (Lead visual artist Mario), Capcom (senior artist Monster Hunter), Square Enix. Clients Tokkun : Disney, Pixar, Square Enix, Warner Bros, Ubisoft, King, Gameloft, CD Projekt RED, Sony. Formé à Aries (Annecy).
+- **Premier contact** : septembre 2025, via recommandation de **Lou Bujoli** (grand-oncle de Matthieu, ami de Benoît, Corse). Intention d'origine = échanger sur son parcours d'installation au Japon.
+- **Pivot SaaS/AI** : Benoît a développé seul une gamme de SaaS (ClientsOO, ClientsReach jusqu'à 50-100K mails/jour, ClientsCheck, ClientsOK, ClientsOsint, ClientsEvidence, balisarde.com, kidikia.com). Raison qu'il donne : **"j'ai peur pour l'avenir dans le jeu vidéo"**. Il utilise Tokkun seulement comme entité d'exploitation de ses SaaS.
+- **Le "besoin 3D"** : Benoît a écrit textuellement **"Ça peut venir d'ici 1 mois mais pas encore sûr"**. Besoin Houdini/3D **conditionnel et incertain**, JAMAIS un besoin pipeline animation confirmé. Ne plus jamais l'écrire comme acquis.
+- **Échange substantiel** sur l'AI scraping de Matthieu (agent avocats), front-end React de Benoît, diversification revenus. Relation chaleureuse, vouvoiement mutuel, respect réciproque. Dernier message de Matthieu (fév 2026) avait poliment clôturé ("recontactez-moi quand ça se précise").
+
+**Vrais leviers de lien** (pas le 3D fantasmé) : (1) mentorat parcours Japon, (2) builder-to-builder AI/automation/SaaS solo, (3) lien familial Lou Bujoli, (4) dispo 3D si le besoin se précise.
+
+**Action 2026-06-19** : Matthieu est à Tokyo (3 mois, depuis le 12 juin). Relance envoyée via Teams/LinkedIn (`b.ferriere`) — message builder-to-builder + proposition café/repas à Kyoto + portfolio matthieuhuguet.com (Houdini/procédural + ZenRay Progress) + "cœur = jeu vidéo". Objectif : transformer le call jamais concrétisé en rencontre réelle. C'est exactement le bottleneck P0 (exposition sociale + Japon).
